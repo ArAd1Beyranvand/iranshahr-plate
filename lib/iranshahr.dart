@@ -1,4 +1,4 @@
-/// Bahrain's, Azerbaijan's and Afghanistan's licence plates for the
+/// Bahrain's, Azerbaijan's, Afghanistan's and Armenia's licence plates for the
 /// `core_plate` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
@@ -10,7 +10,7 @@
 /// PlateCanvas(spec: AzerbaijanPlates.car, theme: AzerbaijanThemes.civilian, ...)
 /// ```
 ///
-/// The two countries live side by side here and share nothing: `src/bahrain/`
+/// The countries live side by side here and share nothing: `src/bahrain/`
 /// for Bahrain, `src/azerbaijan/` for Azerbaijan, no import across any line,
 /// and no constant in common. Each country's designs are its own — Bahrain's
 /// grey security band and its wording set as labels rather than as a panel
@@ -96,3 +96,56 @@ export 'src/afghanistan/afghanistan_themes.dart';
 /// six-figure one, the two two-wheeler sizes, and the five designs that print
 /// something other than a class code at the head.
 export 'src/afghanistan/afghanistan_plates.dart';
+
+// ---------------------------------------------------------------------------
+// Armenia. A fourth country on the same terms as the first three: its own
+// folder (`src/armenia/`), no import across any line, and no constant shared
+// with any of them.
+//
+// It is the one country here whose *letters* are the design. Armenia opened in
+// 1996 with four letters picked for their shapes — `Լ`, `Ս`, `Տ`, `Օ`, which an
+// Armenian reads as Armenian and a foreigner reads as `L`, `U`, `S`, `O` — and
+// added the other twenty-two in batches until 2019, two of them (`G`, `I`) to
+// the Police and the Prosecutor's office alone. It is also the one whose state
+// plates are a lookup rather than a shape: `NN 01` is the Security Council and
+// `GG 01` the Prosecutor's office, and no shape check can say so.
+// ---------------------------------------------------------------------------
+
+/// The field-and-ink pairs every Armenian plate is printed in, and the silver
+/// of the 2014 design's identifier band.
+export 'src/armenia/armenia_colors.dart';
+
+/// The one country block every Armenian plate with a block carries: the flag
+/// over `AM`, on white.
+export 'src/armenia/armenia_country.dart';
+
+/// The letter register and the three class alphabets — diplomatic, bus and the
+/// Armenian-script military one — plus the timeline of when each of the
+/// twenty-six letters entered use.
+export 'src/armenia/armenia_alphabets.dart';
+
+/// The ten provinces and the capital, and which two-digit codes open a plate
+/// registered in each. A lookup, not a panel: Armenia prints its region in the
+/// number itself.
+export 'src/armenia/armenia_regions.dart';
+
+/// The reserved letter-and-tail combinations that name an institution on a
+/// public plate.
+export 'src/armenia/armenia_special_plates.dart';
+
+/// The five liveries — civilian white, bus yellow, diplomatic red, UN blue and
+/// military black — that print the specs below.
+export 'src/armenia/armenia_themes.dart';
+
+/// The ten Armenian geometries: the private number in its three sizes, the
+/// state number, the trailer and bus plates, the two diplomatic wordings, the
+/// UN plate and the military one.
+export 'src/armenia/armenia_plates.dart';
+
+/// The advisory validators: [ArmeniaPlateValidator] for private registrations —
+/// the region code, the letters reserved to the state, and optionally the
+/// letter timeline — [ArmeniaPublicPlateValidator] for the reserved
+/// combinations, and one each for the trailer, bus, diplomatic, UN and military
+/// formats, none of which follows the private plate's rules.
+/// [ArmeniaPlates.validatorFor] picks between them.
+export 'src/armenia/armenia_validators.dart';
