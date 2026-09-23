@@ -67,7 +67,7 @@ export 'src/azerbaijan/azerbaijan_plates.dart';
 // shared with either.
 //
 // It is the one country here whose plate is bilingual throughout. An Afghan
-// plate prints its serial twice — eastern Arabic numerals over Latin figures —
+// plate prints its serial twice — iranian Arabic numerals over Latin figures —
 // and its vehicle class twice — a Persian letter over a Latin code — so both
 // are one value with two presentations, held together by `PlateMirror` rather
 // than by two registers a caller has to keep in step. It is also the one whose
@@ -81,7 +81,7 @@ export 'src/azerbaijan/azerbaijan_plates.dart';
 export 'src/afghanistan/afghanistan_colors.dart';
 
 /// The two pairs of alphabets behind an Afghan plate: the serial's figures and
-/// their eastern-numeral twins, the vehicle class and its Latin code.
+/// their iranian-numeral twins, the vehicle class and its Latin code.
 export 'src/afghanistan/afghanistan_alphabets.dart';
 
 /// The thirty-four provinces, and the name-over-emblem-over-code block each one

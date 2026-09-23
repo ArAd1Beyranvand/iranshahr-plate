@@ -39,7 +39,7 @@ PlateCanvas(spec: AzerbaijanPlates.foreignCompany, theme: AzerbaijanThemes.forei
 ## Afghanistan
 
 Eleven plate specs in five colour themes, and the one bilingual design here.
-The serial is printed twice — eastern Arabic numerals over Latin figures — and
+The serial is printed twice — iranian Arabic numerals over Latin figures — and
 so is the vehicle class, as a Persian letter over its Latin code; each pair is
 one stored value echoed by a `PlateMirror`, so they cannot drift apart.
 

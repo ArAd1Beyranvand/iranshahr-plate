@@ -13,7 +13,7 @@ import 'afghanistan_provinces.dart';
 /// 1. the **class**, at the head of the plate: a Persian letter over its Latin
 ///    code — `ش` over `PRV`, `ت` over `T`;
 /// 2. the **serial**, in the middle: the same three to six figures printed
-///    twice, eastern Arabic numerals above and Latin digits below;
+///    twice, iranian Arabic numerals above and Latin digits below;
 /// 3. the **province**, at the tail: its name in Persian or Pashto over the
 ///    Darul Aman emblem over its three-letter Latin code.
 ///
@@ -79,7 +79,7 @@ abstract final class AfghanistanPlates {
   static const double _width = 420;
   static const double _height = 175;
 
-  /// The upper band, where the eastern-numeral serial and the Persian class
+  /// The upper band, where the iranian-numeral serial and the Persian class
   /// letter are printed, and the lower band, where their Latin twins are.
   ///
   /// A band is taller than the figure in it: core sets a glyph at 0.72 of the
@@ -156,14 +156,17 @@ abstract final class AfghanistanPlates {
     alphabet: AfghanistanAlphabets.classLatin,
   );
 
-  /// The serial: [count] Latin figures across the lower band, and their eastern
+  /// The serial: [count] Latin figures across the lower band, and their iranian
   /// twins above.
   ///
-  /// The Latin row is the slot row and the eastern row the mirror, rather than
-  /// the other way round: the Latin figures are what a user types and what a
-  /// host stores, and [PlateMirror] is read-only by construction. Which row is
-  /// which is invisible on the finished plate — both are the same value at the
-  /// same size — and entirely visible the moment someone tries to edit one.
+  /// The Latin row is the slot row and the iranian row the mirror, rather than
+  /// the other way round: the Latin figures are what a host stores, so they are
+  /// the position in the grammar. Both rows are editable, though — the iranian
+  /// mirrors are `editable` (see [_serialEcho]) — so the same one value can be
+  /// typed in either script, the upper (iranian) row being the primary one the
+  /// user reads and reaches for. A keystroke in either row writes the shared
+  /// value and the other row re-renders it; storage stays ASCII because core
+  /// folds a typed iranian numeral back to its character.
   static List<PlateSlot> _serialSlots(int count) => plateRegisterAcross(
     alphabet: AfghanistanAlphabets.digits,
     count: count,
@@ -182,7 +185,8 @@ abstract final class AfghanistanPlates {
       top: _upperTop,
       width: cell,
       height: _bandHeight,
-      alphabet: AfghanistanAlphabets.easternDigits,
+      alphabet: AfghanistanAlphabets.iranianDigits,
+      editable: true,
     );
   }
 
@@ -233,7 +237,7 @@ abstract final class AfghanistanPlates {
   /// where there was room for it rather than by widening the serial — so it is
   /// printed **once, in Persian only**, spanning both bands, with a hyphen
   /// above and below it. That is why it is a slot of its own over
-  /// [AfghanistanAlphabets.easternDigits] and carries no mirror: there is no
+  /// [AfghanistanAlphabets.iranianDigits] and carries no mirror: there is no
   /// Latin twin to echo, and on a plate where everything else is said twice
   /// that is the one thing worth saying about this design.
   ///
@@ -248,7 +252,7 @@ abstract final class AfghanistanPlates {
     textDirection: TextDirection.rtl,
     panel: _panel,
     slots: <PlateSlot>[
-      const PlateSlot(alphabet: AfghanistanAlphabets.easternDigits, box: PlateBox(106, 46, 44, 74)),
+      const PlateSlot(alphabet: AfghanistanAlphabets.iranianDigits, box: PlateBox(106, 46, 44, 74)),
       ...plateRegisterAcross(
         alphabet: AfghanistanAlphabets.digits,
         count: 5,
@@ -266,7 +270,8 @@ abstract final class AfghanistanPlates {
         top: _upperTop,
         width: (_serialRight - 154) / 5,
         height: _bandHeight,
-        alphabet: AfghanistanAlphabets.easternDigits,
+        alphabet: AfghanistanAlphabets.iranianDigits,
+        editable: true,
       ),
       _classMirror(6),
     ],
@@ -340,7 +345,8 @@ abstract final class AfghanistanPlates {
           top: _cycleUpperTop,
           width: cell,
           height: _cycleBandHeight,
-          alphabet: AfghanistanAlphabets.easternDigits,
+          alphabet: AfghanistanAlphabets.iranianDigits,
+          editable: true,
         ),
         PlateMirror(
           source: count,
@@ -395,7 +401,8 @@ abstract final class AfghanistanPlates {
         top: _upperTop,
         width: 42,
         height: _bandHeight,
-        alphabet: AfghanistanAlphabets.easternDigits,
+        alphabet: AfghanistanAlphabets.iranianDigits,
+        editable: true,
       ),
       ...plateEcho(
         sources: const <int>[2, 3],
@@ -403,7 +410,8 @@ abstract final class AfghanistanPlates {
         top: _upperTop,
         width: 42,
         height: _bandHeight,
-        alphabet: AfghanistanAlphabets.easternDigits,
+        alphabet: AfghanistanAlphabets.iranianDigits,
+        editable: true,
       ),
     ],
     labels: const <PlateLabel>[
@@ -519,7 +527,7 @@ abstract final class AfghanistanPlates {
   /// of one has been published, and the article says only that the plate bears
   /// Western Arabic numerals and a spelled-out category. So the one thing this
   /// spec asserts confidently is the thing the source states: there is no
-  /// eastern-numeral band and no Persian class letter, which makes it the only
+  /// iranian-numeral band and no Persian class letter, which makes it the only
   /// Afghan design in this file that says anything once. Everything else here —
   /// a five-figure serial on one centred row, the category at the head, the
   /// province block unchanged — is a reasonable reading of "like the others,

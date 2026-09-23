@@ -4,11 +4,11 @@ import 'package:core_plate/core_plate.dart';
 /// The alphabets an Afghan plate slot is drawn over.
 ///
 /// Two pairs, and each pair is one value printed twice. **An Afghan plate says
-/// everything twice** — the serial in eastern Arabic numerals above and in
+/// everything twice** — the serial in iranian Arabic numerals above and in
 /// Latin figures below, the class as a Persian letter above and a Latin code
 /// below — and neither pair is two values that happen to agree. It is one
 /// value with two presentations, which is what [PlateMirror] is for and why
-/// every `…Latin` / `eastern…` twin below accepts exactly the same characters
+/// every `…Latin` / `iranian…` twin below accepts exactly the same characters
 /// as the alphabet it twins and differs only in [PlateAlphabet.glyphs].
 ///
 /// **Storage stays ASCII throughout.** A serial digit is stored `'7'` whatever
@@ -24,7 +24,7 @@ abstract final class AfghanistanAlphabets {
   /// prints them.
   ///
   /// Restated under an `af.` id rather than reusing [PlateAlphabet.latinDigits]
-  /// so that it and [easternDigits] are declared side by side, in the one file
+  /// so that it and [iranianDigits] are declared side by side, in the one file
   /// that explains why there are two of them.
   static const PlateAlphabet digits = PlateAlphabet(
     id: 'af.digits',
@@ -33,14 +33,14 @@ abstract final class AfghanistanAlphabets {
     isNumeric: true,
   );
 
-  /// The same ten digits, printed as eastern Arabic numerals — the upper
+  /// The same ten digits, printed as iranian Arabic numerals — the upper
   /// register of every Afghan plate.
   ///
   /// Eastern Arabic (`٤`, `٥`, `٦`) and not the Persian variants (`۴`, `۵`,
   /// `۶`): the plates photographed for the Wikipedia article print the Arabic
   /// forms, and Dari uses them.
-  static const PlateAlphabet easternDigits = PlateAlphabet(
-    id: 'af.easternDigits',
+  static const PlateAlphabet iranianDigits = PlateAlphabet(
+    id: 'af.iranianDigits',
     characters: <String>['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
     input: AlphabetInput.typed,
     isNumeric: true,
