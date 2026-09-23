@@ -1,4 +1,5 @@
-/// Bahrain's and Azerbaijan's licence plates for the `core_plate` library.
+/// Bahrain's, Azerbaijan's and Afghanistan's licence plates for the
+/// `core_plate` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
 /// core widget layer paints. Nothing here knows about any other country
@@ -59,3 +60,39 @@ export 'src/azerbaijan/azerbaijan_themes.dart';
 /// blue transport plate, under another theme), the motorcycle plate, the
 /// diplomatic plate and the foreign-company plate.
 export 'src/azerbaijan/azerbaijan_plates.dart';
+
+// ---------------------------------------------------------------------------
+// Afghanistan. A third country on the same terms as the first two: its own
+// folder (`src/afghanistan/`), no import across any line, and no constant
+// shared with either.
+//
+// It is the one country here whose plate is bilingual throughout. An Afghan
+// plate prints its serial twice — eastern Arabic numerals over Latin figures —
+// and its vehicle class twice — a Persian letter over a Latin code — so both
+// are one value with two presentations, held together by `PlateMirror` rather
+// than by two registers a caller has to keep in step. It is also the one whose
+// hoist block is a runtime value: the province column varies over all
+// thirty-four, so it is an `AfghanistanProvince` handed to `PlateCanvas.country`
+// and not a constant baked into a spec.
+// ---------------------------------------------------------------------------
+
+/// The field-and-ink pairs every Afghan plate is printed in, and the red of the
+/// temporary plate's two words.
+export 'src/afghanistan/afghanistan_colors.dart';
+
+/// The two pairs of alphabets behind an Afghan plate: the serial's figures and
+/// their eastern-numeral twins, the vehicle class and its Latin code.
+export 'src/afghanistan/afghanistan_alphabets.dart';
+
+/// The thirty-four provinces, and the name-over-emblem-over-code block each one
+/// prints at the hoist end of a plate registered in it.
+export 'src/afghanistan/afghanistan_provinces.dart';
+
+/// The five liveries — civilian white, transport yellow, diplomatic red,
+/// governmental black and UN blue — that print the specs below.
+export 'src/afghanistan/afghanistan_themes.dart';
+
+/// The eleven Afghan geometries: the three- to five-figure plates, Kabul's
+/// six-figure one, the two two-wheeler sizes, and the five designs that print
+/// something other than a class code at the head.
+export 'src/afghanistan/afghanistan_plates.dart';

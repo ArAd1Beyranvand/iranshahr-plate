@@ -1,6 +1,6 @@
 import 'package:core_plate/core_plate.dart';
 import 'package:flutter/material.dart';
-import 'package:iranshahr/iranshahr.dart';
+import 'package:iranshahr_plate/iranshahr.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,7 +1,7 @@
-name: iranshahr
-description: "Bahrain's and Azerbaijan's licence plates for the core_plate library — country panels, and the Bahraini and Azerbaijani plate specs."
+name: iranshahr_plate
+description: "Bahrain's, Azerbaijan's and Afghanistan's licence plates for the core_plate library — country panels, and the Bahraini, Azerbaijani and Afghan plate specs."
 version: 0.1.0
-homepage: https://github.com/ArAd1Beyranvand/iranshahr
+homepage: https://github.com/ArAd1Beyranvand/iranshahr_plate
 
 environment:
   sdk: '>=3.10.0 <4.0.0'
@@ -23,3 +23,9 @@ flutter:
   assets:
     - assets/flags/Flag_of_Bahrain.svg
     - assets/flags/Flag_of_Azerbaijan.svg
+
+    # Afghanistan ships an emblem rather than a flag: the block at the hoist
+    # end of an Afghan plate carries the Darul Aman Palace, not the national
+    # colours. Two files, one per ink — see `AfghanistanPanelInk`.
+    - assets/emblems/Darul_Aman_dark.svg
+    - assets/emblems/Darul_Aman_light.svg
