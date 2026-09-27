@@ -5,72 +5,12 @@ import 'afghanistan_alphabets.dart';
 import 'afghanistan_colors.dart';
 import 'afghanistan_provinces.dart';
 
-/// The Afghan plate designs, as introduced in 2004 and amended since.
-///
-/// **One plate, three columns, read right to left.** Every design here is the
-/// same three-column row:
-///
-/// 1. the **class**, at the head of the plate: a Persian letter over its Latin
-///    code — `ش` over `PRV`, `ت` over `T`;
-/// 2. the **serial**, in the middle: the same three to six figures printed
-///    twice, iranian Arabic numerals above and Latin digits below;
-/// 3. the **province**, at the tail: its name in Persian or Pashto over the
-///    Darul Aman emblem over its three-letter Latin code.
-///
-/// Only the third of those is in this file by its absence. The province column
-/// is a [PlateCountry] and lives in [AfghanistanProvince], because it is the
-/// axis a plate varies along at runtime and geometry is the same in Herat as in
-/// Kabul. A renderer is handed one:
-///
-/// ```dart
-/// PlateCanvas(
-///   spec: AfghanistanPlates.car5,
-///   theme: AfghanistanThemes.civilian,
-///   country: AfghanistanProvince.herat.country(),
-/// )
-/// ```
-///
-/// ## Why there are eleven specs and not eleven classes
-///
-/// The article tabulates eleven vehicle types. Eight of them are **not** specs
-/// here, because what tells a lorry from a taxi is one character in one
-/// register and the colour of the field — a class and a livery, never a
-/// geometry. They are [car3]/[car4]/[car5] (or [cycle3]/[cycle4] on a
-/// two-wheeler's smaller plate) with a different value in the class register
-/// and a different `AfghanistanThemes` constant.
-///
-/// A spec appears here only when the *shape* of the plate changes, and it
-/// changes for exactly five reasons:
-///
-/// * **how many figures the serial has** — [car3], [car4], [car5], and the
-///   smaller [cycle3] and [cycle4]. A register's cells are evenly pitched
-///   across a span, so a three-figure plate and a five-figure one are two
-///   registers and therefore two specs.
-/// * **Kabul ran out of numbers.** [kabul6] adds a sixth figure printed only
-///   in Persian, set apart from the serial between two hyphens.
-/// * **three classes carry no class register at all.** [diplomatic] prints
-///   `CD` with no Persian counterpart (and hyphenates its number, which
-///   nothing else does), [governmental] prints a dash in both registers, and
-///   [un] prints nothing.
-/// * **the temporary plate prints in two inks.** [temporary] puts `موقت` where
-///   the province code goes and `TEMP` where the Latin class code goes, both
-///   in red on an otherwise black-on-white plate.
-/// * **the cross-border plate drops the Persian half entirely.** [international]
-///   is one row of Latin figures and a spelled-out category.
-///
-/// ## Calibration
-///
-/// Every coordinate below is sampled by eye from the plate photographs on the
-/// Wikipedia article and is a calibration target. The full-size canvas is
-/// 420×175, which is the plate's real size in millimetres; the two-wheeler
-/// canvas is 265×105, scaled off the motorcycle and rickshaw photographs, which
-/// are a noticeably longer rectangle than the car plate rather than a shrunk
-/// copy of it.
-///
-/// `final`, not `const`: the serial registers are built by [plateRegisterAcross]
-/// and [plateEcho], and a `const` constructor cannot run a loop. Initialised
-/// lazily, once per isolate; [PlateSpec] equality is over `id` alone, so nothing
-/// here depended on const canonicalisation.
+/// Afghan plates: class (Persian letter over Latin code), serial (3–6 figures,
+/// above/below), province (name, emblem, code). Province is a [PlateCountry]
+/// (varies at runtime). Eleven specs only where *shape* changes: serial count,
+/// Kabul6 extra digit, diplomatic/governmental/UN no-class forms, temporary's
+/// two inks, international's Latin-only row. Geometry calibrated by eye from
+/// Wikipedia; 420×175 mm full-size, 265×105 mm two-wheeler. `final` not `const`.
 abstract final class AfghanistanPlates {
   // ---------------------------------------------------------------------------
   // The full-size plate: 420×175 mm, and every design but the two-wheelers'.
@@ -128,23 +68,11 @@ abstract final class AfghanistanPlates {
     captionScale: 1.8,
   );
 
-  /// The Persian class letter, at the head of the upper band.
   static const PlateBox _classBox = PlateBox(337, _upperTop, 60, _bandHeight);
-
-  /// Its Latin twin, under it. Wider than the letter above because the code it
-  /// prints can be three characters (`PRV`, `TRC`) where the letter is always
-  /// one, and shorter in the glyph because three characters at the band's full
-  /// height would run off the end of the plate.
   static const PlateBox _classLatinBox = PlateBox(322, _lowerTop, 90, _bandHeight);
   static const double _classLatinGlyph = 62;
 
-  /// The class register: the letter as a slot, its Latin code as a mirror of
-  /// that same slot.
-  ///
-  /// The mirror is what makes this one value rather than two. A plate does not
-  /// carry a Persian class *and* a Latin class that have to be kept in step —
-  /// it carries a class, printed twice — so the letter is the slot, the code
-  /// echoes it, and no caller can put `ش` over `T`.
+  /// Class as slot, code as mirror (one value, printed twice).
   static List<PlateSlot> get _classSlot => const <PlateSlot>[
     PlateSlot(alphabet: AfghanistanAlphabets.vehicleClass, box: _classBox),
   ];
@@ -156,17 +84,7 @@ abstract final class AfghanistanPlates {
     alphabet: AfghanistanAlphabets.classLatin,
   );
 
-  /// The serial: [count] Latin figures across the lower band, and their iranian
-  /// twins above.
-  ///
-  /// The Latin row is the slot row and the iranian row the mirror, rather than
-  /// the other way round: the Latin figures are what a host stores, so they are
-  /// the position in the grammar. Both rows are editable, though — the iranian
-  /// mirrors are `editable` (see [_serialEcho]) — so the same one value can be
-  /// typed in either script, the upper (iranian) row being the primary one the
-  /// user reads and reaches for. A keystroke in either row writes the shared
-  /// value and the other row re-renders it; storage stays ASCII because core
-  /// folds a typed iranian numeral back to its character.
+  /// Serial: [count] Latin lower, Iranian mirrors upper (editable).
   static List<PlateSlot> _serialSlots(int count) => plateRegisterAcross(
     alphabet: AfghanistanAlphabets.digits,
     count: count,
@@ -190,13 +108,7 @@ abstract final class AfghanistanPlates {
     );
   }
 
-  /// One ordinary plate: [count] figures, a class register, a province block.
-  ///
-  /// [car3], [car4] and [car5] are three calls to this and differ in one
-  /// integer, which is the whole of what separates a Takhar three-figure plate
-  /// from a Herat five-figure one. Every class printed on this geometry — a
-  /// private car, a lorry, a duplicate, a bus, a taxi — is a value in the class
-  /// register and a `PlateTheme`, not another call.
+  /// Ordinary plate: [count] figures, class register, province block.
   static PlateSpec _car(int count) => PlateSpec(
     id: 'af.car$count',
     country: _defaultProvince,

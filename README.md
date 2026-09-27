@@ -1,6 +1,6 @@
 # iranshahr_plate
 
-License plates for **Bahrain**, **Azerbaijan**, **Afghanistan**, and **Armenia** — four countries with the [`core_plate`](https://pub.dev/packages/core_plate) library.
+License plates for **Bahrain**, **Azerbaijan**, **Afghanistan**, **Armenia**, and **Tajikistan** — five countries with the [`core_plate`](https://pub.dev/packages/core_plate) library.
 
 Data, not code: [`PlateCountry`](https://pub.dev/documentation/core_plate/latest/core_plate/PlateCountry-class.html)s, [`PlateAlphabet`](https://pub.dev/documentation/core_plate/latest/core_plate/PlateAlphabet-class.html)s and [`PlateSpec`](https://pub.dev/documentation/core_plate/latest/core_plate/PlateSpec-class.html)s that the core widget layer paints.
 
@@ -119,6 +119,38 @@ ArmeniaRegions.provinceFor('90');  // null — an individual plate, showing no p
 ```dart
 PlateCanvas(spec: ArmeniaPlates.car, theme: ArmeniaThemes.civilian, ...)
 PlateCanvas(spec: ArmeniaPlates.military, theme: ArmeniaThemes.military, ...)
+```
+
+## Tajikistan
+
+Nine plate specs in six colour themes, on a German-style face: the flag over
+`TJ`, and `NNNN LL NN` told apart by gaps alone — no hyphen and no divider.
+
+- **`car` / `carTwoRow` / `motorcycle`** — the private number, in its three sizes
+- **`trailer`** — a two-row design that leads with its region, `NN LL` over `NNNN`
+- **`publicTransport`** — black on amber, the fixed `TT` printed between serial and region
+- **`police`** — white on blue, `NNNN L NN`
+- **`foreign`** — black on yellow, `NNN L NNN`, and no flag block
+- **`diplomatic`** — white on red; the class is `CD`, `CMD`, `D`, `T` or `S`
+- **`governmental`** — white on black, the old Russian-derived layout with the region boxed off and `RT` beneath it
+
+**The letters.** A Tajik plate's register is a Cyrillic one wearing Latin
+shapes: the eleven letters whose Cyrillic and Latin forms coincide — `А В Е К
+М Н О Р С Т Х` — plus the four plain-Latin additions of 2014, `D J Z Y`. They
+are stored and rendered in Latin, so there is nothing to transliterate.
+
+The flag block sits on three differently coloured fields, so it is three
+`PlateCountry` values — one per ink — and the region is the two-digit group of
+the number itself, never a panel, so `TajikistanRegions` is a lookup:
+
+```dart
+TajikistanRegions.regionFor('01');  // TajikistanRegion.dushanbe
+TajikistanRegions.isIssued('09');   // false — only 01–08 are issued
+```
+
+```dart
+PlateCanvas(spec: TajikistanPlates.car, theme: TajikistanThemes.civilian, ...)
+PlateCanvas(spec: TajikistanPlates.police, theme: TajikistanThemes.police, ...)
 ```
 
 ## Usage

@@ -149,3 +149,49 @@ export 'src/armenia/armenia_plates.dart';
 /// formats, none of which follows the private plate's rules.
 /// [ArmeniaPlates.validatorFor] picks between them.
 export 'src/armenia/armenia_validators.dart';
+
+// ---------------------------------------------------------------------------
+// Tajikistan. A fifth country on the same terms as the first four: its own
+// folder (`src/tajikistan/`), no import across any line, and no constant shared
+// with any of them.
+//
+// It is the one country here whose letter register is a Cyrillic one wearing
+// Latin shapes: the fifteen letters a Tajik plate carries are the eleven whose
+// Cyrillic and Latin forms coincide — `А В Е К М Н О Р С Т Х` — plus the four
+// plain-Latin additions of the 2014 redesign, `D J Z Y`. Its flag block sits on
+// three differently coloured fields — white, amber and blue — so the block is
+// three `PlateCountry` values, one per ink, and its flagless coloured classes —
+// foreign yellow, diplomatic red and the old boxed-region governmental black —
+// declare `noPanel` and carry their own arrangement instead.
+// ---------------------------------------------------------------------------
+
+/// The field-and-ink pairs every Tajik plate is printed in.
+export 'src/tajikistan/tajikistan_colors.dart';
+
+/// The letter register — the fifteen shape-sharing and Latin letters — and the
+/// diplomatic class codes.
+export 'src/tajikistan/tajikistan_alphabets.dart';
+
+/// The capital and four regions, and which two-digit codes a plate registered in
+/// each carries. A lookup, not a panel: Tajikistan prints its region in the
+/// number itself.
+export 'src/tajikistan/tajikistan_regions.dart';
+
+/// The flag-over-`TJ` block in its three fields — white civilian, amber
+/// transport and blue police.
+export 'src/tajikistan/tajikistan_country.dart';
+
+/// The six liveries — civilian white, transport amber, foreign yellow,
+/// diplomatic red, police blue and governmental black — that print the specs
+/// below.
+export 'src/tajikistan/tajikistan_themes.dart';
+
+/// The nine Tajik geometries: the private number in three sizes, the trailer,
+/// the public-transport and police plates, and the three flagless coloured
+/// classes — foreign, diplomatic and governmental.
+export 'src/tajikistan/tajikistan_plates.dart';
+
+/// The advisory validators: [TajikistanPlateValidator] for the serial /
+/// letters / region designs, and one each for the foreign and diplomatic
+/// formats. [TajikistanPlates.validatorFor] picks between them.
+export 'src/tajikistan/tajikistan_validators.dart';
