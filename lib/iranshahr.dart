@@ -1,5 +1,5 @@
-/// Bahrain's, Azerbaijan's, Afghanistan's and Armenia's licence plates for the
-/// `core_plate` library.
+/// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, and
+/// Kuwait's licence plates for the `core_plate` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
 /// core widget layer paints. Nothing here knows about any other country
@@ -8,15 +8,17 @@
 /// ```dart
 /// PlateCanvas(spec: BahrainPlates.eu, theme: BahrainThemes.civilian, ...)
 /// PlateCanvas(spec: AzerbaijanPlates.car, theme: AzerbaijanThemes.civilian, ...)
+/// PlateCanvas(spec: KuwaitPlates.civilian, theme: KuwaitThemes.civilian, ...)
 /// ```
 ///
 /// The countries live side by side here and share nothing: `src/bahrain/`
-/// for Bahrain, `src/azerbaijan/` for Azerbaijan, no import across any line,
-/// and no constant in common. Each country's designs are its own — Bahrain's
-/// grey security band and its wording set as labels rather than as a panel
-/// caption, Azerbaijan's single white country block on four differently
-/// coloured fields — and are described in `BahrainPlates` and
-/// `AzerbaijanPlates`.
+/// for Bahrain, `src/azerbaijan/` for Azerbaijan, `src/kuwait/` for Kuwait,
+/// no import across any line, and no constant in common. Each country's designs
+/// are its own — Bahrain's grey security band and its wording set as labels
+/// rather than as a panel caption, Azerbaijan's single white country block on
+/// four differently coloured fields, Kuwait's simple design with coloured fields
+/// for each vehicle class — and are described in `BahrainPlates`,
+/// `AzerbaijanPlates`, `KuwaitPlates`, and so on.
 library;
 
 // ---------------------------------------------------------------------------
@@ -195,3 +197,33 @@ export 'src/tajikistan/tajikistan_plates.dart';
 /// letters / region designs, and one each for the foreign and diplomatic
 /// formats. [TajikistanPlates.validatorFor] picks between them.
 export 'src/tajikistan/tajikistan_validators.dart';
+
+// ---------------------------------------------------------------------------
+// Kuwait. A sixth country on the same terms as the first five: its own folder
+// (`src/kuwait/`), no import across any line, and no constant shared with any
+// of them.
+//
+// Kuwait adopted its current plate format in 2008. The standard format is
+// "12-45678" (2 digits, hyphen, 5 digits), with the country block at the hoist
+// end displaying the flag and "دولة الكويت" (State of Kuwait). The field colour
+// varies by vehicle class: white for civilians, yellow for public transport,
+// red for police, blue for government, and various colours for other special
+// classes.
+// ---------------------------------------------------------------------------
+
+/// The field-and-ink pairs every Kuwaiti plate is printed in.
+export 'src/kuwait/kuwait_colors.dart';
+
+/// The country blocks that go in a Kuwaiti plate's panel: the flag and caption,
+/// on various coloured fields for different vehicle classes.
+export 'src/kuwait/kuwait_country.dart';
+
+/// The liveries — civilian white, transport yellow, police red, government
+/// blue, and eight other colours for special vehicle classes — that print the
+/// specs below.
+export 'src/kuwait/kuwait_themes.dart';
+
+/// The thirteen Kuwaiti plate specs: civilian private vehicles, public transport,
+/// police, government, diplomatic, national guard, military, commercial,
+/// construction, firefighting, export, customs, and Emiri Bureau.
+export 'src/kuwait/kuwait_plates.dart';
