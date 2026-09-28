@@ -7,21 +7,18 @@ import 'kuwait_country.dart';
 /// The Kuwaiti plate designs.
 ///
 /// Kuwait adopted its current plate format in 2008. The standard format is
-/// "12-45678" (2 digits, hyphen, 5 digits), positioned centrally on the plate.
-/// The left side has a white or coloured band containing the Arabic text
-/// "دولة الكويت" (State of Kuwait). The text size and positioning varies by
-/// plate type.
+/// "12-45678" (2 digits, hyphen, 5 digits), displayed centrally on the plate.
+/// The LEFT SIDE has a narrow coloured band containing vertically stacked
+/// "KUWAIT" letters and the Arabic text "دولة الكويت" (State of Kuwait).
 ///
-/// The designs here follow a consistent pattern:
+/// The designs follow a consistent European-style pattern:
 ///
-/// 1. **Left band with country text.** A vertical band on the left containing
-///    "دولة الكويت" and optionally additional text lines below it, on a white
-///    or coloured background.
+/// 1. **Left identifier band.** A narrow vertical band (~60px) on the left
+///    containing stacked "K-U-W-A-I-T" letters and Arabic country text, on a
+///    colored field matching the plate's vehicle class.
 /// 2. **The serial in the centre and right.** A 2-digit regional/class code,
 ///    hyphen, and 5-digit serial number in large digits, occupying most of
-///    the remaining space.
-/// 3. **Optional flag/emblem.** On some special plates, the flag may be
-///    integrated into the left band.
+///    the remaining space in the plate's background colour.
 ///
 /// Kuwaiti plates measure 520×110 mm (20.5×4.3 in) for standard vehicles.
 ///
@@ -35,13 +32,12 @@ import 'kuwait_country.dart';
 abstract final class KuwaitPlates {
   /// The standard private vehicle plate (520×110): civilian car registration.
   /// Format: [2-digit class code]-[5-digit serial].
-  /// Left band: white background with black "دولة الكويت" text.
+  /// Left band: white background with black text and stacked KUWAIT letters.
   static final PlateSpec civilian = PlateSpec(
     id: 'kw.civilian',
     country: KuwaitCountry.civilian,
     canvasWidth: 520,
     canvasHeight: 110,
-    // No panel needed - the text is on the plate itself via labels
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
@@ -49,29 +45,31 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       // 5-digit serial
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
-    // Hyphen between the two number groups and country text on left
+    // Hyphen and left band text
     labels: const [
-      // Country text on left band
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 20, 95, 70), glyphHeight: 28),
-      // Hyphen divider
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      // "KUWAIT" letters stacked vertically on left
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
+      // Arabic text on left band
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      // Hyphen divider between digit groups
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -92,25 +90,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 20, 95, 70), glyphHeight: 28),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -119,7 +118,7 @@ abstract final class KuwaitPlates {
   );
 
   /// The police plate (520×110): black field with white text.
-  /// Left band: contains "دولة الكويت" and "الشرطة" in white text.
+  /// Left band: stacked "KUWAIT" in white, "POLICE" / "شرطة" labels.
   static final PlateSpec police = PlateSpec(
     id: 'kw.police',
     country: KuwaitCountry.police,
@@ -130,35 +129,25 @@ abstract final class KuwaitPlates {
     slots: [
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 120,
-        top: 10,
+        count: 6,
+        left: 100,
+        top: 30,
         width: 52,
-        height: 90,
-        pitch: 60,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 260,
-        top: 10,
-        width: 42,
-        height: 90,
-        pitch: 48,
+        height: 50,
+        pitch: 56,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 10, 95, 35), glyphHeight: 20, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'الشرطة', box: PlateBox(10, 45, 95, 35), glyphHeight: 20, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'POLICE', box: PlateBox(65, 8, 300, 18), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'شرطة', box: PlateBox(65, 28, 300, 18), glyphHeight: 14, color: KuwaitColors.whiteText),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'class'),
-      PlateTextGroup([2, 3, 4, 5, 6], key: 'serial'),
+      PlateTextGroup([0, 1, 2, 3, 4, 5], key: 'serial'),
     ],
   );
 
-  /// The government plate (520×110): blue field with white text.
+  /// The government plate (520×110): blue field with black text.
   static final PlateSpec government = PlateSpec(
     id: 'kw.government',
     country: KuwaitCountry.government,
@@ -170,25 +159,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 20, 95, 70), glyphHeight: 28, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -197,7 +187,6 @@ abstract final class KuwaitPlates {
   );
 
   /// The diplomatic plate (520×110): blue field with white text.
-  /// Includes "دبلوماسي" designation below the country name.
   static final PlateSpec diplomatic = PlateSpec(
     id: 'kw.diplomatic',
     country: KuwaitCountry.diplomatic,
@@ -209,26 +198,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 8, 95, 35), glyphHeight: 20, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دبلوماسي', box: PlateBox(10, 45, 95, 35), glyphHeight: 20, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -248,26 +237,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 8, 95, 35), glyphHeight: 20, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'الحرس الوطني', box: PlateBox(10, 45, 95, 35), glyphHeight: 18, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -287,26 +276,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 10, 95, 35), glyphHeight: 20),
-      PlateLabel(text: 'الجيش', box: PlateBox(10, 45, 95, 35), glyphHeight: 20),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -326,25 +315,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 20, 95, 70), glyphHeight: 28),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -364,25 +354,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 20, 95, 70), glyphHeight: 28),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -402,26 +393,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 8, 95, 35), glyphHeight: 20, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'الإطفاء', box: PlateBox(10, 45, 95, 35), glyphHeight: 20, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -441,25 +432,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 20, 95, 70), glyphHeight: 28, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -479,25 +471,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 20, 95, 70), glyphHeight: 28, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -517,26 +510,26 @@ abstract final class KuwaitPlates {
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
-        left: 120,
-        top: 10,
-        width: 52,
-        height: 90,
-        pitch: 60,
+        left: 100,
+        top: 8,
+        width: 56,
+        height: 94,
+        pitch: 64,
       ),
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
-        left: 260,
-        top: 10,
+        left: 250,
+        top: 8,
         width: 42,
-        height: 90,
+        height: 94,
         pitch: 48,
       ),
     ],
     labels: const [
-      PlateLabel(text: 'دولة الكويت', box: PlateBox(10, 8, 95, 35), glyphHeight: 20, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'الديوان الأميري', box: PlateBox(10, 45, 95, 35), glyphHeight: 18, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(235, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
