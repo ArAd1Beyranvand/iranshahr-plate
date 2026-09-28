@@ -62,12 +62,16 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    // Vertical divider separating left band from digits
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     // Hyphen and left band text
     labels: const [
       // "KUWAIT" letters stacked vertically on left
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
       // Arabic text on left band
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
       // Hyphen divider between digit groups
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
@@ -106,9 +110,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -137,10 +144,13 @@ abstract final class KuwaitPlates {
         pitch: 56,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'POLICE', box: PlateBox(65, 8, 300, 18), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'شرطة', box: PlateBox(65, 28, 300, 18), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'POLICE', box: PlateBox(75, 8, 250, 18), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'شرطة', box: PlateBox(75, 28, 250, 18), glyphHeight: 16, color: KuwaitColors.whiteText),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3, 4, 5], key: 'serial'),
@@ -175,9 +185,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -214,9 +227,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -253,9 +269,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -292,9 +311,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -331,9 +353,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -370,9 +395,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -409,9 +437,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -448,9 +479,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -487,9 +521,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -526,9 +563,12 @@ abstract final class KuwaitPlates {
         pitch: 48,
       ),
     ],
+    rules: const [
+      PlateRule(box: PlateBox(65, 0, 2, 110)),
+    ],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(8, 8, 35, 94), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(8, 35, 35, 45), glyphHeight: 11, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
