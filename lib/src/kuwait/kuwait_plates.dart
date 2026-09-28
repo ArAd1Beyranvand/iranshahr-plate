@@ -6,33 +6,14 @@ import 'kuwait_country.dart';
 
 /// The Kuwaiti plate designs.
 ///
-/// Kuwait adopted its current plate format in 2008. The standard format is
-/// "12-45678" (2 digits, hyphen, 5 digits), displayed centrally on the plate.
-/// The LEFT SIDE has a narrow coloured band containing vertically stacked
-/// "KUWAIT" letters and the Arabic text "دولة الكويت" (State of Kuwait).
+/// Kuwait adopted its current format in 2008. Plates come in two sizes:
+/// - 520×110 mm (EU): Private vehicles in large format, "12-45678"
+/// - 335×155 mm (US): Public, Police, Government, Diplomatic
+/// - 155×155 mm: Motorcycles
 ///
-/// The designs follow a consistent European-style pattern:
-///
-/// 1. **Left identifier band.** A narrow vertical band (~60px) on the left
-///    containing stacked "K-U-W-A-I-T" letters and Arabic country text, on a
-///    colored field matching the plate's vehicle class.
-/// 2. **The serial in the centre and right.** A 2-digit regional/class code,
-///    hyphen, and 5-digit serial number in large digits, occupying most of
-///    the remaining space in the plate's background colour.
-///
-/// Kuwaiti plates measure 520×110 mm (20.5×4.3 in) for standard vehicles.
-///
-/// `final`, not `const`: the digit runs are built by [plateRegister], and a
-/// `const` constructor cannot run a loop. Initialised lazily, once per isolate;
-/// [PlateSpec] equality is over `id` alone, so nothing here depended on const
-/// canonicalisation.
-///
-/// Every coordinate below is sampled by eye from plate photographs and is a
-/// calibration target.
+/// All plates have left band with text/labels and main number area.
 abstract final class KuwaitPlates {
-  /// The standard private vehicle plate (520×110): civilian car registration.
-  /// Format: [2-digit class code]-[5-digit serial].
-  /// Left band: white background with black text and stacked KUWAIT letters.
+  /// EU-size private vehicle (520×110): "دولة الكويت", black on white, "12-45678".
   static final PlateSpec civilian = PlateSpec(
     id: 'kw.civilian',
     country: KuwaitCountry.civilian,
@@ -41,38 +22,13 @@ abstract final class KuwaitPlates {
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      // 2-digit class/regional code
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      // 5-digit serial
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 100, top: 8, width: 56, height: 94, pitch: 64),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 250, top: 8, width: 42, height: 94, pitch: 48),
     ],
-    // Vertical divider separating left band from digits
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
-    // Hyphen and left band text
+    rules: const [PlateRule(box: PlateBox(65, 0, 2, 110))],
     labels: const [
-      // "KUWAIT" letters stacked vertically on left
       PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
-      // Arabic text on left band
       PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
-      // Hyphen divider between digit groups
       PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
     ],
     textGroups: const [
@@ -81,42 +37,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The public transport plate (520×110): taxis, buses, and goods export.
-  /// Same format as civilian but on a yellow field.
+  /// US-size public transport (335×155): "دولة الكويت", black on yellow, codes 90-99.
   static final PlateSpec transport = PlateSpec(
     id: 'kw.transport',
     country: KuwaitCountry.transport,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 30, 50, 90), glyphHeight: 18),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -124,74 +60,43 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The police plate (520×110): black field with white text.
-  /// Left band: stacked "KUWAIT" in white, "POLICE" / "شرطة" labels.
+  /// US-size police (335×155): "POLICE شرطة", white on black, digits only.
   static final PlateSpec police = PlateSpec(
     id: 'kw.police',
     country: KuwaitCountry.police,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 6,
-        left: 100,
-        top: 30,
-        width: 52,
-        height: 50,
-        pitch: 56,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 6, left: 85, top: 50, width: 32, height: 80, pitch: 38),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'POLICE', box: PlateBox(75, 8, 250, 18), glyphHeight: 16, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'شرطة', box: PlateBox(75, 28, 250, 18), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'POLICE', box: PlateBox(65, 12, 250, 20), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: 'شرطة', box: PlateBox(65, 35, 250, 20), glyphHeight: 16, color: KuwaitColors.whiteText),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3, 4, 5], key: 'serial'),
     ],
   );
 
-  /// The government plate (520×110): blue field with black text.
+  /// US-size government (335×155): "دولة الكويت — حكومة", black on blue.
   static final PlateSpec government = PlateSpec(
     id: 'kw.government',
     country: KuwaitCountry.government,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'دولة\nالكويت\nحكومة', box: PlateBox(5, 20, 50, 110), glyphHeight: 14),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -199,41 +104,23 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The diplomatic plate (520×110): blue field with white text.
+  /// US-size diplomatic (335×155): "هيئة دبلوماسية / C.D", blue on white with RED BAND at bottom.
   static final PlateSpec diplomatic = PlateSpec(
     id: 'kw.diplomatic',
     country: KuwaitCountry.diplomatic,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
+    rightBand: const PlateBand(box: PlateBox(0, 135, 335, 20), color: Color(0xFFCC0000)),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 25, width: 38, height: 90, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 25, width: 32, height: 90, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'هيئة\nدبلوماسية', box: PlateBox(5, 20, 50, 100), glyphHeight: 14),
+      PlateLabel(text: '-', box: PlateBox(160, 30, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -241,41 +128,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The national guard plate (520×110): green field with white text.
+  /// US-size national guard (335×155): "الحرس الوطني", yellow on green.
   static final PlateSpec nationalGuard = PlateSpec(
     id: 'kw.nationalguard',
     country: KuwaitCountry.nationalGuard,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'الحرس\nالوطني', box: PlateBox(5, 30, 50, 90), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -283,41 +151,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The military/army plate (520×110): beige field with black text.
+  /// US-size army (335×155): "الجيش", black on beige.
   static final PlateSpec army = PlateSpec(
     id: 'kw.army',
     country: KuwaitCountry.army,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'الجيش', box: PlateBox(5, 40, 50, 70), glyphHeight: 18),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -325,41 +174,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The commercial plate (520×110): pink field with black text.
+  /// US-size commercial (335×155): "دولة الكويت", black on pink.
   static final PlateSpec commercial = PlateSpec(
     id: 'kw.commercial',
     country: KuwaitCountry.commercial,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 30, 50, 90), glyphHeight: 16),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -367,41 +197,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The construction plate (520×110): orange field with black text.
+  /// US-size construction (335×155): "دولة الكويت", black on orange.
   static final PlateSpec construction = PlateSpec(
     id: 'kw.construction',
     country: KuwaitCountry.construction,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 30, 50, 90), glyphHeight: 16),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -409,41 +220,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The firefighting plate (520×110): red field with white text.
+  /// US-size firefighting (335×155): "الإطفاء", white on red.
   static final PlateSpec firefighting = PlateSpec(
     id: 'kw.firefighting',
     country: KuwaitCountry.firefighting,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'الإطفاء', box: PlateBox(5, 45, 50, 60), glyphHeight: 18, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -451,41 +243,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The export plate (520×110): green field with white text.
+  /// US-size export (335×155): "دولة الكويت", white on green.
   static final PlateSpec exportPlate = PlateSpec(
     id: 'kw.export',
     country: KuwaitCountry.export,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 30, 50, 90), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -493,41 +266,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The temporary/customs plate (520×110): purple field with white text.
+  /// US-size customs (335×155): "دولة الكويت", white on purple.
   static final PlateSpec customs = PlateSpec(
     id: 'kw.customs',
     country: KuwaitCountry.customs,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 30, 50, 90), glyphHeight: 16, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -535,41 +289,22 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// The Emiri Bureau plate (520×110): blue field with white text.
+  /// US-size Emiri Bureau (335×155): "الديوان الأميري", white on blue.
   static final PlateSpec emiri = PlateSpec(
     id: 'kw.emiri',
     country: KuwaitCountry.emiri,
-    canvasWidth: 520,
-    canvasHeight: 110,
+    canvasWidth: 335,
+    canvasHeight: 155,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     slots: [
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 100,
-        top: 8,
-        width: 56,
-        height: 94,
-        pitch: 64,
-      ),
-      ...plateRegister(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 250,
-        top: 8,
-        width: 42,
-        height: 94,
-        pitch: 48,
-      ),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 85, top: 35, width: 38, height: 100, pitch: 44),
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 5, left: 180, top: 35, width: 32, height: 100, pitch: 36),
     ],
-    rules: const [
-      PlateRule(box: PlateBox(65, 0, 2, 110)),
-    ],
+    rules: const [PlateRule(box: PlateBox(60, 0, 2, 155))],
     labels: const [
-      PlateLabel(text: 'K\nU\nW\nA\nI\nT', box: PlateBox(5, 5, 55, 100), glyphHeight: 16, color: KuwaitColors.whiteText),
-      PlateLabel(text: 'دولة\nالكويت', box: PlateBox(5, 40, 55, 60), glyphHeight: 14, color: KuwaitColors.whiteText),
-      PlateLabel(text: '-', box: PlateBox(225, 15, 20, 80), glyphHeight: 80),
+      PlateLabel(text: 'الديوان\nالأميري', box: PlateBox(5, 25, 50, 100), glyphHeight: 14, color: KuwaitColors.whiteText),
+      PlateLabel(text: '-', box: PlateBox(160, 40, 15, 80), glyphHeight: 80),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'class'),
@@ -577,8 +312,26 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// Every Kuwaiti design, in the order they are introduced above. A picker
-  /// iterates this rather than naming individual constants.
+  /// Motorcycle plate (155×155): "دولة الكويت / دراجة", black on white, codes 1-10.
+  static final PlateSpec motorcycle = PlateSpec(
+    id: 'kw.motorcycle',
+    country: KuwaitCountry.civilian,
+    canvasWidth: 155,
+    canvasHeight: 155,
+    noPanel: true,
+    panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
+    slots: [
+      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 4, left: 45, top: 90, width: 22, height: 50, pitch: 26),
+    ],
+    rules: const [PlateRule(box: PlateBox(42, 0, 1, 155))],
+    labels: const [
+      PlateLabel(text: 'دولة\nالكويت\nدراجة', box: PlateBox(3, 20, 36, 60), glyphHeight: 10),
+    ],
+    textGroups: const [
+      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
+    ],
+  );
+
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
     civilian,
     transport,
@@ -593,5 +346,6 @@ abstract final class KuwaitPlates {
     exportPlate,
     customs,
     emiri,
+    motorcycle,
   ]);
 }
