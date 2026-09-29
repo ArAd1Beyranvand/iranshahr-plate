@@ -1,4 +1,5 @@
 import 'package:core_plate/core_plate.dart';
+import 'package:flutter/widgets.dart';
 
 import 'kuwait_colors.dart';
 
@@ -15,172 +16,147 @@ import 'kuwait_colors.dart';
 ///   ...
 /// )
 /// ```
-///
-/// One theme per row of the "Vehicle types" table on Wikipedia's
-/// "Vehicle registration plates of Kuwait" article — field colour, text
-/// colour and frame all come from that source.
 abstract final class KuwaitThemes {
-  /// Frame thickness as a fraction of plate height. // CALIBRATE
-  static const double _borderWidthRatio = 0.04;
+  /// 3 units of frame on a 155-unit plate, measured off the reference
+  /// artwork. The article's table does not give a frame width.
+  static const double _borderWidthRatio = 0.02;
 
-  /// Slightly rounded corners — less generous than Bahrain's, more generous
-  /// than standard European plates. // CALIBRATE
-  static const double _plateRadiusRatio = 0.08;
+  /// 14 units of corner radius on a 155-unit plate, same source.
+  static const double _plateRadiusRatio = 0.09;
 
-  /// Private vehicles: black text on white field, dark frame.
-  static const PlateTheme civilian = PlateTheme(
-    plateBackground: KuwaitColors.civField,
-    plateBorder: KuwaitColors.darkInk,
-    ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
+  /// Every Kuwaiti plate is one ink on one field with a frame in one of the
+  /// two; only those three colours ever change.
+  static PlateTheme _theme({
+    required Color field,
+    required Color ink,
+    required Color frame,
+    required bool darkField,
+  }) => PlateTheme(
+    plateBackground: field,
+    plateBorder: frame,
+    ink: ink,
+    dividerColor: ink,
     borderWidthRatio: _borderWidthRatio,
     plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    activeColor: ink,
+    inactiveColor: darkField
+        ? KuwaitColors.inactiveOnDark
+        : KuwaitColors.inactiveOnLight,
   );
 
-  /// Public transport vehicles: black text on yellow field, dark frame.
-  static const PlateTheme transport = PlateTheme(
-    plateBackground: KuwaitColors.transField,
-    plateBorder: KuwaitColors.darkInk,
+  /// Private vehicles: black on white, dark frame.
+  static final PlateTheme civilian = _theme(
+    field: KuwaitColors.civField,
     ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
   );
 
-  /// Police and police motorcycle vehicles: white text on black field, black frame.
-  static const PlateTheme police = PlateTheme(
-    plateBackground: KuwaitColors.policeField,
-    plateBorder: KuwaitColors.policeField,
+  /// Public transport: black on yellow, dark frame.
+  static final PlateTheme transport = _theme(
+    field: KuwaitColors.transField,
+    ink: KuwaitColors.darkInk,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
+  );
+
+  /// Police and police motorcycle: white on black. The frame is the field, so
+  /// the plate reads as one solid black rounded rectangle.
+  static final PlateTheme police = _theme(
+    field: KuwaitColors.policeField,
     ink: KuwaitColors.whiteText,
-    dividerColor: KuwaitColors.whiteText,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.whiteText,
-    inactiveColor: KuwaitColors.inactiveOnDark,
+    frame: KuwaitColors.policeField,
+    darkField: true,
   );
 
-  /// Government vehicles: black text on blue field, blue frame.
-  static const PlateTheme government = PlateTheme(
-    plateBackground: KuwaitColors.govField,
-    plateBorder: KuwaitColors.govField,
+  /// Government: black on blue, dark frame.
+  static final PlateTheme government = _theme(
+    field: KuwaitColors.govField,
     ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
   );
 
-  /// Corps Diplomatique vehicles: blue text on white field, blue frame, red
-  /// band along the bottom (drawn by the spec's [PlateBand], not this theme).
-  static const PlateTheme diplomatic = PlateTheme(
-    plateBackground: KuwaitColors.civField,
-    plateBorder: KuwaitColors.govField,
+  /// Corps Diplomatique: blue on white, blue frame. The red band and its
+  /// white capsule are geometry, so they come from the spec, not from here.
+  static final PlateTheme diplomatic = _theme(
+    field: KuwaitColors.civField,
     ink: KuwaitColors.govField,
-    dividerColor: KuwaitColors.govField,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.govField,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.govField,
+    darkField: false,
   );
 
-  /// National guard vehicles: yellow text on green field, green frame.
-  static const PlateTheme nationalGuard = PlateTheme(
-    plateBackground: KuwaitColors.guardField,
-    plateBorder: KuwaitColors.guardField,
+  /// National guard: yellow on teal, yellow frame — the only category whose
+  /// frame takes the ink colour rather than the dark ink.
+  static final PlateTheme nationalGuard = _theme(
+    field: KuwaitColors.guardField,
     ink: KuwaitColors.transField,
-    dividerColor: KuwaitColors.transField,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.transField,
-    inactiveColor: KuwaitColors.inactiveOnDark,
+    frame: KuwaitColors.transField,
+    darkField: true,
   );
 
-  /// Army vehicles: black text on beige field, beige frame.
-  static const PlateTheme army = PlateTheme(
-    plateBackground: KuwaitColors.armyField,
-    plateBorder: KuwaitColors.darkInk,
+  /// Army: black on beige, dark frame.
+  static final PlateTheme army = _theme(
+    field: KuwaitColors.armyField,
     ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
   );
 
-  /// Commercial vehicles: black text on pink field, dark frame.
-  static const PlateTheme commercial = PlateTheme(
-    plateBackground: KuwaitColors.commField,
-    plateBorder: KuwaitColors.darkInk,
+  /// Commercial: black on pink, dark frame.
+  static final PlateTheme commercial = _theme(
+    field: KuwaitColors.commField,
     ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
   );
 
-  /// Construction vehicles: black text on orange field, dark frame.
-  static const PlateTheme construction = PlateTheme(
-    plateBackground: KuwaitColors.constructField,
-    plateBorder: KuwaitColors.darkInk,
+  /// Construction: black on red-orange, dark frame.
+  static final PlateTheme construction = _theme(
+    field: KuwaitColors.constructField,
     ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
   );
 
-  /// General firefighting vehicles: black text on red field, red frame.
-  static const PlateTheme firefighting = PlateTheme(
-    plateBackground: KuwaitColors.fireField,
-    plateBorder: KuwaitColors.fireField,
+  /// General firefighting: black on orange-red, dark frame.
+  static final PlateTheme firefighting = _theme(
+    field: KuwaitColors.fireField,
     ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
   );
 
-  /// Export vehicles: black text on green field, green frame.
-  static const PlateTheme export = PlateTheme(
-    plateBackground: KuwaitColors.exportField,
-    plateBorder: KuwaitColors.exportField,
+  /// Export: black on green, dark frame.
+  static final PlateTheme export = _theme(
+    field: KuwaitColors.exportField,
     ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
   );
 
-  /// Temporary customs vehicles: black text on purple field, purple frame.
-  static const PlateTheme customs = PlateTheme(
-    plateBackground: KuwaitColors.customsField,
-    plateBorder: KuwaitColors.customsField,
+  /// Temporary customs: black on lilac, dark frame.
+  static final PlateTheme customs = _theme(
+    field: KuwaitColors.customsField,
     ink: KuwaitColors.darkInk,
-    dividerColor: KuwaitColors.darkInk,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.darkInk,
-    inactiveColor: KuwaitColors.inactiveOnLight,
+    frame: KuwaitColors.darkInk,
+    darkField: false,
   );
 
-  /// Emiri Bureau and Emiri Guard vehicles: white text on blue field, blue frame.
-  static const PlateTheme emiri = PlateTheme(
-    plateBackground: KuwaitColors.govField,
-    plateBorder: KuwaitColors.govField,
+  /// Emiri Bureau: white on azure, dark frame.
+  static final PlateTheme emiri = _theme(
+    field: KuwaitColors.emiriField,
     ink: KuwaitColors.whiteText,
-    dividerColor: KuwaitColors.whiteText,
-    borderWidthRatio: _borderWidthRatio,
-    plateRadiusRatio: _plateRadiusRatio,
-    activeColor: KuwaitColors.whiteText,
-    inactiveColor: KuwaitColors.inactiveOnDark,
+    frame: KuwaitColors.darkInk,
+    darkField: true,
+  );
+
+  /// Emiri Guard: white on navy, dark frame. A distinct blue from [emiri] —
+  /// the two are different plates, not one plate rendered twice.
+  static final PlateTheme emiriGuard = _theme(
+    field: KuwaitColors.emiriGuardField,
+    ink: KuwaitColors.whiteText,
+    frame: KuwaitColors.darkInk,
+    darkField: true,
   );
 }

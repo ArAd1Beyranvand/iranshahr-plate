@@ -1,5 +1,5 @@
-/// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, and
-/// Kuwait's licence plates for the `core_plate` library.
+/// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's
+/// and Qatar's licence plates for the `core_plate` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
 /// core widget layer paints. Nothing here knows about any other country
@@ -9,6 +9,7 @@
 /// PlateCanvas(spec: BahrainPlates.eu, theme: BahrainThemes.civilian, ...)
 /// PlateCanvas(spec: AzerbaijanPlates.car, theme: AzerbaijanThemes.civilian, ...)
 /// PlateCanvas(spec: KuwaitPlates.civilian, theme: KuwaitThemes.civilian, ...)
+/// PlateCanvas(spec: QatarPlates.civilian, theme: QatarThemes.civilian, ...)
 /// ```
 ///
 /// The countries live side by side here and share nothing: `src/bahrain/`
@@ -227,3 +228,37 @@ export 'src/kuwait/kuwait_themes.dart';
 /// police, government, diplomatic, national guard, military, commercial,
 /// construction, firefighting, export, customs, and Emiri Bureau.
 export 'src/kuwait/kuwait_plates.dart';
+
+// ---------------------------------------------------------------------------
+// Qatar. A seventh country on the same terms as the first six: its own folder
+// (`src/qatar/`), no import across any line, and no constant shared with any of
+// them.
+//
+// It is the one country here whose country block is not a rectangle. A Qatari
+// plate opens with the hoist end of the flag itself — a maroon column cut down
+// its inboard edge by the flag's nine-point serration, with `QATAR` reversed
+// out of it one letter per line — so the block carries no flag image and needs
+// a shape no `PlateBox` can describe. That shape is `QatarFlagEdgeClipper`,
+// handed to `PlatePanel.shape`, and its geometry is taken from the official
+// flag construction rather than eyeballed: nine triangles whose tips reach 6
+// units inboard of a spine at 22/28 of the block's width.
+// ---------------------------------------------------------------------------
+
+/// The field-and-ink pairs every Qatari plate is printed in, including the
+/// official `#8a1538` maroon of the hoist block.
+export 'src/qatar/qatar_colors.dart';
+
+/// The serrated edge of the hoist block: the flag's own nine-point geometry,
+/// as a clipper for [PlatePanel.shape].
+export 'src/qatar/qatar_clippers.dart';
+
+/// The two Qatari country blocks — the maroon civilian hoist and the police
+/// plate's blue field — neither of which carries a flag asset or a caption.
+export 'src/qatar/qatar_country.dart';
+
+/// The two liveries: civilian black on white, and police white on blue.
+export 'src/qatar/qatar_themes.dart';
+
+/// The five Qatari plate specs: the civilian plate at each of its three serial
+/// lengths, the motorcycle plate, and the police plate.
+export 'src/qatar/qatar_plates.dart';

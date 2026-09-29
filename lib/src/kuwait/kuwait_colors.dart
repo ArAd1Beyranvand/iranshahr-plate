@@ -2,53 +2,57 @@ import 'package:flutter/widgets.dart';
 
 /// Every colour a Kuwaiti plate is printed in, in one place.
 ///
-/// Sourced from the "Vehicle types" table on Wikipedia's
-/// "Vehicle registration plates of Kuwait", which gives each category as
-/// `text colour on field colour`. Move the value here and every spec and
-/// theme that uses it moves with it.
+/// Values are sampled from the reference plate artwork on Wikimedia Commons
+/// linked from Wikipedia's "Vehicle registration plates of Kuwait", not from
+/// the prose colour names in that article's table — "orange", "green" and
+/// "red" name three shades the artwork does not agree on.
 abstract final class KuwaitColors {
-  /// Black text/frame, used on every field except the black-background ones.
-  static const Color darkInk = Color(0xFF000000);
+  /// The near-black the 2024 artwork prints in. Not pure black: the reference
+  /// files use this single ink for glyphs, rules and frames alike.
+  static const Color darkInk = Color(0xFF1D1D1B);
 
-  /// White text, used on the black-background fields.
   static const Color whiteText = Color(0xFFFFFFFF);
 
-  /// The white field: private, motorcycle, and diplomatic (blue text) plates.
+  /// Private, motorcycle and diplomatic plates.
   static const Color civField = Color(0xFFFFFFFF);
 
-  /// The yellow field: public transport plates. Also the text colour on the
-  /// national guard's green field.
-  static const Color transField = Color(0xFFFFD700);
+  /// Public transport (codes 90-99). Also the national guard's ink.
+  static const Color transField = Color(0xFFFFEC00);
 
-  /// The black field: police and police motorcycle plates (white text).
-  static const Color policeField = Color(0xFF000000);
+  /// Police and police motorcycle. Shares [darkInk] so the frame vanishes into
+  /// the field, exactly as the reference shows.
+  static const Color policeField = Color(0xFF1D1D1B);
 
-  /// The blue field: government (black text), Emiri Bureau, and Emiri Guard
-  /// (white text) plates. Also the text colour on diplomatic's white field.
-  static const Color govField = Color(0xFF0033CC);
+  /// Government. Also the diplomatic plate's ink and frame.
+  static const Color govField = Color(0xFF0079C1);
 
-  /// The green field: national guard plates (yellow text).
-  static const Color guardField = Color(0xFF008000);
+  /// National guard — a teal, distinctly bluer than [exportField].
+  static const Color guardField = Color(0xFF008C7B);
 
-  /// The orange field: construction plates (black text).
-  static const Color constructField = Color(0xFFFF6600);
+  /// Construction. A red-orange, not the pure orange the article's table names.
+  static const Color constructField = Color(0xFFE84433);
 
-  /// The pink field: commercial plates (black text).
-  static const Color commField = Color(0xFFFF1493);
+  static const Color commField = Color(0xFFF473B1);
 
-  /// The red field: firefighting plates (black text). Also the diplomatic
-  /// plate's bottom band.
-  static const Color fireField = Color(0xFFFF0000);
+  /// General firefighting, sampled from the photographed plate.
+  static const Color fireField = Color(0xFFFF4401);
 
-  /// The purple field: temporary customs plates (black text).
-  static const Color customsField = Color(0xFF9400D3);
+  /// The diplomatic plate's bottom band. A pure signal red, unlike
+  /// [fireField].
+  static const Color diplomaticBand = Color(0xFFED1C24);
 
-  /// The green field: export plates (black text). A distinct shade from the
-  /// national guard's green.
-  static const Color exportField = Color(0xFF228B22);
+  static const Color customsField = Color(0xFFCA98EA);
 
-  /// The beige field: army plates (black text).
-  static const Color armyField = Color(0xFFD2B48C);
+  static const Color exportField = Color(0xFF41AD59);
+
+  static const Color armyField = Color(0xFFB3A58E);
+
+  /// Emiri Bureau — a brighter azure than [govField].
+  static const Color emiriField = Color(0xFF0778E8);
+
+  /// Emiri Guard, sampled from the photographed plate: a deep navy, and the
+  /// one Kuwaiti blue that is neither [govField] nor [emiriField].
+  static const Color emiriGuardField = Color(0xFF234691);
 
   /// Input chrome only: the outline core paints under an empty field. Never
   /// printed — see [PlateTheme.inactiveColor].

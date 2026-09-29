@@ -77,7 +77,7 @@ abstract final class KuwaitCountry {
     flagAspectRatio: _flagAspectRatio,
   );
 
-  /// National guard: yellow on green, "الحرس الوطني".
+  /// National guard: yellow on teal, "الحرس الوطني".
   static const PlateCountry nationalGuard = PlateCountry(
     code: 'kw',
     captionLines: <String>['الحرس الوطني'],
@@ -105,16 +105,16 @@ abstract final class KuwaitCountry {
     flagAspectRatio: _flagAspectRatio,
   );
 
-  /// Construction: black on orange, "دولة الكويت — إنشاءت".
+  /// Construction: black on red-orange, "دولة الكويت — إنشاءات".
   static const PlateCountry construction = PlateCountry(
     code: 'kw',
-    captionLines: <String>['دولة الكويت', 'إنشاءت'],
+    captionLines: <String>['دولة الكويت', 'إنشاءات'],
     panelColor: KuwaitColors.constructField,
     panelTextColor: KuwaitColors.darkInk,
     flagAspectRatio: _flagAspectRatio,
   );
 
-  /// General Firefighting: black on red, "FIRE — الإطفاء العام".
+  /// General Firefighting: black on orange-red, "FIRE — الإطفاء العام".
   static const PlateCountry firefighting = PlateCountry(
     code: 'kw',
     captionLines: <String>['FIRE', 'الإطفاء العام'],
@@ -141,20 +141,20 @@ abstract final class KuwaitCountry {
     flagAspectRatio: _flagAspectRatio,
   );
 
-  /// Emiri Bureau: white on blue, "دولة الكويت — الديوان الأميري".
+  /// Emiri Bureau: white on azure, "دولة الكويت — الديوان الأميري".
   static const PlateCountry emiri = PlateCountry(
     code: 'kw',
     captionLines: <String>['دولة الكويت', 'الديوان الأميري'],
-    panelColor: KuwaitColors.govField,
+    panelColor: KuwaitColors.emiriField,
     panelTextColor: KuwaitColors.whiteText,
     flagAspectRatio: _flagAspectRatio,
   );
 
-  /// Emiri Guard: white on blue, "الحرس — الأميري".
+  /// Emiri Guard: white on navy, "الحرس الأميري".
   static const PlateCountry emiriGuard = PlateCountry(
     code: 'kw',
     captionLines: <String>['الحرس', 'الأميري'],
-    panelColor: KuwaitColors.govField,
+    panelColor: KuwaitColors.emiriGuardField,
     panelTextColor: KuwaitColors.whiteText,
     flagAspectRatio: _flagAspectRatio,
   );
