@@ -1,14 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:core_plate/core_plate.dart';
+import 'package:plate_alphabet/plate_alphabet.dart';
 
 /// The alphabets an Afghan plate slot is drawn over.
 ///
 /// Two pairs, and each pair is one value printed twice. **An Afghan plate says
-/// everything twice** — the serial in iranian Arabic numerals above and in
+/// everything twice** — the serial in Eastern Arabic numerals above and in
 /// Latin figures below, the class as a Persian letter above and a Latin code
 /// below — and neither pair is two values that happen to agree. It is one
 /// value with two presentations, which is what [PlateMirror] is for and why
-/// every `…Latin` / `iranian…` twin below accepts exactly the same characters
+/// every `…Latin` / `iranshahr…` twin below accepts exactly the same characters
 /// as the alphabet it twins and differs only in [PlateAlphabet.glyphs].
 ///
 /// **Storage stays ASCII throughout.** A serial digit is stored `'7'` whatever
@@ -21,43 +22,17 @@ import 'package:core_plate/core_plate.dart';
 /// different id.
 abstract final class AfghanistanAlphabets {
   /// The ten digits of the serial, as they are stored and as the lower register
-  /// prints them.
-  ///
-  /// Restated under an `af.` id rather than reusing [PlateAlphabet.latinDigits]
-  /// so that it and [iranianDigits] are declared side by side, in the one file
-  /// that explains why there are two of them.
-  static const PlateAlphabet digits = PlateAlphabet(
-    id: 'af.digits',
-    characters: <String>['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    input: AlphabetInput.typed,
-    isNumeric: true,
-  );
+  /// prints them. Use [PlateAlphabetDigits.english] instead of defining locally.
+  static const PlateAlphabet digits = PlateAlphabetDigits.english;
 
-  /// The same ten digits, printed as iranian Arabic numerals — the upper
+  /// The same ten digits, printed as Eastern Arabic numerals — the upper
   /// register of every Afghan plate.
   ///
   /// Eastern Arabic (`٤`, `٥`, `٦`) and not the Persian variants (`۴`, `۵`,
   /// `۶`): the plates photographed for the Wikipedia article print the Arabic
   /// forms, and Dari uses them.
-  static const PlateAlphabet iranianDigits = PlateAlphabet(
-    id: 'af.iranianDigits',
-    characters: <String>['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    input: AlphabetInput.typed,
-    isNumeric: true,
-    direction: TextDirection.rtl,
-    glyphs: <String, String>{
-      '0': '٠',
-      '1': '١',
-      '2': '٢',
-      '3': '٣',
-      '4': '٤',
-      '5': '٥',
-      '6': '٦',
-      '7': '٧',
-      '8': '٨',
-      '9': '٩',
-    },
-  );
+  /// Use [PlateAlphabetDigits.iranshahr] instead of defining locally.
+  static const PlateAlphabet iranianDigits = PlateAlphabetDigits.iranshahr;
 
   /// The vehicle class, as the upper register prints it: one Persian letter.
   ///
