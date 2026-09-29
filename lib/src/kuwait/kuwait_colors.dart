@@ -2,48 +2,52 @@ import 'package:flutter/widgets.dart';
 
 /// Every colour a Kuwaiti plate is printed in, in one place.
 ///
-/// All of these are sampled by eye from plate photographs and official
-/// specifications rather than from a printing standard, so each is a calibration
-/// target: move the value here and every spec and theme that uses it moves with
-/// it.
+/// Sourced from the "Vehicle types" table on Wikipedia's
+/// "Vehicle registration plates of Kuwait", which gives each category as
+/// `text colour on field colour`. Move the value here and every spec and
+/// theme that uses it moves with it.
 abstract final class KuwaitColors {
-  /// The digits and frame on civilian plates. // CALIBRATE
+  /// Black text/frame, used on every field except the black-background ones.
   static const Color darkInk = Color(0xFF000000);
 
-  /// The white field for civilian plates.
-  static const Color civField = Color(0xFFFFFFFF);
-
-  /// The yellow field for public transport plates.
-  static const Color transField = Color(0xFFFFD700);
-
-  /// The red field for police plates.
-  static const Color policeField = Color(0xFFCC0000);
-
-  /// The blue field for government and diplomatic plates.
-  static const Color govField = Color(0xFF0033CC);
-
-  /// White text for police and diplomatic plates. // CALIBRATE
+  /// White text, used on the black-background fields.
   static const Color whiteText = Color(0xFFFFFFFF);
 
-  /// Green field for national guard plates.
+  /// The white field: private, motorcycle, and diplomatic (blue text) plates.
+  static const Color civField = Color(0xFFFFFFFF);
+
+  /// The yellow field: public transport plates. Also the text colour on the
+  /// national guard's green field.
+  static const Color transField = Color(0xFFFFD700);
+
+  /// The black field: police and police motorcycle plates (white text).
+  static const Color policeField = Color(0xFF000000);
+
+  /// The blue field: government (black text), Emiri Bureau, and Emiri Guard
+  /// (white text) plates. Also the text colour on diplomatic's white field.
+  static const Color govField = Color(0xFF0033CC);
+
+  /// The green field: national guard plates (yellow text).
   static const Color guardField = Color(0xFF008000);
 
-  /// Orange field for construction plates.
+  /// The orange field: construction plates (black text).
   static const Color constructField = Color(0xFFFF6600);
 
-  /// Pink field for commercial plates.
+  /// The pink field: commercial plates (black text).
   static const Color commField = Color(0xFFFF1493);
 
-  /// Red field for firefighting plates.
+  /// The red field: firefighting plates (black text). Also the diplomatic
+  /// plate's bottom band.
   static const Color fireField = Color(0xFFFF0000);
 
-  /// Purple field for temporary customs plates.
+  /// The purple field: temporary customs plates (black text).
   static const Color customsField = Color(0xFF9400D3);
 
-  /// Green field for export plates.
+  /// The green field: export plates (black text). A distinct shade from the
+  /// national guard's green.
   static const Color exportField = Color(0xFF228B22);
 
-  /// Beige/tan field for army plates.
+  /// The beige field: army plates (black text).
   static const Color armyField = Color(0xFFD2B48C);
 
   /// Input chrome only: the outline core paints under an empty field. Never
