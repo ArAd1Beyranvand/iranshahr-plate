@@ -56,12 +56,13 @@ abstract final class BahrainPlates {
         pitch: 55,
       ),
     ],
-    // Full height and hard against the right edge, outboard of the wording —
-    // the bicycle/diplomatic/police arrangement rather than the band-then-
-    // wording one this size used to carry. It runs under the frame top, bottom
-    // and right, and is clipped back to the rounded face, so it meets the
-    // frame with no seam.
-    rules: const [PlateRule(box: PlateBox(502.5, 0, 9, 110))],
+    // Full height, outboard of the wording — the bicycle/diplomatic/police
+    // arrangement rather than the band-then-wording one this size used to
+    // carry. x 502.5..511.5, divider top to bottom.
+    background: const PlateSection.columns([
+      PlatePart(PlateSection.plain, end: 507, divider: 9),
+      PlatePart(PlateSection.plain),
+    ]),
     labels: const [
       PlateLabel(text: 'البحرين', box: PlateBox(408, 14, 98, 30), glyphHeight: 30),
       // Seven wide Latin capitals against six Arabic letters: the Latin still
@@ -95,7 +96,11 @@ abstract final class BahrainPlates {
         pitch: 42,
       ),
     ],
-    rules: const [PlateRule(box: PlateBox(282.5, 0, 9, 150))],
+    // x 282.5..291.5, top to bottom.
+    background: const PlateSection.columns([
+      PlatePart(PlateSection.plain, end: 287, divider: 9),
+      PlatePart(PlateSection.plain),
+    ]),
     labels: const [
       PlateLabel(text: 'BAHRAIN', box: PlateBox(12, 14, 88, 24), glyphHeight: 24),
       PlateLabel(text: 'البحرين', box: PlateBox(163, 12, 108, 30), glyphHeight: 28),
@@ -126,12 +131,12 @@ abstract final class BahrainPlates {
         pitch: 48,
       ),
     ],
-    rules: const [
-      // Flush to the right edge and the full height of the canvas: it runs
-      // under the frame at top, bottom and right, and is clipped back to the
-      // rounded face, so it meets the frame with no seam.
-      PlateRule(box: PlateBox(244, 0, 16, 120)),
-    ],
+    // The security band: from x 244 out under the frame at top, bottom and
+    // right, so the frame is drawn over it with no field between.
+    background: const PlateSection.columns([
+      PlatePart(PlateSection.plain, end: 244),
+      PlatePart(PlateSection.fill(PlateFill.divider)),
+    ]),
     labels: const [
       PlateLabel(text: 'BRN', box: PlateBox(10, 12, 54, 26), glyphHeight: 26),
       // The mark, as text rather than as a PlateDecal: an emoji is a glyph, and
@@ -144,6 +149,20 @@ abstract final class BahrainPlates {
     ],
   );
 
+  /// The 250×110 head-band layout: the panel colour across the top, [height]
+  /// deep, and the security band from x 234 to the right edge, both run out
+  /// under the frame.
+  static PlateSection _headBand(double height) => PlateSection.columns([
+    PlatePart(
+      PlateSection.rows([
+        PlatePart(const PlateSection.fill(PlateFill.panel), end: height),
+        const PlatePart(PlateSection.plain),
+      ]),
+      end: 234,
+    ),
+    const PlatePart(PlateSection.fill(PlateFill.divider)),
+  ]);
+
   /// Diplomatic corps (250×110): a three-digit serial under a green head band
   /// carrying `BAHRAIN` / `C.D.` and `البحرين` / `هيئة دبلوماسية`, reversed out
   /// white. The band is the panel; the security band is the same full-height
@@ -154,10 +173,10 @@ abstract final class BahrainPlates {
     canvasWidth: 250,
     canvasHeight: 110,
     // A colour and nothing else: flagScale 0 says so in data, rather than
-    // leaving a flag box to be computed for a country that has no flag. It
-    // overlaps the frame on the left and top and stops at the security band on
-    // the right; the face clip trims it back to the rounded corner.
+    // leaving a flag box to be computed for a country that has no flag. The
+    // colour is the background's head row, see [_headBand].
     panel: const PlatePanel(box: PlateBox(0, 0, 234, 54), flagScale: 0, padding: EdgeInsets.zero),
+    background: _headBand(54),
     slots: [
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
@@ -169,7 +188,6 @@ abstract final class BahrainPlates {
         pitch: 40,
       ),
     ],
-    rules: const [PlateRule(box: PlateBox(234, 0, 16, 110))],
     labels: const [
       PlateLabel(text: 'BAHRAIN', box: PlateBox(8, 5, 76, 20), glyphHeight: 20, color: BahrainColors.onDiplomaticGreen),
       PlateLabel(text: 'C.D.', box: PlateBox(8, 29, 76, 22), glyphHeight: 22, color: BahrainColors.onDiplomaticGreen),
@@ -203,6 +221,7 @@ abstract final class BahrainPlates {
     canvasWidth: 250,
     canvasHeight: 110,
     panel: const PlatePanel(box: PlateBox(0, 0, 234, 44), flagScale: 0, padding: EdgeInsets.zero),
+    background: _headBand(44),
     slots: [
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
@@ -214,7 +233,6 @@ abstract final class BahrainPlates {
         pitch: 40,
       ),
     ],
-    rules: const [PlateRule(box: PlateBox(234, 0, 16, 110))],
     labels: const [
       // Printed dark, not reversed out: the band is pale enough that white
       // wording on it would not read.

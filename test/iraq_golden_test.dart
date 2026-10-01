@@ -6,15 +6,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:iranshahr_plate/iranshahr.dart';
 
-/// Goldens for every Iraqi spec, one image per category.
+/// Goldens for every Iraqi plate, one image per spec and per band colour.
 ///
-/// Iraqi plates have a coloured left band (white for private, blue for
-/// governmental, red for for-hire, yellow for commercial/trucks, green for
-/// agricultural), and share the same format: [Governorate code 2 digits] ·
-/// [Vehicle type letter] [4-digit registration number].
+/// These exist to be looked at. The class of an Iraqi plate is carried
+/// entirely by the colour of the left band, which is the `PlateCountry`'s and
+/// not the spec's, so the specs alone would render five near-identical white
+/// plates. The cases below pair each spec with a band so that the thing the
+/// classes actually differ in is what the goldens show.
 ///
 /// Regenerate with `flutter test --update-goldens` after a deliberate change.
 void main() {
+  // flutter_test's default font draws every glyph as a box, which hides
+  // exactly what these goldens exist to show. Both faces go into the one
+  // family the theme resolves to so glyphs fall back per character.
   setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     final loader = FontLoader('Roboto');
@@ -34,12 +38,12 @@ void main() {
     required PlateSpec spec,
     required PlateTheme theme,
     required PlateCountry country,
-    required String digits,
+    required String value,
     required String name,
   }) async {
     final values = <String?>[
       for (var i = 0; i < spec.slotCount; i++)
-        i < digits.length ? digits[i] : '0',
+        i < value.length ? value[i] : '0',
     ];
     final controller = PlateController.fromValues(spec, values);
 
@@ -74,22 +78,48 @@ void main() {
     controller.dispose();
   }
 
+  // The reference artwork prints "14 G 34567" outside Kurdistan and
+  // "21 G 34567" inside it, so the goldens use the same values and can be
+  // compared with it directly. 21 is Sulaymaniyah, 14 is Basra.
+  const rest = '14G34567';
+  const kurd = '21G34567';
+
   final cases = <(String, PlateSpec, PlateTheme, PlateCountry, String)>[
-    ('iq_private', IraqPlates.private_11, IraqThemes.privateVehicle, const PlateCountry(code: 'iq', captionLines: <String>[], panelColor: Color(0xFF7A7A7A), panelTextColor: Color(0xFF1A1A1A)), '11G3456'),
-    ('iq_governmental', IraqPlates.governmental_11, IraqThemes.governmental, const PlateCountry(code: 'iq', captionLines: <String>[], panelColor: Color(0xFF0079C1), panelTextColor: Color(0xFFFFFFFF)), '11G3456'),
-    ('iq_forhire', IraqPlates.forHire_11, IraqThemes.forHire, const PlateCountry(code: 'iq', captionLines: <String>[], panelColor: Color(0xFFED1C24), panelTextColor: Color(0xFFFFFFFF)), '11G3456'),
-    ('iq_commercial', IraqPlates.commercial_11, IraqThemes.commercial, const PlateCountry(code: 'iq', captionLines: <String>[], panelColor: Color(0xFFFFC913), panelTextColor: Color(0xFF000000)), '11G3456'),
-    ('iq_agricultural', IraqPlates.agricultural_11, IraqThemes.agricultural, const PlateCountry(code: 'iq', captionLines: <String>[], panelColor: Color(0xFF01A06A), panelTextColor: Color(0xFFFFFFFF)), '11G3456'),
+    // 520x110, rest of Iraq: one spec, each of the five permanent bands.
+    ('iq_large_private', IraqPlates.large, IraqThemes.large, IraqCountry.private, rest),
+    ('iq_large_hire', IraqPlates.large, IraqThemes.large, IraqCountry.hire, rest),
+    ('iq_large_government', IraqPlates.large, IraqThemes.large, IraqCountry.government, rest),
+    ('iq_large_trade', IraqPlates.large, IraqThemes.large, IraqCountry.trade, rest),
+    ('iq_large_agricultural', IraqPlates.large, IraqThemes.large, IraqCountry.agricultural, rest),
+    // 520x110, Kurdistan Region.
+    ('iq_large_kr_private', IraqPlates.largeKurdistan, IraqThemes.large, IraqCountry.private, kurd),
+    ('iq_large_kr_hire', IraqPlates.largeKurdistan, IraqThemes.large, IraqCountry.hire, kurd),
+    ('iq_large_kr_government', IraqPlates.largeKurdistan, IraqThemes.large, IraqCountry.government, kurd),
+    ('iq_large_kr_trade', IraqPlates.largeKurdistan, IraqThemes.large, IraqCountry.trade, kurd),
+    ('iq_large_kr_agricultural', IraqPlates.largeKurdistan, IraqThemes.large, IraqCountry.agricultural, kurd),
+    // 335x155, both regions.
+    ('iq_small_private', IraqPlates.small, IraqThemes.small, IraqCountry.private, rest),
+    ('iq_small_hire', IraqPlates.small, IraqThemes.small, IraqCountry.hire, rest),
+    ('iq_small_government', IraqPlates.small, IraqThemes.small, IraqCountry.government, rest),
+    ('iq_small_trade', IraqPlates.small, IraqThemes.small, IraqCountry.trade, rest),
+    ('iq_small_agricultural', IraqPlates.small, IraqThemes.small, IraqCountry.agricultural, rest),
+    ('iq_small_kr_private', IraqPlates.smallKurdistan, IraqThemes.small, IraqCountry.private, kurd),
+    ('iq_small_kr_hire', IraqPlates.smallKurdistan, IraqThemes.small, IraqCountry.hire, kurd),
+    ('iq_small_kr_government', IraqPlates.smallKurdistan, IraqThemes.small, IraqCountry.government, kurd),
+    ('iq_small_kr_trade', IraqPlates.smallKurdistan, IraqThemes.small, IraqCountry.trade, kurd),
+    ('iq_small_kr_agricultural', IraqPlates.smallKurdistan, IraqThemes.small, IraqCountry.agricultural, kurd),
+    // Temporary: governorate 21, expiring in 22, serial 34567.
+    ('iq_small_temporary', IraqPlates.smallTemporary, IraqThemes.temporary, IraqCountry.temporary, '212234567'),
   ];
 
-  for (final (name, spec, theme, country, digits) in cases) {
+  for (final (name, spec, theme, country, value) in cases) {
     testWidgets(name, (tester) async {
       await renderGolden(
         tester,
         spec: spec,
         theme: theme,
         country: country,
-        digits: digits,
+        value: value,
         name: name,
       );
     });

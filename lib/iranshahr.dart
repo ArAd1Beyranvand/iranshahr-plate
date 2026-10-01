@@ -1,5 +1,5 @@
-/// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's
-/// and Qatar's licence plates for the `core_plate` library.
+/// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's,
+/// Qatar's and Iraq's licence plates for the `core_plate` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
 /// core widget layer paints. Nothing here knows about any other country
@@ -262,3 +262,30 @@ export 'src/qatar/qatar_themes.dart';
 /// The five Qatari plate specs: the civilian plate at each of its three serial
 /// lengths, the motorcycle plate, and the police plate.
 export 'src/qatar/qatar_plates.dart';
+
+// ---------------------------------------------------------------------------
+// Iraq. An eighth country on the same terms as the first seven: its own folder
+// (`src/iraq/`), no import across any line, and no constant shared with any of
+// them.
+// ---------------------------------------------------------------------------
+
+/// The six band colours, the one field and the two inks every Iraqi plate is
+/// printed in.
+export 'src/iraq/iraq_colors.dart';
+
+/// The digits and class letters that compose an Iraqi registration.
+export 'src/iraq/iraq_alphabets.dart';
+
+/// The governorate codes, and the left band in each of its six class colours.
+export 'src/iraq/iraq_country.dart';
+
+/// One theme per canvas — 520x110, 335x155, and the red-on-white temporary —
+/// since the frame is a ratio of the plate's height.
+export 'src/iraq/iraq_themes.dart';
+
+/// The five Iraqi plate specs: both sizes in both regional designs, plus the
+/// temporary plate.
+export 'src/iraq/iraq_plates.dart';
+
+/// The advisory validator, including the Kurdistan Region's transition rules.
+export 'src/iraq/iraq_validators.dart';

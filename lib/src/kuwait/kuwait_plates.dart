@@ -115,7 +115,7 @@ abstract final class KuwaitPlates {
         top: _Layout.serialTop,
         height: _Layout.serialHeight,
       ),
-      rules: band ? _bandRule : const <PlateRule>[],
+      background: band ? _bandBackground : PlateSection.plain,
       labels: <PlateLabel>[
         if (band) _kuwaitLabel(captionColor),
         PlateLabel(
@@ -172,7 +172,7 @@ abstract final class KuwaitPlates {
         ),
         ...base.slots,
       ],
-      rules: base.rules,
+      background: base.background,
       labels: base.labels,
       textGroups: const <PlateTextGroup>[
         PlateTextGroup([0, 1], key: 'class'),
@@ -186,11 +186,15 @@ abstract final class KuwaitPlates {
     padding: EdgeInsets.zero,
   );
 
-  static const List<PlateRule> _bandRule = <PlateRule>[
-    PlateRule(
-      box: PlateBox(_Layout.ruleLeft, 0, _Layout.ruleWidth, _Layout.height),
+  /// The "KUWAIT" band and the face, divided by the rule.
+  static const PlateSection _bandBackground = PlateSection.columns(<PlatePart>[
+    PlatePart(
+      PlateSection.plain,
+      end: _Layout.ruleLeft + _Layout.ruleWidth / 2,
+      divider: _Layout.ruleWidth,
     ),
-  ];
+    PlatePart(PlateSection.plain),
+  ]);
 
   static PlateLabel _kuwaitLabel(Color? color) => PlateLabel(
     text: 'K\nU\nW\nA\nI\nT',
@@ -275,7 +279,7 @@ abstract final class KuwaitPlates {
       top: _Layout.serialTop,
       height: _Layout.serialHeight,
     ),
-    rules: _bandRule,
+    background: _bandBackground,
     labels: <PlateLabel>[
       _kuwaitLabel(null),
       const PlateLabel(
@@ -307,16 +311,15 @@ abstract final class KuwaitPlates {
     canvasHeight: _Layout.height,
     noPanel: true,
     panel: _noPanel,
-    rightBand: const PlateBand(
-      box: _diplomaticBandBox,
-      color: KuwaitColors.diplomaticBand,
-    ),
-    innerBand: const PlateBand(
-      box: _diplomaticCapsuleBox,
-      color: KuwaitColors.civField,
-      topCornerRadius: _diplomaticBandHeight / 2,
-      bottomCornerRadius: _diplomaticBandHeight / 2,
-    ),
+    background: _diplomaticBackground,
+    bands: const <PlateBand>[
+      PlateBand(
+        box: _diplomaticCapsuleBox,
+        color: KuwaitColors.civField,
+        topCornerRadius: _diplomaticBandHeight / 2,
+        bottomCornerRadius: _diplomaticBandHeight / 2,
+      ),
+    ],
     slots: <PlateSlot>[
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
@@ -337,7 +340,6 @@ abstract final class KuwaitPlates {
         pitch: _diplomaticPitch,
       ),
     ],
-    rules: const <PlateRule>[PlateRule(box: PlateBox(42, 0, 4, 155))],
     labels: <PlateLabel>[
       _kuwaitLabel(null),
       const PlateLabel(
@@ -377,15 +379,22 @@ abstract final class KuwaitPlates {
 
   static const double _diplomaticBandTop = 113;
   static const double _diplomaticBandHeight = 30;
-  /// The band runs from the rule to the inner edge of the frame — 3 units in
-  /// from the canvas at the 0.02 border ratio — so it meets both without a
-  /// seam of field showing through.
-  static const PlateBox _diplomaticBandBox = PlateBox(
-    45,
-    _diplomaticBandTop,
-    287,
-    _diplomaticBandHeight,
-  );
+  /// The rule, 4 units wide at x 42, and right of it the red band: a row of
+  /// the face from the rule out under the frame, so it meets both with no
+  /// field between.
+  static const PlateSection _diplomaticBackground = PlateSection.columns(<PlatePart>[
+    PlatePart(PlateSection.plain, end: 44, divider: 4),
+    PlatePart(
+      PlateSection.rows(<PlatePart>[
+        PlatePart(PlateSection.plain, end: _diplomaticBandTop),
+        PlatePart(
+          PlateSection.fill(PlateFill.color(KuwaitColors.diplomaticBand)),
+          end: _diplomaticBandTop + _diplomaticBandHeight,
+        ),
+        PlatePart(PlateSection.plain),
+      ]),
+    ),
+  ]);
 
   /// Centred on the band, not on the plate.
   static const PlateBox _diplomaticCapsuleBox = PlateBox(
@@ -500,7 +509,7 @@ abstract final class KuwaitPlates {
         box: PlateBox(58, 106, 26, 34),
       ),
     ],
-    rules: _squareRule,
+    background: _squareBackground,
     labels: <PlateLabel>[
       _squareKuwaitLabel,
       const PlateLabel(
@@ -536,7 +545,7 @@ abstract final class KuwaitPlates {
       top: 52,
       height: 38,
     ),
-    rules: _squareRule,
+    background: _squareBackground,
     labels: <PlateLabel>[
       _squareKuwaitLabel,
       const PlateLabel(
@@ -555,11 +564,10 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  static const List<PlateRule> _squareRule = <PlateRule>[
-    PlateRule(
-      box: PlateBox(_Layout.squareRuleLeft, 0, 2, _Layout.squareSide),
-    ),
-  ];
+  static const PlateSection _squareBackground = PlateSection.columns(<PlatePart>[
+    PlatePart(PlateSection.plain, end: _Layout.squareRuleLeft + 1, divider: 2),
+    PlatePart(PlateSection.plain),
+  ]);
 
   static const PlateLabel _squareKuwaitLabel = PlateLabel(
     text: 'K\nU\nW\nA\nI\nT',

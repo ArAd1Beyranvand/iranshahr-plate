@@ -36,10 +36,10 @@ abstract final class QatarPlates {
   /// Where the maroon block sits, and the shape it is cut to. Shared by the two
   /// civilian sizes, which differ only in how many digits follow it.
   ///
-  /// The box runs the full height of the face and hard against the left edge: it
-  /// goes under the frame at top, left and bottom, and core's face clip trims it
-  /// back to the rounded corner, so the block meets the frame with no seam. The
-  /// zero padding and `flagScale: 0` say the block holds no flag — it *is* the
+  /// The block itself is the background's first column, [_hoistBackground],
+  /// run out under the frame at top, left and bottom so the frame is drawn
+  /// over it. The panel only places the (absent) flag and caption: zero
+  /// padding and `flagScale: 0` say the block holds no flag — it *is* the
   /// flag; see [QatarCountry].
   static const PlatePanel _hoist = PlatePanel(
     box: PlateBox(0, 0, 54, 110),
@@ -47,6 +47,11 @@ abstract final class QatarPlates {
     padding: EdgeInsets.zero,
     shape: QatarFlagEdgeClipper(),
   );
+
+  static const PlateSection _hoistBackground = PlateSection.columns([
+    PlatePart(PlateSection.fill(PlateFill.panel, shape: QatarFlagEdgeClipper()), end: 54),
+    PlatePart(PlateSection.plain),
+  ]);
 
   /// `QATAR`, reversed out of the maroon block, one letter per line.
   ///
@@ -112,6 +117,7 @@ abstract final class QatarPlates {
     canvasWidth: 520,
     canvasHeight: 110,
     panel: _hoist,
+    background: _hoistBackground,
     slots: _civilianSerial(count),
     labels: const [_qatarLetters, _qatarArabic],
     textGroups: [
