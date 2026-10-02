@@ -1,5 +1,5 @@
 /// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's,
-/// Qatar's and Iraq's licence plates for the `core_plate` library.
+/// Qatar's, Iraq's and the UAE's licence plates for the `core_plate` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
 /// core widget layer paints. Nothing here knows about any other country
@@ -289,3 +289,30 @@ export 'src/iraq/iraq_plates.dart';
 
 /// The advisory validator, including the Kurdistan Region's transition rules.
 export 'src/iraq/iraq_validators.dart';
+
+// ---------------------------------------------------------------------------
+// United Arab Emirates. A ninth country on the same terms as the first eight:
+// its own folder (`src/uae/`), no import across any line, and no constant
+// shared with any of them.
+//
+// Each of the seven emirates prints its own design, in a long 520x110 and a
+// short 335x155 size, all black on white save Abu Dhabi's red code panel.
+// ---------------------------------------------------------------------------
+
+/// Black, white, and Abu Dhabi's red.
+export 'src/uae/uae_colors.dart';
+
+/// The digits and code letters that compose a UAE registration.
+export 'src/uae/uae_alphabets.dart';
+
+/// The panel-less country value every UAE spec carries.
+export 'src/uae/uae_country.dart';
+
+/// One theme per canvas, long and short.
+export 'src/uae/uae_themes.dart';
+
+/// The fourteen UAE plate specs: seven emirates, two sizes each.
+export 'src/uae/uae_plates.dart';
+
+/// The advisory validators: each emirate's codes and the serial.
+export 'src/uae/uae_validators.dart';
