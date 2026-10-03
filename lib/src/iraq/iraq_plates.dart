@@ -275,10 +275,7 @@ abstract final class IraqPlates {
           ),
         ],
         background: _smallBackground,
-        labels: <PlateLabel>[
-          _smallStack,
-          if (kurdistan) _smallKr,
-        ],
+        labels: <PlateLabel>[_smallStack, if (kurdistan) _smallKr],
         textGroups: const <PlateTextGroup>[
           PlateTextGroup(<int>[0, 1], key: 'governorate'),
           PlateTextGroup(<int>[2], key: 'letter'),
@@ -404,7 +401,11 @@ abstract final class IraqPlates {
     ],
   );
 
-  static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(
-    <PlateSpec>[large, largeKurdistan, small, smallKurdistan, smallTemporary],
-  );
+  static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
+    large,
+    largeKurdistan,
+    small,
+    smallKurdistan,
+    smallTemporary,
+  ]);
 }

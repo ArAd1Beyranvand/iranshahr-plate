@@ -70,7 +70,9 @@ class ArmeniaPlateValidator extends GatedPlateValidator {
       return const PlateValidation.invalid('A region code is two digits.');
     }
     if (!ArmeniaRegions.isIssued(region)) {
-      return PlateValidation.invalid('"$region" is not a region code Armenia issues.');
+      return PlateValidation.invalid(
+        '"$region" is not a region code Armenia issues.',
+      );
     }
     return const PlateValidation.valid();
   }
@@ -94,10 +96,15 @@ class ArmeniaPlateValidator extends GatedPlateValidator {
         return PlateValidation.invalid('"$letter" is not a plate letter.');
       }
       if (ArmeniaAlphabets.stateVehiclesOnly.contains(letter)) {
-        return PlateValidation.invalid('"$letter" is issued to the Police and the Prosecutor\'s office only.');
+        return PlateValidation.invalid(
+          '"$letter" is issued to the Police and the Prosecutor\'s office only.',
+        );
       }
-      if (issuedYear != null && !ArmeniaAlphabets.inUseOn(letter, issuedYear, month: issuedMonth)) {
-        return PlateValidation.invalid('"$letter" was not being issued in $issuedYear.');
+      if (issuedYear != null &&
+          !ArmeniaAlphabets.inUseOn(letter, issuedYear, month: issuedMonth)) {
+        return PlateValidation.invalid(
+          '"$letter" was not being issued in $issuedYear.',
+        );
       }
     }
     // Checked last: an in-progress block is short before it is wrong, and
@@ -147,19 +154,25 @@ class ArmeniaPublicPlateValidator extends GatedPlateValidator {
 
   @override
   PlateValidation judge(PlateEntry entry) {
-    final serial = ArmeniaPlateValidator.validateSerial(entry.group('serial'), length: 3);
+    final serial = ArmeniaPlateValidator.validateSerial(
+      entry.group('serial'),
+      length: 3,
+    );
     if (!serial.isValid) return serial;
 
     final letters = entry.group('letters').toUpperCase();
     final tail = entry.group('tail');
     // Quiet until both halves are there: a combination is a pair of letters and
     // a pair of digits, and three quarters of one matches nothing.
-    if (letters.length < 2 || tail.length < 2) return const PlateValidation.valid();
+    if (letters.length < 2 || tail.length < 2)
+      return const PlateValidation.valid();
     if (!isDigitsOfLength(tail, 2)) {
       return const PlateValidation.invalid('The last group is two digits.');
     }
     if (ArmeniaSpecialPlates.lookup(letters, tail) == null) {
-      return PlateValidation.invalid('"$letters $tail" is not a combination issued to any institution.');
+      return PlateValidation.invalid(
+        '"$letters $tail" is not a combination issued to any institution.',
+      );
     }
     return const PlateValidation.valid();
   }
@@ -179,10 +192,16 @@ class ArmeniaTrailerPlateValidator extends GatedPlateValidator {
 
   @override
   PlateValidation judge(PlateEntry entry) {
-    final serial = ArmeniaPlateValidator.validateSerial(entry.group('serial'), length: 3);
+    final serial = ArmeniaPlateValidator.validateSerial(
+      entry.group('serial'),
+      length: 3,
+    );
     if (!serial.isValid) return serial;
 
-    final letters = ArmeniaPlateValidator.validateLetters(entry.group('letters'), count: 1);
+    final letters = ArmeniaPlateValidator.validateLetters(
+      entry.group('letters'),
+      count: 1,
+    );
     if (!letters.isValid) return letters;
 
     final tail = entry.group('tail');
@@ -215,8 +234,12 @@ class ArmeniaBusPlateValidator extends GatedPlateValidator {
     if (!isDigitsOfLength(serial, 4)) {
       return const PlateValidation.invalid('A bus number is four digits.');
     }
-    if (!ArmeniaAlphabets.busClass.characters.contains(entry.group('class').toUpperCase())) {
-      return const PlateValidation.invalid('A bus is "S" (city) or "L" (long-range).');
+    if (!ArmeniaAlphabets.busClass.characters.contains(
+      entry.group('class').toUpperCase(),
+    )) {
+      return const PlateValidation.invalid(
+        'A bus is "S" (city) or "L" (long-range).',
+      );
     }
     return const PlateValidation.valid();
   }
@@ -241,10 +264,17 @@ class ArmeniaDiplomaticPlateValidator extends GatedPlateValidator {
     if (mission.length == 2 && !isDigitsOfLength(mission, 2)) {
       return const PlateValidation.invalid('A mission code is two digits.');
     }
-    if (!ArmeniaAlphabets.diplomaticClass.characters.contains(entry.group('class').toUpperCase())) {
-      return const PlateValidation.invalid('A diplomatic plate is "D" (diplomat) or "T" (technician).');
+    if (!ArmeniaAlphabets.diplomaticClass.characters.contains(
+      entry.group('class').toUpperCase(),
+    )) {
+      return const PlateValidation.invalid(
+        'A diplomatic plate is "D" (diplomat) or "T" (technician).',
+      );
     }
-    return ArmeniaPlateValidator.validateSerial(entry.group('serial'), length: 3);
+    return ArmeniaPlateValidator.validateSerial(
+      entry.group('serial'),
+      length: 3,
+    );
   }
 }
 
@@ -264,8 +294,12 @@ class ArmeniaMilitaryPlateValidator extends GatedPlateValidator {
     if (!isDigitsOfLength(entry.group('serial'), 4)) {
       return const PlateValidation.invalid('A military number is four digits.');
     }
-    if (!ArmeniaAlphabets.militaryClass.characters.contains(entry.group('class').toUpperCase())) {
-      return const PlateValidation.invalid('A military plate is "Մ" (passenger) or "Տ" (transport).');
+    if (!ArmeniaAlphabets.militaryClass.characters.contains(
+      entry.group('class').toUpperCase(),
+    )) {
+      return const PlateValidation.invalid(
+        'A military plate is "Մ" (passenger) or "Տ" (transport).',
+      );
     }
     return const PlateValidation.valid();
   }
@@ -287,5 +321,9 @@ class ArmeniaSerialPlateValidator extends GatedPlateValidator {
   String get gateGroup => 'serial';
 
   @override
-  PlateValidation judge(PlateEntry entry) => ArmeniaPlateValidator.validateSerial(entry.group('serial'), length: length);
+  PlateValidation judge(PlateEntry entry) =>
+      ArmeniaPlateValidator.validateSerial(
+        entry.group('serial'),
+        length: length,
+      );
 }

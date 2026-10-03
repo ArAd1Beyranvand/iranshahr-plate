@@ -32,7 +32,10 @@ abstract final class TajikistanCountry {
     panelColor: TajikistanColors.field,
     panelTextColor: TajikistanColors.ink,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Tajikistan.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Tajikistan.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 
   /// The flag over a black `TJ`, on the amber public-transport field.
@@ -42,7 +45,10 @@ abstract final class TajikistanCountry {
     panelColor: TajikistanColors.transportAmber,
     panelTextColor: TajikistanColors.onTransportAmber,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Tajikistan.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Tajikistan.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 
   /// The flag over a white `TJ`, on the blue police field.
@@ -52,6 +58,9 @@ abstract final class TajikistanCountry {
     panelColor: TajikistanColors.policeBlue,
     panelTextColor: TajikistanColors.onPoliceBlue,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Tajikistan.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Tajikistan.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 }

@@ -13,10 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Iranshahr Plates',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: const PlatesScreen(),
     );
   }
@@ -28,9 +25,7 @@ class PlatesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bahrain & Azerbaijan Plates'),
-      ),
+      appBar: AppBar(title: const Text('Bahrain & Azerbaijan Plates')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

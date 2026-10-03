@@ -63,5 +63,6 @@ class QatarFlagEdgeClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => oldClipper is! QatarFlagEdgeClipper;
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) =>
+      oldClipper is! QatarFlagEdgeClipper;
 }

@@ -110,9 +110,13 @@ enum AfghanistanProvince {
   /// alone and these ids are stable — `af.hrt`, `af.hrt.light`, `af.hrt.bare` —
   /// so two blocks built for the same province in the same livery compare equal
   /// without being canonicalised.
-  PlateCountry country({AfghanistanPanelInk ink = AfghanistanPanelInk.dark, bool showCode = true}) {
+  PlateCountry country({
+    AfghanistanPanelInk ink = AfghanistanPanelInk.dark,
+    bool showCode = true,
+  }) {
     return PlateCountry(
-      code: 'af.${code.toLowerCase()}${ink == AfghanistanPanelInk.light ? '.light' : ''}${showCode ? '' : '.bare'}',
+      code:
+          'af.${code.toLowerCase()}${ink == AfghanistanPanelInk.light ? '.light' : ''}${showCode ? '' : '.bare'}',
       headingLines: <String>[localName],
       captionLines: showCode ? <String>[code] : const <String>[],
       // Transparent, and that is the design rather than a default left unset.
@@ -148,10 +152,16 @@ enum AfghanistanProvince {
 enum AfghanistanPanelInk {
   /// Black line art on the plate's field: the private, lorry, motorcycle,
   /// rickshaw, duplicate, temporary, bus, taxi and UN plates.
-  dark(AfghanistanColors.ink, SvgPlateAsset('assets/emblems/Darul_Aman_dark.svg', package: _package)),
+  dark(
+    AfghanistanColors.ink,
+    SvgPlateAsset('assets/emblems/Darul_Aman_dark.svg', package: _package),
+  ),
 
   /// White line art: the diplomatic red and governmental black plates.
-  light(AfghanistanColors.onDiplomaticRed, SvgPlateAsset('assets/emblems/Darul_Aman_light.svg', package: _package));
+  light(
+    AfghanistanColors.onDiplomaticRed,
+    SvgPlateAsset('assets/emblems/Darul_Aman_light.svg', package: _package),
+  );
 
   const AfghanistanPanelInk(this.ink, this.emblem);
 

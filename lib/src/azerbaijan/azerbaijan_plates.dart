@@ -69,7 +69,15 @@ abstract final class AzerbaijanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 78, top: 17, width: 46, height: 76, pitch: 54),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 2,
+        left: 78,
+        top: 17,
+        width: 46,
+        height: 76,
+        pitch: 54,
+      ),
       // Wider cells on a wider pitch: a letter is broader than a digit, so the
       // pair is its own register rather than a continuation of the one before.
       ...plateRegister(
@@ -81,7 +89,15 @@ abstract final class AzerbaijanPlates {
         height: 76,
         pitch: 58,
       ),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 340, top: 17, width: 46, height: 76, pitch: 54),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 340,
+        top: 17,
+        width: 46,
+        height: 76,
+        pitch: 54,
+      ),
     ],
     // The two hyphens, centred in the gaps the registers leave for them. A
     // hyphen is printed in the serial's own ink at the serial's own size, so it
@@ -117,16 +133,41 @@ abstract final class AzerbaijanPlates {
     // Shallower than the full-size block, and its own value rather than
     // _euPanel: this panel shares the head row with the regional pair, so it
     // gets that row's depth and not the plate's.
-    panel: const PlatePanel(box: PlateBox(14, 16, 40, 52), padding: EdgeInsets.zero, captionScale: 1.5),
+    panel: const PlatePanel(
+      box: PlateBox(14, 16, 40, 52),
+      padding: EdgeInsets.zero,
+      captionScale: 1.5,
+    ),
     slots: [
       // Head row: the regional pair, smaller than the serial below it.
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 100, top: 20, width: 34, height: 46, pitch: 42),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 2,
+        left: 100,
+        top: 20,
+        width: 34,
+        height: 46,
+        pitch: 42,
+      ),
       // Lower row: the letter, then the serial, across the full width.
-      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(14, 82, 36, 54)),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 72, top: 82, width: 34, height: 54, pitch: 40),
+      const PlateSlot(
+        alphabet: PlateAlphabet.latinUppercase,
+        box: PlateBox(14, 82, 36, 54),
+      ),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 72,
+        top: 82,
+        width: 34,
+        height: 54,
+        pitch: 40,
+      ),
     ],
     // 82 + 54/2 - 0.72*54/2 = 89.6. See car.
-    labels: const [PlateLabel(text: '-', box: PlateBox(52, 89.6, 18, 54), glyphHeight: 54)],
+    labels: const [
+      PlateLabel(text: '-', box: PlateBox(52, 89.6, 18, 54), glyphHeight: 54),
+    ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'region'),
       PlateTextGroup([2], key: 'letters'),
@@ -148,9 +189,28 @@ abstract final class AzerbaijanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 94, top: 17, width: 46, height: 76, pitch: 54),
-      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(262, 17, 50, 76)),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 326, top: 17, width: 46, height: 76, pitch: 54),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 94,
+        top: 17,
+        width: 46,
+        height: 76,
+        pitch: 54,
+      ),
+      const PlateSlot(
+        alphabet: PlateAlphabet.latinUppercase,
+        box: PlateBox(262, 17, 50, 76),
+      ),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 326,
+        top: 17,
+        width: 46,
+        height: 76,
+        pitch: 54,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2], key: 'mission'),
@@ -174,9 +234,28 @@ abstract final class AzerbaijanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(94, 17, 50, 76)),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 158, top: 17, width: 46, height: 76, pitch: 54),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 326, top: 17, width: 46, height: 76, pitch: 54),
+      const PlateSlot(
+        alphabet: PlateAlphabet.latinUppercase,
+        box: PlateBox(94, 17, 50, 76),
+      ),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 158,
+        top: 17,
+        width: 46,
+        height: 76,
+        pitch: 54,
+      ),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 326,
+        top: 17,
+        width: 46,
+        height: 76,
+        pitch: 54,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'class'),
@@ -191,5 +270,10 @@ abstract final class AzerbaijanPlates {
   /// Four, not five: the blue transport plate is [car] under another theme, and
   /// a theme is not a member of this list. A picker that wants to offer it
   /// offers `(car, AzerbaijanThemes.transport)`.
-  static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[car, bicycle, diplomatic, foreign]);
+  static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
+    car,
+    bicycle,
+    diplomatic,
+    foreign,
+  ]);
 }

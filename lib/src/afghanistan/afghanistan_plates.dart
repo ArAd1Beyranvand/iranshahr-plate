@@ -69,7 +69,12 @@ abstract final class AfghanistanPlates {
   );
 
   static const PlateBox _classBox = PlateBox(337, _upperTop, 60, _bandHeight);
-  static const PlateBox _classLatinBox = PlateBox(322, _lowerTop, 90, _bandHeight);
+  static const PlateBox _classLatinBox = PlateBox(
+    322,
+    _lowerTop,
+    90,
+    _bandHeight,
+  );
   static const double _classLatinGlyph = 62;
 
   /// Class as slot, code as mirror (one value, printed twice).
@@ -130,7 +135,8 @@ abstract final class AfghanistanPlates {
   /// least surprising one. It is a default and nothing more: `PlateCanvas.country`
   /// overrides it, and a host that draws Afghan plates is expected to pass the
   /// province the vehicle is registered in.
-  static final PlateCountry _defaultProvince = AfghanistanProvince.kabul.country();
+  static final PlateCountry _defaultProvince = AfghanistanProvince.kabul
+      .country();
 
   /// A three-figure plate, e.g. Takhar `١٢٣` / `123`.
   static final PlateSpec car3 = _car(3);
@@ -164,7 +170,10 @@ abstract final class AfghanistanPlates {
     textDirection: TextDirection.rtl,
     panel: _panel,
     slots: <PlateSlot>[
-      const PlateSlot(alphabet: AfghanistanAlphabets.iranianDigits, box: PlateBox(106, 46, 44, 74)),
+      const PlateSlot(
+        alphabet: AfghanistanAlphabets.iranianDigits,
+        box: PlateBox(106, 46, 44, 74),
+      ),
       ...plateRegisterAcross(
         alphabet: AfghanistanAlphabets.digits,
         count: 5,
@@ -248,7 +257,10 @@ abstract final class AfghanistanPlates {
           top: _cycleLowerTop,
           height: _cycleBandHeight,
         ),
-        const PlateSlot(alphabet: AfghanistanAlphabets.vehicleClass, box: PlateBox(212, _cycleUpperTop, 38, _cycleBandHeight)),
+        const PlateSlot(
+          alphabet: AfghanistanAlphabets.vehicleClass,
+          box: PlateBox(212, _cycleUpperTop, 38, _cycleBandHeight),
+        ),
       ],
       mirrors: <PlateMirror>[
         ...plateEcho(
@@ -303,8 +315,22 @@ abstract final class AfghanistanPlates {
     textDirection: TextDirection.rtl,
     panel: _panel,
     slots: <PlateSlot>[
-      ...plateRegister(alphabet: AfghanistanAlphabets.digits, count: 2, left: 106, top: _lowerTop, width: 42, height: _bandHeight),
-      ...plateRegister(alphabet: AfghanistanAlphabets.digits, count: 2, left: 232, top: _lowerTop, width: 42, height: _bandHeight),
+      ...plateRegister(
+        alphabet: AfghanistanAlphabets.digits,
+        count: 2,
+        left: 106,
+        top: _lowerTop,
+        width: 42,
+        height: _bandHeight,
+      ),
+      ...plateRegister(
+        alphabet: AfghanistanAlphabets.digits,
+        count: 2,
+        left: 232,
+        top: _lowerTop,
+        width: 42,
+        height: _bandHeight,
+      ),
     ],
     mirrors: <PlateMirror>[
       ...plateEcho(
@@ -327,8 +353,16 @@ abstract final class AfghanistanPlates {
       ),
     ],
     labels: const <PlateLabel>[
-      PlateLabel(text: '-', box: PlateBox(190, _upperTop, 42, _bandHeight), glyphHeight: _bandHeight),
-      PlateLabel(text: '-', box: PlateBox(190, _lowerTop, 42, _bandHeight), glyphHeight: _bandHeight),
+      PlateLabel(
+        text: '-',
+        box: PlateBox(190, _upperTop, 42, _bandHeight),
+        glyphHeight: _bandHeight,
+      ),
+      PlateLabel(
+        text: '-',
+        box: PlateBox(190, _lowerTop, 42, _bandHeight),
+        glyphHeight: _bandHeight,
+      ),
       PlateLabel(text: 'CD', box: PlateBox(322, 56, 90, 60), glyphHeight: 54),
     ],
     // Two groups of two and not one of four: the hyphen is a real gap, and a
@@ -356,8 +390,16 @@ abstract final class AfghanistanPlates {
     slots: _serialSlots(4),
     mirrors: _serialEcho(4),
     labels: const <PlateLabel>[
-      PlateLabel(text: '—', box: PlateBox(330, _upperTop, 74, _bandHeight), glyphHeight: 56),
-      PlateLabel(text: '—', box: PlateBox(330, _lowerTop, 74, _bandHeight), glyphHeight: 56),
+      PlateLabel(
+        text: '—',
+        box: PlateBox(330, _upperTop, 74, _bandHeight),
+        glyphHeight: 56,
+      ),
+      PlateLabel(
+        text: '—',
+        box: PlateBox(330, _lowerTop, 74, _bandHeight),
+        glyphHeight: 56,
+      ),
     ],
     textGroups: const <PlateTextGroup>[
       PlateTextGroup(<int>[0, 1, 2, 3], key: 'serial'),
@@ -430,7 +472,8 @@ abstract final class AfghanistanPlates {
 
   /// Kabul again, with the block's bottom line suppressed — [temporary]'s
   /// default, for the reason that spec's doc gives.
-  static final PlateCountry _bareDefaultProvince = AfghanistanProvince.kabul.country(showCode: false);
+  static final PlateCountry _bareDefaultProvince = AfghanistanProvince.kabul
+      .country(showCode: false);
 
   /// The cross-border international plate, issued in Herat from January 2026 to
   /// taxis, buses and cargo lorries running between Afghanistan and Iran.
@@ -465,7 +508,10 @@ abstract final class AfghanistanPlates {
       // where `L` names what it is registered as. Shorter in the glyph than
       // anything else on the plate because five characters at a serial figure's
       // height would be half the plate wide.
-      const PlateSlot(alphabet: AfghanistanAlphabets.internationalCategory, box: PlateBox(316, 68, 98, 40)),
+      const PlateSlot(
+        alphabet: AfghanistanAlphabets.internationalCategory,
+        box: PlateBox(316, 68, 98, 40),
+      ),
     ],
     textGroups: const <PlateTextGroup>[
       PlateTextGroup(<int>[0, 1, 2, 3, 4], key: 'serial'),

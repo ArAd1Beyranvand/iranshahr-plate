@@ -84,7 +84,8 @@ abstract final class ArmeniaSpecialPlates {
   /// fact that `SS 03` and `SS 60` are the Government's while `SS 01` is the
   /// Court of Cassation's and `SS 02` the National Security Service's — three
   /// bodies sharing one pair of letters, told apart by two digits.
-  static final List<ArmeniaSpecialCombination> all = List<ArmeniaSpecialCombination>.unmodifiable(
+  static final List<ArmeniaSpecialCombination>
+  all = List<ArmeniaSpecialCombination>.unmodifiable(
     <ArmeniaSpecialCombination>[
       const ArmeniaSpecialCombination(
         institution: 'Constitutional Court',

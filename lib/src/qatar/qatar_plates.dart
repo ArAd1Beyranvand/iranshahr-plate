@@ -49,7 +49,10 @@ abstract final class QatarPlates {
   );
 
   static const PlateSection _hoistBackground = PlateSection.columns([
-    PlatePart(PlateSection.fill(PlateFill.panel, shape: QatarFlagEdgeClipper()), end: 54),
+    PlatePart(
+      PlateSection.fill(PlateFill.panel, shape: QatarFlagEdgeClipper()),
+      end: 54,
+    ),
     PlatePart(PlateSection.plain),
   ]);
 
@@ -169,7 +172,11 @@ abstract final class QatarPlates {
       // draws it with a long kashida joining the letters, so it spans much more
       // of the width than the three glyphs alone would.
       PlateLabel(text: 'قطر', box: PlateBox(84, 10, 132, 44), glyphHeight: 40),
-      PlateLabel(text: 'QATAR', box: PlateBox(70, 168, 160, 40), glyphHeight: 36),
+      PlateLabel(
+        text: 'QATAR',
+        box: PlateBox(70, 168, 160, 40),
+        glyphHeight: 36,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3, 4], key: 'serial'),
@@ -209,8 +216,18 @@ abstract final class QatarPlates {
       PlateRule(box: PlateBox(165, 84, 2, 70)),
     ],
     labels: const [
-      PlateLabel(text: 'قطر', box: PlateBox(24, 92, 128, 56), glyphHeight: 52, color: QatarColors.onPoliceBlue),
-      PlateLabel(text: 'شرطة', box: PlateBox(178, 92, 128, 56), glyphHeight: 52, color: QatarColors.onPoliceBlue),
+      PlateLabel(
+        text: 'قطر',
+        box: PlateBox(24, 92, 128, 56),
+        glyphHeight: 52,
+        color: QatarColors.onPoliceBlue,
+      ),
+      PlateLabel(
+        text: 'شرطة',
+        box: PlateBox(178, 92, 128, 56),
+        glyphHeight: 52,
+        color: QatarColors.onPoliceBlue,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3], key: 'serial'),
@@ -219,11 +236,9 @@ abstract final class QatarPlates {
 
   /// The civilian car plate at each length Qatar issues, longest first. A host
   /// that lets someone pick a serial length walks this.
-  static final List<PlateSpec> civilianSizes = List<PlateSpec>.unmodifiable(<PlateSpec>[
-    civilian,
-    civilian4,
-    civilian3,
-  ]);
+  static final List<PlateSpec> civilianSizes = List<PlateSpec>.unmodifiable(
+    <PlateSpec>[civilian, civilian4, civilian3],
+  );
 
   /// Every Qatari design, in the order they are introduced above. A picker
   /// iterates this rather than naming five constants.

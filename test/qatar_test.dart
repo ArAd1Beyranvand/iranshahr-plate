@@ -25,7 +25,11 @@ void main() {
     test('the civilian plate runs three to five digits', () {
       expect(QatarPlates.civilianSizes.map((s) => s.slotCount), <int>[5, 4, 3]);
       for (final spec in QatarPlates.civilianSizes) {
-        expect(spec.indicesOfGroup('serial'), hasLength(spec.slotCount), reason: spec.id);
+        expect(
+          spec.indicesOfGroup('serial'),
+          hasLength(spec.slotCount),
+          reason: spec.id,
+        );
       }
     });
 
@@ -36,12 +40,18 @@ void main() {
         final boxes = spec.slots.map((s) => s.box).toList();
         final left = boxes.first.left;
         final right = boxes.last.left + boxes.last.width;
-        expect((left + right) / 2, closeTo((209 + 500) / 2, 1), reason: spec.id);
+        expect(
+          (left + right) / 2,
+          closeTo((209 + 500) / 2, 1),
+          reason: spec.id,
+        );
       }
     });
 
     test('the figures widen as they get fewer', () {
-      final widths = QatarPlates.civilianSizes.map((s) => s.slots.first.box.width).toList();
+      final widths = QatarPlates.civilianSizes
+          .map((s) => s.slots.first.box.width)
+          .toList();
       // civilianSizes is longest-first, so each shorter serial sets wider.
       expect(widths[1], greaterThan(widths[0]));
       expect(widths[2], greaterThan(widths[1]));
@@ -62,12 +72,18 @@ void main() {
       final moto = QatarPlates.motorcycle;
       // Near-square, where the car plate is a long European rectangle.
       expect(moto.canvasWidth / moto.canvasHeight, lessThan(2));
-      expect(QatarPlates.civilian.canvasWidth / QatarPlates.civilian.canvasHeight, greaterThan(4));
+      expect(
+        QatarPlates.civilian.canvasWidth / QatarPlates.civilian.canvasHeight,
+        greaterThan(4),
+      );
       // No block, so nothing to serrate.
       expect(moto.noPanel, isTrue);
       expect(moto.panel.shape, isNull);
       // It names the country in both scripts and nothing else.
-      expect(moto.labels.map((l) => l.text), containsAll(<String>['قطر', 'QATAR']));
+      expect(
+        moto.labels.map((l) => l.text),
+        containsAll(<String>['قطر', 'QATAR']),
+      );
       expect(moto.slotCount, 5);
     });
 
@@ -150,7 +166,9 @@ void main() {
     expect(tester.takeException(), isNull);
     // The clip is in the tree, holding the block to the flag's shape.
     expect(
-      find.byWidgetPredicate((w) => w is ClipPath && w.clipper is QatarFlagEdgeClipper),
+      find.byWidgetPredicate(
+        (w) => w is ClipPath && w.clipper is QatarFlagEdgeClipper,
+      ),
       findsOneWidget,
     );
   });

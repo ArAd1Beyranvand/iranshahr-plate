@@ -51,7 +51,10 @@ class TajikistanPlateValidator extends GatedPlateValidator {
       if (!region.isValid) return region;
     }
     if (letterCount > 0) {
-      final letters = validateLetters(entry.group('letters'), count: letterCount);
+      final letters = validateLetters(
+        entry.group('letters'),
+        count: letterCount,
+      );
       if (!letters.isValid) return letters;
     }
     return validateSerial(entry.group('serial'), length: serialLength);
@@ -68,7 +71,9 @@ class TajikistanPlateValidator extends GatedPlateValidator {
       return const PlateValidation.invalid('A region code is two digits.');
     }
     if (!TajikistanRegions.isIssued(region)) {
-      return PlateValidation.invalid('"$region" is not a region code Tajikistan issues.');
+      return PlateValidation.invalid(
+        '"$region" is not a region code Tajikistan issues.',
+      );
     }
     return const PlateValidation.valid();
   }
@@ -123,11 +128,20 @@ class TajikistanForeignPlateValidator extends GatedPlateValidator {
 
   @override
   PlateValidation judge(PlateEntry entry) {
-    final prefix = TajikistanPlateValidator.validateSerial(entry.group('prefix'), length: 3);
+    final prefix = TajikistanPlateValidator.validateSerial(
+      entry.group('prefix'),
+      length: 3,
+    );
     if (!prefix.isValid) return prefix;
-    final letter = TajikistanPlateValidator.validateLetters(entry.group('letters'), count: 1);
+    final letter = TajikistanPlateValidator.validateLetters(
+      entry.group('letters'),
+      count: 1,
+    );
     if (!letter.isValid) return letter;
-    return TajikistanPlateValidator.validateSerial(entry.group('serial'), length: 3);
+    return TajikistanPlateValidator.validateSerial(
+      entry.group('serial'),
+      length: 3,
+    );
   }
 }
 
@@ -145,15 +159,23 @@ class TajikistanDiplomaticPlateValidator extends GatedPlateValidator {
 
   @override
   PlateValidation judge(PlateEntry entry) {
-    final serial = TajikistanPlateValidator.validateSerial(entry.group('serial'), length: 3);
+    final serial = TajikistanPlateValidator.validateSerial(
+      entry.group('serial'),
+      length: 3,
+    );
     if (!serial.isValid) return serial;
     final code = entry.group('class').toUpperCase();
-    if (code.isNotEmpty && !TajikistanAlphabets.diplomaticClass.characters.contains(code)) {
-      return const PlateValidation.invalid('A diplomatic class is CD, CMD, D, T or S.');
+    if (code.isNotEmpty &&
+        !TajikistanAlphabets.diplomaticClass.characters.contains(code)) {
+      return const PlateValidation.invalid(
+        'A diplomatic class is CD, CMD, D, T or S.',
+      );
     }
     final tail = entry.group('tail');
     if (tail.isNotEmpty && !isDigits(tail)) {
-      return const PlateValidation.invalid('The trailing group must be digits.');
+      return const PlateValidation.invalid(
+        'The trailing group must be digits.',
+      );
     }
     if (tail.length > 1) {
       return const PlateValidation.invalid('The trailing group is one digit.');

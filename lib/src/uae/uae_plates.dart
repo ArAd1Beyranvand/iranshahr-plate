@@ -70,7 +70,10 @@ abstract final class UaePlates {
     Color? color,
   }) {
     final cy = (y0 + y1) / 2;
-    final double height = math.min((y1 - y0) / _latinInk, 2 * math.min(cy, canvasH - cy));
+    final double height = math.min(
+      (y1 - y0) / _latinInk,
+      2 * math.min(cy, canvasH - cy),
+    );
     final w = width ?? pitch * 0.96;
     return plateRegister(
       alphabet: alphabet,
@@ -84,13 +87,42 @@ abstract final class UaePlates {
     );
   }
 
-  static List<PlateSlot> _letter(double cx, double y0, double y1, double canvasH, {double width = 48}) =>
-      _cells(alphabet: UaeAlphabets.letters, count: 1, firstCx: cx, pitch: width, y0: y0, y1: y1, canvasH: canvasH);
+  static List<PlateSlot> _letter(
+    double cx,
+    double y0,
+    double y1,
+    double canvasH, {
+    double width = 48,
+  }) => _cells(
+    alphabet: UaeAlphabets.letters,
+    count: 1,
+    firstCx: cx,
+    pitch: width,
+    y0: y0,
+    y1: y1,
+    canvasH: canvasH,
+  );
 
-  static List<PlateSlot> _serial(double firstCx, double pitch, double y0, double y1, double canvasH) =>
-      _cells(alphabet: UaeAlphabets.digits, count: 5, firstCx: firstCx, pitch: pitch, y0: y0, y1: y1, canvasH: canvasH);
+  static List<PlateSlot> _serial(
+    double firstCx,
+    double pitch,
+    double y0,
+    double y1,
+    double canvasH,
+  ) => _cells(
+    alphabet: UaeAlphabets.digits,
+    count: 5,
+    firstCx: firstCx,
+    pitch: pitch,
+    y0: y0,
+    y1: y1,
+    canvasH: canvasH,
+  );
 
-  static const PlatePanel _noPanel = PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero);
+  static const PlatePanel _noPanel = PlatePanel(
+    box: PlateBox(0, 0, 0, 0),
+    padding: EdgeInsets.zero,
+  );
 
   /// Every design is a code (one or two cells) then a five-digit serial.
   static PlateSpec _spec({
@@ -133,7 +165,10 @@ abstract final class UaePlates {
     id: 'ae.abudhabi.long',
     long: true,
     background: const PlateSection.columns(<PlatePart>[
-      PlatePart(PlateSection.fill(PlateFill.color(UaeColors.abuDhabiRed)), end: 107.2),
+      PlatePart(
+        PlateSection.fill(PlateFill.color(UaeColors.abuDhabiRed)),
+        end: 107.2,
+      ),
       PlatePart(PlateSection.plain),
     ]),
     code: _cells(
@@ -162,7 +197,11 @@ abstract final class UaePlates {
     id: 'ae.abudhabi.short',
     long: false,
     background: const PlateSection.rows(<PlatePart>[
-      PlatePart(PlateSection.fill(PlateFill.color(UaeColors.abuDhabiRed)), end: 61.5, divider: 2.8),
+      PlatePart(
+        PlateSection.fill(PlateFill.color(UaeColors.abuDhabiRed)),
+        end: 61.5,
+        divider: 2.8,
+      ),
       PlatePart(PlateSection.plain),
     ]),
     code: _cells(
@@ -258,8 +297,10 @@ abstract final class UaePlates {
     labels: <PlateLabel>[_ink('U.A.E', 101, 214, 18.3, 48.2), name],
   );
 
-  static final PlateSpec fujairahLong =
-      _letterUaeNameLong('ae.fujairah.long', _ink('الفجيرة', 105.6, 216.5, 56, 96, arabic: true));
+  static final PlateSpec fujairahLong = _letterUaeNameLong(
+    'ae.fujairah.long',
+    _ink('الفجيرة', 105.6, 216.5, 56, 96, arabic: true),
+  );
 
   /// Short: serial on top (centres 31.9 + 59.1k, y 10.7..87); "U.A.E", the
   /// letter (cx 155, y 97..145) and "الفجيرة" below.
@@ -274,8 +315,10 @@ abstract final class UaePlates {
     ],
   );
 
-  static final PlateSpec ummAlQuwainLong =
-      _letterUaeNameLong('ae.ummalquwain.long', _ink('ام القوين', 102, 217.6, 57.6, 91, arabic: true));
+  static final PlateSpec ummAlQuwainLong = _letterUaeNameLong(
+    'ae.ummalquwain.long',
+    _ink('ام القوين', 102, 217.6, 57.6, 91, arabic: true),
+  );
 
   /// Short: the letter (cx 34.6, y 16..85.4) and serial (centres 97.7 + 47k,
   /// y 15.7..86) on top; "UAE" and "ام القوين" below.

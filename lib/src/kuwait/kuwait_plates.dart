@@ -379,22 +379,25 @@ abstract final class KuwaitPlates {
 
   static const double _diplomaticBandTop = 113;
   static const double _diplomaticBandHeight = 30;
+
   /// The rule, 4 units wide at x 42, and right of it the red band: a row of
   /// the face from the rule out under the frame, so it meets both with no
   /// field between.
-  static const PlateSection _diplomaticBackground = PlateSection.columns(<PlatePart>[
-    PlatePart(PlateSection.plain, end: 44, divider: 4),
-    PlatePart(
-      PlateSection.rows(<PlatePart>[
-        PlatePart(PlateSection.plain, end: _diplomaticBandTop),
-        PlatePart(
-          PlateSection.fill(PlateFill.color(KuwaitColors.diplomaticBand)),
-          end: _diplomaticBandTop + _diplomaticBandHeight,
-        ),
-        PlatePart(PlateSection.plain),
-      ]),
-    ),
-  ]);
+  static const PlateSection _diplomaticBackground = PlateSection.columns(
+    <PlatePart>[
+      PlatePart(PlateSection.plain, end: 44, divider: 4),
+      PlatePart(
+        PlateSection.rows(<PlatePart>[
+          PlatePart(PlateSection.plain, end: _diplomaticBandTop),
+          PlatePart(
+            PlateSection.fill(PlateFill.color(KuwaitColors.diplomaticBand)),
+            end: _diplomaticBandTop + _diplomaticBandHeight,
+          ),
+          PlatePart(PlateSection.plain),
+        ]),
+      ),
+    ],
+  );
 
   /// Centred on the band, not on the plate.
   static const PlateBox _diplomaticCapsuleBox = PlateBox(
@@ -564,10 +567,15 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  static const PlateSection _squareBackground = PlateSection.columns(<PlatePart>[
-    PlatePart(PlateSection.plain, end: _Layout.squareRuleLeft + 1, divider: 2),
-    PlatePart(PlateSection.plain),
-  ]);
+  static const PlateSection _squareBackground =
+      PlateSection.columns(<PlatePart>[
+        PlatePart(
+          PlateSection.plain,
+          end: _Layout.squareRuleLeft + 1,
+          divider: 2,
+        ),
+        PlatePart(PlateSection.plain),
+      ]);
 
   static const PlateLabel _squareKuwaitLabel = PlateLabel(
     text: 'K\nU\nW\nA\nI\nT',

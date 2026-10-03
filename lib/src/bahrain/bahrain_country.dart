@@ -42,7 +42,10 @@ abstract final class BahrainCountry {
     panelColor: BahrainColors.field,
     panelTextColor: BahrainColors.blue,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Bahrain.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Bahrain.svg',
+      package: 'iranshahr_plate',
+    ),
     // The photographed plates print a fine black line around the flag's own
     // rectangle, distinct from the frame around the whole plate. // CALIBRATE
     flagBorderColor: BahrainColors.darkInk,

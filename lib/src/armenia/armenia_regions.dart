@@ -55,7 +55,14 @@ enum ArmeniaProvince {
   /// `22` is here since 2025; until 2024 it was an Artsakh code. See the
   /// library doc.
   aragatsotn('Aragatsotn', 'Արագածոտն', <String>['15', '21', '22', '23', '24']),
-  gegharkunik('Gegharkunik', 'Գեղարքունիք', <String>['16', '31', '32', '33', '34', '35']),
+  gegharkunik('Gegharkunik', 'Գեղարքունիք', <String>[
+    '16',
+    '31',
+    '32',
+    '33',
+    '34',
+    '35',
+  ]),
   kotayk('Kotayk', 'Կոտայք', <String>['17', '42', '43']),
   vayotsDzor('Vayots Dzor', 'Վայոց ձոր', <String>['18', '56']),
   ararat('Ararat', 'Արարատ', <String>['25', '26']),
@@ -150,5 +157,6 @@ abstract final class ArmeniaRegions {
   /// and not `00`. It is written as a membership test all the same, so that a
   /// future deallocation is a change to the tables above and not to a range
   /// check hidden in a validator.
-  static bool isIssued(String code) => individualCodes.contains(code) || provinceFor(code) != null;
+  static bool isIssued(String code) =>
+      individualCodes.contains(code) || provinceFor(code) != null;
 }

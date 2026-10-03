@@ -33,6 +33,9 @@ abstract final class ArmeniaCountry {
     panelColor: ArmeniaColors.field,
     panelTextColor: ArmeniaColors.ink,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Armenia.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Armenia.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 }

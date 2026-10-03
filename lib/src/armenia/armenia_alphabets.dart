@@ -136,7 +136,8 @@ abstract final class ArmeniaAlphabets {
   ///
   /// Months, not [DateTime]s: a [DateTime] cannot be `const`, and every date
   /// the article gives is a month at best.
-  static const Map<String, (int year, int month)> introduced = <String, (int, int)>{
+  static const Map<String, (int year, int month)>
+  introduced = <String, (int, int)>{
     // The four shape-sharing letters the system opened with in 1996.
     'L': (1996, 1),
     'U': (1996, 1), // Ս

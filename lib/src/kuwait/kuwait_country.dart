@@ -25,7 +25,10 @@ abstract final class KuwaitCountry {
     panelColor: KuwaitColors.civField,
     panelTextColor: KuwaitColors.darkInk,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Kuwait.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Kuwait.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 
   /// Public: black on yellow, "دولة الكويت" (codes 90-99: 91 general, 92 buses,
@@ -36,7 +39,10 @@ abstract final class KuwaitCountry {
     panelColor: KuwaitColors.transField,
     panelTextColor: KuwaitColors.darkInk,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Kuwait.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Kuwait.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 
   /// Police: white on black, "POLICE شرطة".
@@ -64,7 +70,10 @@ abstract final class KuwaitCountry {
     panelColor: KuwaitColors.govField,
     panelTextColor: KuwaitColors.darkInk,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Kuwait.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Kuwait.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 
   /// Corps Diplomatique: blue text on white field, red band along the bottom,
@@ -84,7 +93,10 @@ abstract final class KuwaitCountry {
     panelColor: KuwaitColors.guardField,
     panelTextColor: KuwaitColors.transField,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Kuwait.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Kuwait.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 
   /// Army: black on beige, "الجيش الكويتي".

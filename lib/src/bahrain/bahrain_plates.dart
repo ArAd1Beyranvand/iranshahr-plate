@@ -44,7 +44,10 @@ abstract final class BahrainPlates {
     // The flag's rectangle, in the field colour — see BahrainCountry.civilian.
     // Zero padding and a flagScale of 1 make the flag fill the box exactly, so
     // the box IS the flag: 55 × 33 is the official 3:5 at this height.
-    panel: const PlatePanel(box: PlateBox(12, 38.5, 55, 33), padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(12, 38.5, 55, 33),
+      padding: EdgeInsets.zero,
+    ),
     slots: [
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
@@ -64,12 +67,20 @@ abstract final class BahrainPlates {
       PlatePart(PlateSection.plain),
     ]),
     labels: const [
-      PlateLabel(text: 'البحرين', box: PlateBox(408, 14, 98, 30), glyphHeight: 30),
+      PlateLabel(
+        text: 'البحرين',
+        box: PlateBox(408, 14, 98, 30),
+        glyphHeight: 30,
+      ),
       // Seven wide Latin capitals against six Arabic letters: the Latin still
       // needs the smaller glyph to hold one line, but the 98pt column this
       // arrangement frees lets it sit much closer to the Arabic's weight than
       // the 76pt one did.
-      PlateLabel(text: 'BAHRAIN', box: PlateBox(408, 62, 98, 28), glyphHeight: 27),
+      PlateLabel(
+        text: 'BAHRAIN',
+        box: PlateBox(408, 62, 98, 28),
+        glyphHeight: 27,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3, 4, 5], key: 'serial'),
@@ -84,7 +95,10 @@ abstract final class BahrainPlates {
     country: BahrainCountry.civilian,
     canvasWidth: 300,
     canvasHeight: 150,
-    panel: const PlatePanel(box: PlateBox(108, 14, 45, 27), padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(108, 14, 45, 27),
+      padding: EdgeInsets.zero,
+    ),
     slots: [
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
@@ -102,8 +116,16 @@ abstract final class BahrainPlates {
       PlatePart(PlateSection.plain),
     ]),
     labels: const [
-      PlateLabel(text: 'BAHRAIN', box: PlateBox(12, 14, 88, 24), glyphHeight: 24),
-      PlateLabel(text: 'البحرين', box: PlateBox(163, 12, 108, 30), glyphHeight: 28),
+      PlateLabel(
+        text: 'BAHRAIN',
+        box: PlateBox(12, 14, 88, 24),
+        glyphHeight: 24,
+      ),
+      PlateLabel(
+        text: 'البحرين',
+        box: PlateBox(163, 12, 108, 30),
+        glyphHeight: 28,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3, 4, 5], key: 'serial'),
@@ -119,7 +141,10 @@ abstract final class BahrainPlates {
     country: BahrainCountry.civilian,
     canvasWidth: 260,
     canvasHeight: 120,
-    panel: const PlatePanel(box: PlateBox(106, 12, 35, 21), padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(106, 12, 35, 21),
+      padding: EdgeInsets.zero,
+    ),
     slots: [
       ...plateRegister(
         alphabet: PlateAlphabet.latinDigits,
@@ -142,7 +167,11 @@ abstract final class BahrainPlates {
       // The mark, as text rather than as a PlateDecal: an emoji is a glyph, and
       // a glyph needs no asset, no pubspec entry and no package to own it.
       PlateLabel(text: '🚲', box: PlateBox(68, 8, 32, 30), glyphHeight: 30),
-      PlateLabel(text: 'البحرين', box: PlateBox(148, 8, 92, 28), glyphHeight: 26),
+      PlateLabel(
+        text: 'البحرين',
+        box: PlateBox(148, 8, 92, 28),
+        glyphHeight: 26,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3], key: 'serial'),
@@ -175,7 +204,11 @@ abstract final class BahrainPlates {
     // A colour and nothing else: flagScale 0 says so in data, rather than
     // leaving a flag box to be computed for a country that has no flag. The
     // colour is the background's head row, see [_headBand].
-    panel: const PlatePanel(box: PlateBox(0, 0, 234, 54), flagScale: 0, padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(0, 0, 234, 54),
+      flagScale: 0,
+      padding: EdgeInsets.zero,
+    ),
     background: _headBand(54),
     slots: [
       ...plateRegister(
@@ -189,8 +222,18 @@ abstract final class BahrainPlates {
       ),
     ],
     labels: const [
-      PlateLabel(text: 'BAHRAIN', box: PlateBox(8, 5, 76, 20), glyphHeight: 20, color: BahrainColors.onDiplomaticGreen),
-      PlateLabel(text: 'C.D.', box: PlateBox(8, 29, 76, 22), glyphHeight: 22, color: BahrainColors.onDiplomaticGreen),
+      PlateLabel(
+        text: 'BAHRAIN',
+        box: PlateBox(8, 5, 76, 20),
+        glyphHeight: 20,
+        color: BahrainColors.onDiplomaticGreen,
+      ),
+      PlateLabel(
+        text: 'C.D.',
+        box: PlateBox(8, 29, 76, 22),
+        glyphHeight: 22,
+        color: BahrainColors.onDiplomaticGreen,
+      ),
       PlateLabel(
         text: 'البحرين',
         box: PlateBox(120, 3, 108, 22),
@@ -220,7 +263,11 @@ abstract final class BahrainPlates {
     country: BahrainCountry.police,
     canvasWidth: 250,
     canvasHeight: 110,
-    panel: const PlatePanel(box: PlateBox(0, 0, 234, 44), flagScale: 0, padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(0, 0, 234, 44),
+      flagScale: 0,
+      padding: EdgeInsets.zero,
+    ),
     background: _headBand(44),
     slots: [
       ...plateRegister(
@@ -236,8 +283,18 @@ abstract final class BahrainPlates {
     labels: const [
       // Printed dark, not reversed out: the band is pale enough that white
       // wording on it would not read.
-      PlateLabel(text: 'POLICE', box: PlateBox(8, 10, 76, 24), glyphHeight: 24, color: BahrainColors.onPoliceBlue),
-      PlateLabel(text: 'الشرطة', box: PlateBox(146, 8, 82, 28), glyphHeight: 26, color: BahrainColors.onPoliceBlue),
+      PlateLabel(
+        text: 'POLICE',
+        box: PlateBox(8, 10, 76, 24),
+        glyphHeight: 24,
+        color: BahrainColors.onPoliceBlue,
+      ),
+      PlateLabel(
+        text: 'الشرطة',
+        box: PlateBox(146, 8, 82, 28),
+        glyphHeight: 26,
+        color: BahrainColors.onPoliceBlue,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3], key: 'serial'),
@@ -246,5 +303,11 @@ abstract final class BahrainPlates {
 
   /// Every Bahraini design, in the order they are introduced above. A picker
   /// iterates this rather than naming five constants.
-  static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[eu, us, bicycle, diplomatic, police]);
+  static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
+    eu,
+    us,
+    bicycle,
+    diplomatic,
+    police,
+  ]);
 }

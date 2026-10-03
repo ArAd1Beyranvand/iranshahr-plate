@@ -9,7 +9,9 @@ import 'package:iranshahr_plate/iranshahr.dart';
 /// they *do* decide.
 void main() {
   PlateValidation judge(PlateSpec spec, List<String?> values) =>
-      TajikistanPlates.validatorFor(spec).validate(PlateEntry(spec: spec, values: values));
+      TajikistanPlates.validatorFor(
+        spec,
+      ).validate(PlateEntry(spec: spec, values: values));
 
   group('the specs', () {
     test('every design is internally consistent', () {
@@ -31,21 +33,34 @@ void main() {
     });
 
     test('the flagless coloured classes carry no country block', () {
-      for (final spec in [TajikistanPlates.foreign, TajikistanPlates.diplomatic, TajikistanPlates.governmental]) {
+      for (final spec in [
+        TajikistanPlates.foreign,
+        TajikistanPlates.diplomatic,
+        TajikistanPlates.governmental,
+      ]) {
         expect(spec.noPanel, isTrue, reason: spec.id);
       }
       expect(TajikistanPlates.car.noPanel, isFalse);
     });
 
-    test('the flag classes each take the country block matching their field', () {
-      expect(TajikistanPlates.car.country, TajikistanCountry.civilian);
-      expect(TajikistanPlates.publicTransport.country, TajikistanCountry.transport);
-      expect(TajikistanPlates.police.country, TajikistanCountry.police);
-    });
+    test(
+      'the flag classes each take the country block matching their field',
+      () {
+        expect(TajikistanPlates.car.country, TajikistanCountry.civilian);
+        expect(
+          TajikistanPlates.publicTransport.country,
+          TajikistanCountry.transport,
+        );
+        expect(TajikistanPlates.police.country, TajikistanCountry.police);
+      },
+    );
 
     test('public transport prints its fixed TT and has no letter slots', () {
       expect(TajikistanPlates.publicTransport.labels.single.text, 'TT');
-      expect(TajikistanPlates.publicTransport.indicesOfGroup('serial'), hasLength(4));
+      expect(
+        TajikistanPlates.publicTransport.indicesOfGroup('serial'),
+        hasLength(4),
+      );
     });
 
     test('the governmental plate boxes off its region with a divider', () {
@@ -66,30 +81,86 @@ void main() {
     test('the capital and the republican districts hold two codes each', () {
       expect(TajikistanRegions.regionFor('01'), TajikistanRegion.dushanbe);
       expect(TajikistanRegions.regionFor('05'), TajikistanRegion.dushanbe);
-      expect(TajikistanRegions.regionFor('04'), TajikistanRegion.gornoBadakhshan);
+      expect(
+        TajikistanRegions.regionFor('04'),
+        TajikistanRegion.gornoBadakhshan,
+      );
     });
   });
 
   group('validation', () {
     test('a well-formed private plate is accepted', () {
-      expect(judge(TajikistanPlates.car, ['9', '9', '9', '9', 'M', 'K', '0', '2']).isValid, isTrue);
+      expect(
+        judge(TajikistanPlates.car, [
+          '9',
+          '9',
+          '9',
+          '9',
+          'M',
+          'K',
+          '0',
+          '2',
+        ]).isValid,
+        isTrue,
+      );
     });
 
     test('a region code Tajikistan does not issue is rejected', () {
-      expect(judge(TajikistanPlates.car, ['9', '9', '9', '9', 'M', 'K', '0', '9']).isValid, isFalse);
+      expect(
+        judge(TajikistanPlates.car, [
+          '9',
+          '9',
+          '9',
+          '9',
+          'M',
+          'K',
+          '0',
+          '9',
+        ]).isValid,
+        isFalse,
+      );
     });
 
     test('a letter outside the register is rejected', () {
-      expect(judge(TajikistanPlates.car, ['9', '9', '9', '9', 'Q', 'T', '0', '2']).isValid, isFalse);
+      expect(
+        judge(TajikistanPlates.car, [
+          '9',
+          '9',
+          '9',
+          '9',
+          'Q',
+          'T',
+          '0',
+          '2',
+        ]).isValid,
+        isFalse,
+      );
     });
 
     test('the diplomatic class must be one of the five codes', () {
-      expect(judge(TajikistanPlates.diplomatic, ['0', '9', '1', 'CMD', '1']).isValid, isTrue);
-      expect(judge(TajikistanPlates.diplomatic, ['0', '9', '1', 'D', '1']).isValid, isTrue);
+      expect(
+        judge(TajikistanPlates.diplomatic, ['0', '9', '1', 'CMD', '1']).isValid,
+        isTrue,
+      );
+      expect(
+        judge(TajikistanPlates.diplomatic, ['0', '9', '1', 'D', '1']).isValid,
+        isTrue,
+      );
     });
 
     test('the foreign plate takes no region and any three-digit halves', () {
-      expect(judge(TajikistanPlates.foreign, ['2', '0', '0', 'P', '0', '0', '5']).isValid, isTrue);
+      expect(
+        judge(TajikistanPlates.foreign, [
+          '2',
+          '0',
+          '0',
+          'P',
+          '0',
+          '0',
+          '5',
+        ]).isValid,
+        isTrue,
+      );
     });
   });
 }

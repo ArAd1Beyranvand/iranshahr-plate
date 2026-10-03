@@ -37,6 +37,9 @@ abstract final class AzerbaijanCountry {
     panelColor: AzerbaijanColors.field,
     panelTextColor: AzerbaijanColors.ink,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset('assets/flags/Flag_of_Azerbaijan.svg', package: 'iranshahr_plate'),
+    flag: SvgPlateAsset(
+      'assets/flags/Flag_of_Azerbaijan.svg',
+      package: 'iranshahr_plate',
+    ),
   );
 }

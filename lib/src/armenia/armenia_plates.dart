@@ -69,7 +69,9 @@ abstract final class ArmeniaPlates {
   /// *on* and lives only at the right-hand end, and nothing is printed on this
   /// one. It is chrome, it takes the theme's divider colour, and it is the only
   /// reason that colour is not the ink.
-  static const PlateRule _identifierBand = PlateRule(box: PlateBox(66, 12, 10, 86));
+  static const PlateRule _identifierBand = PlateRule(
+    box: PlateBox(66, 12, 10, 86),
+  );
 
   /// The standard private plate (520×110), e.g. `01 AD 234`: a two-digit region
   /// code, two letters, a three-digit serial.
@@ -85,7 +87,15 @@ abstract final class ArmeniaPlates {
     panel: _euPanel,
     rules: const <PlateRule>[_identifierBand],
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 90, top: 17, width: 48, height: 76, pitch: 54),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 2,
+        left: 90,
+        top: 17,
+        width: 48,
+        height: 76,
+        pitch: 54,
+      ),
       // Wider cells on a wider pitch: FE-Schrift prints a letter broader than a
       // digit, so the pair is its own register rather than a continuation of
       // the one before.
@@ -98,7 +108,15 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 60,
       ),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 338, top: 17, width: 48, height: 76, pitch: 54),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 338,
+        top: 17,
+        width: 48,
+        height: 76,
+        pitch: 54,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'region'),
@@ -123,12 +141,40 @@ abstract final class ArmeniaPlates {
     canvasHeight: 150,
     // Lower and shallower than the full-size block: on a two-row plate the
     // block sits against the bottom row, not against the middle of the plate.
-    panel: const PlatePanel(box: PlateBox(12, 34, 42, 72), padding: EdgeInsets.zero, captionScale: 1.6),
+    panel: const PlatePanel(
+      box: PlateBox(12, 34, 42, 72),
+      padding: EdgeInsets.zero,
+      captionScale: 1.6,
+    ),
     rules: const <PlateRule>[PlateRule(box: PlateBox(60, 32, 9, 76))],
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 74, top: 16, width: 40, height: 62, pitch: 44),
-      ...plateRegister(alphabet: ArmeniaAlphabets.letters, count: 2, left: 170, top: 16, width: 44, height: 62, pitch: 48),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 108, top: 84, width: 44, height: 62, pitch: 50),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 2,
+        left: 74,
+        top: 16,
+        width: 40,
+        height: 62,
+        pitch: 44,
+      ),
+      ...plateRegister(
+        alphabet: ArmeniaAlphabets.letters,
+        count: 2,
+        left: 170,
+        top: 16,
+        width: 44,
+        height: 62,
+        pitch: 48,
+      ),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 108,
+        top: 84,
+        width: 44,
+        height: 62,
+        pitch: 50,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'region'),
@@ -150,13 +196,41 @@ abstract final class ArmeniaPlates {
     country: ArmeniaCountry.armenia,
     canvasWidth: 200,
     canvasHeight: 150,
-    panel: const PlatePanel(box: PlateBox(8, 84, 34, 54), padding: EdgeInsets.zero, captionScale: 1.5),
+    panel: const PlatePanel(
+      box: PlateBox(8, 84, 34, 54),
+      padding: EdgeInsets.zero,
+      captionScale: 1.5,
+    ),
     slots: [
       // Head row: region and letters, hard against one another.
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 52, top: 14, width: 30, height: 44, pitch: 34),
-      ...plateRegister(alphabet: ArmeniaAlphabets.letters, count: 2, left: 120, top: 14, width: 32, height: 44, pitch: 36),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 2,
+        left: 52,
+        top: 14,
+        width: 30,
+        height: 44,
+        pitch: 34,
+      ),
+      ...plateRegister(
+        alphabet: ArmeniaAlphabets.letters,
+        count: 2,
+        left: 120,
+        top: 14,
+        width: 32,
+        height: 44,
+        pitch: 36,
+      ),
       // Lower row: the serial, at the size the head row gave up.
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 50, top: 74, width: 34, height: 58, pitch: 40),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 50,
+        top: 74,
+        width: 34,
+        height: 58,
+        pitch: 40,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'region'),
@@ -182,7 +256,15 @@ abstract final class ArmeniaPlates {
     panel: _euPanel,
     rules: const <PlateRule>[_identifierBand],
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 90, top: 17, width: 46, height: 76, pitch: 54),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 90,
+        top: 17,
+        width: 46,
+        height: 76,
+        pitch: 54,
+      ),
       ...plateRegister(
         alphabet: ArmeniaAlphabets.letters,
         count: 2,
@@ -192,7 +274,15 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 58,
       ),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 380, top: 17, width: 46, height: 76, pitch: 54),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 2,
+        left: 380,
+        top: 17,
+        width: 46,
+        height: 76,
+        pitch: 54,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2], key: 'serial'),
@@ -215,13 +305,36 @@ abstract final class ArmeniaPlates {
     country: ArmeniaCountry.armenia,
     canvasWidth: 210,
     canvasHeight: 150,
-    panel: const PlatePanel(box: PlateBox(10, 86, 34, 52), padding: EdgeInsets.zero, captionScale: 1.5),
+    panel: const PlatePanel(
+      box: PlateBox(10, 86, 34, 52),
+      padding: EdgeInsets.zero,
+      captionScale: 1.5,
+    ),
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 40, top: 14, width: 36, height: 58, pitch: 42),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 40,
+        top: 14,
+        width: 36,
+        height: 58,
+        pitch: 42,
+      ),
       // Set smaller than the digits beside it and dropped to their centre line,
       // the way the photographed plates print it.
-      const PlateSlot(alphabet: ArmeniaAlphabets.letters, box: PlateBox(166, 22, 30, 46)),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 96, top: 82, width: 36, height: 58, pitch: 42),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.letters,
+        box: PlateBox(166, 22, 30, 46),
+      ),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 2,
+        left: 96,
+        top: 82,
+        width: 36,
+        height: 58,
+        pitch: 42,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2], key: 'serial'),
@@ -245,8 +358,19 @@ abstract final class ArmeniaPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 4, left: 100, top: 17, width: 60, height: 76, pitch: 70),
-      const PlateSlot(alphabet: ArmeniaAlphabets.busClass, box: PlateBox(400, 17, 64, 76)),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 4,
+        left: 100,
+        top: 17,
+        width: 60,
+        height: 76,
+        pitch: 70,
+      ),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.busClass,
+        box: PlateBox(400, 17, 64, 76),
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2, 3], key: 'serial'),
@@ -266,11 +390,17 @@ abstract final class ArmeniaPlates {
   /// print `AM` and the two are different widths of the same design. Built by
   /// [_diplomatic], so the pair differ in the one datum they actually differ
   /// in: see `core_plate/CLAUDE.md` — variation is data.
-  static final PlateSpec diplomatic = _diplomatic(id: 'am.diplomatic', countryCode: 'AM');
+  static final PlateSpec diplomatic = _diplomatic(
+    id: 'am.diplomatic',
+    countryCode: 'AM',
+  );
 
   /// The current diplomatic plate, printing `ARM` in place of [diplomatic]'s
   /// `AM`.
-  static final PlateSpec diplomaticArm = _diplomatic(id: 'am.diplomaticArm', countryCode: 'ARM');
+  static final PlateSpec diplomaticArm = _diplomatic(
+    id: 'am.diplomaticArm',
+    countryCode: 'ARM',
+  );
 
   /// [diplomatic] and [diplomaticArm], which differ only in the wording at the
   /// tail and in how much room it takes.
@@ -278,7 +408,10 @@ abstract final class ArmeniaPlates {
   /// The label is laid out from the top of its box while a slot centres its
   /// glyph, so its top is not the slots' 20: 20 + 70/2 - 0.72*56/2 = 34.8,
   /// which puts the wording on the digits' own centre line.
-  static PlateSpec _diplomatic({required String id, required String countryCode}) => PlateSpec(
+  static PlateSpec _diplomatic({
+    required String id,
+    required String countryCode,
+  }) => PlateSpec(
     id: id,
     country: ArmeniaCountry.armenia,
     canvasWidth: 520,
@@ -286,15 +419,38 @@ abstract final class ArmeniaPlates {
     noPanel: true,
     panel: _euPanel,
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 2, left: 40, top: 20, width: 48, height: 70, pitch: 56),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 2,
+        left: 40,
+        top: 20,
+        width: 48,
+        height: 70,
+        pitch: 56,
+      ),
       // Taller than the digits either side of it, as the photographed plates
       // print it: the class letter is the one character on a diplomatic plate
       // that has to be read at a checkpoint.
-      const PlateSlot(alphabet: ArmeniaAlphabets.diplomaticClass, box: PlateBox(160, 17, 56, 76)),
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 228, top: 20, width: 48, height: 70, pitch: 56),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.diplomaticClass,
+        box: PlateBox(160, 17, 56, 76),
+      ),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 228,
+        top: 20,
+        width: 48,
+        height: 70,
+        pitch: 56,
+      ),
     ],
     labels: [
-      PlateLabel(text: countryCode, box: PlateBox(400, 34.8, 104, 56), glyphHeight: 56),
+      PlateLabel(
+        text: countryCode,
+        box: PlateBox(400, 34.8, 104, 56),
+        glyphHeight: 56,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1], key: 'mission'),
@@ -323,11 +479,23 @@ abstract final class ArmeniaPlates {
     noPanel: true,
     panel: _euPanel,
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 3, left: 190, top: 17, width: 50, height: 76, pitch: 58),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 3,
+        left: 190,
+        top: 17,
+        width: 50,
+        height: 76,
+        pitch: 58,
+      ),
     ],
     labels: const [
       PlateLabel(text: 'UN', box: PlateBox(44, 27.6, 130, 76), glyphHeight: 76),
-      PlateLabel(text: 'AM', box: PlateBox(380, 34.8, 104, 56), glyphHeight: 56),
+      PlateLabel(
+        text: 'AM',
+        box: PlateBox(380, 34.8, 104, 56),
+        glyphHeight: 56,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0, 1, 2], key: 'serial'),
@@ -355,8 +523,19 @@ abstract final class ArmeniaPlates {
     noPanel: true,
     panel: _euPanel,
     slots: [
-      ...plateRegister(alphabet: PlateAlphabet.latinDigits, count: 4, left: 170, top: 17, width: 50, height: 76, pitch: 58),
-      const PlateSlot(alphabet: ArmeniaAlphabets.militaryClass, box: PlateBox(410, 17, 54, 76)),
+      ...plateRegister(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 4,
+        left: 170,
+        top: 17,
+        width: 50,
+        height: 76,
+        pitch: 58,
+      ),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.militaryClass,
+        box: PlateBox(410, 17, 54, 76),
+      ),
     ],
     labels: const [
       PlateLabel(text: 'ՊՆ', box: PlateBox(40, 27.6, 112, 76), glyphHeight: 76),
@@ -402,7 +581,8 @@ abstract final class ArmeniaPlates {
     'am.public' => const ArmeniaPublicPlateValidator(),
     'am.trailer' => const ArmeniaTrailerPlateValidator(),
     'am.bus' => const ArmeniaBusPlateValidator(),
-    'am.diplomatic' || 'am.diplomaticArm' => const ArmeniaDiplomaticPlateValidator(),
+    'am.diplomatic' ||
+    'am.diplomaticArm' => const ArmeniaDiplomaticPlateValidator(),
     'am.un' => const ArmeniaSerialPlateValidator(length: 3),
     'am.military' => const ArmeniaMilitaryPlateValidator(),
     _ => const ArmeniaPlateValidator(),

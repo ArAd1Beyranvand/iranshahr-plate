@@ -16,12 +16,56 @@ abstract final class UaeValidators {
   }
 
   /// Sharjah's code, 1 to 4, which a plate may also omit.
-  static bool isSharjahCode(String code) => code.isEmpty || const <String>{'1', '2', '3', '4'}.contains(code);
+  static bool isSharjahCode(String code) =>
+      code.isEmpty || const <String>{'1', '2', '3', '4'}.contains(code);
 
-  static const Set<String> ajmanLetters = <String>{'A', 'B', 'C', 'D', 'E', 'H'};
-  static const Set<String> fujairahLetters = <String>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'K', 'M', 'P', 'R', 'S', 'T'};
-  static const Set<String> rasAlKhaimahLetters = <String>{'A', 'C', 'D', 'I', 'K', 'M', 'N', 'S', 'V', 'Y'};
-  static const Set<String> ummAlQuwainLetters = <String>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'X'};
+  static const Set<String> ajmanLetters = <String>{
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'H',
+  };
+  static const Set<String> fujairahLetters = <String>{
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'K',
+    'M',
+    'P',
+    'R',
+    'S',
+    'T',
+  };
+  static const Set<String> rasAlKhaimahLetters = <String>{
+    'A',
+    'C',
+    'D',
+    'I',
+    'K',
+    'M',
+    'N',
+    'S',
+    'V',
+    'Y',
+  };
+  static const Set<String> ummAlQuwainLetters = <String>{
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'X',
+  };
 
   /// Dubai: any single letter, or one of the five doubled ones the article
   /// lists. The specs print a single letter only.
