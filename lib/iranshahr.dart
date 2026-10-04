@@ -1,5 +1,5 @@
 /// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's,
-/// Qatar's, Iraq's and the UAE's licence plates for the `core_plate` library.
+/// Qatar's, Iraq's, the UAE's and Turkey's licence plates for the `core_plate` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
 /// core widget layer paints. Nothing here knows about any other country
@@ -316,3 +316,33 @@ export 'src/uae/uae_plates.dart';
 
 /// The advisory validators: each emirate's codes and the serial.
 export 'src/uae/uae_validators.dart';
+
+// ---------------------------------------------------------------------------
+// Turkey. A tenth country on the same terms as the first nine: its own folder
+// (`src/turkey/`), no import across any line, and no constant shared with any
+// of them.
+//
+// Every current design is one row of ink — a province code, one to three
+// letters, two to five figures — on one of three shapes: with the blue TR
+// strip, without it, or the two-row motorcycle plate. The counts are
+// parameters of one builder per shape, and the class lives in the livery.
+// ---------------------------------------------------------------------------
+
+/// The field, ink and frame colours every Turkish plate is printed in.
+export 'src/turkey/turkey_colors.dart';
+
+/// The province figures and the 23 serial letters.
+export 'src/turkey/turkey_alphabets.dart';
+
+/// The panel-less country value every Turkish spec carries.
+export 'src/turkey/turkey_country.dart';
+
+/// The ten liveries, from civilian black on white to the state's gold on red.
+export 'src/turkey/turkey_themes.dart';
+
+/// The strip, stripless and motorcycle builders and the named category plates.
+export 'src/turkey/turkey_plates.dart';
+
+/// The advisory validator: province codes, letters, class prefixes, and the
+/// six-character limit.
+export 'src/turkey/turkey_validators.dart';
