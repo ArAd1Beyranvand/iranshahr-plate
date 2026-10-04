@@ -1,8 +1,14 @@
+FREE PALESTINE 🇮🇷🇵🇸 پاینده ایران
+
+GO VEGAN 🌱
+
+==================================
+
+https://platexample.ir/#/discover/iranshahr
+
 # iranshahr_plate
 
-License plates for **Bahrain**, **Azerbaijan**, **Afghanistan**, **Armenia**, and **Tajikistan** — five countries with the [`core_plate`](https://pub.dev/packages/core_plate) library.
-
-Data, not code: [`PlateCountry`](https://pub.dev/documentation/core_plate/latest/core_plate/PlateCountry-class.html)s, [`PlateAlphabet`](https://pub.dev/documentation/core_plate/latest/core_plate/PlateAlphabet-class.html)s and [`PlateSpec`](https://pub.dev/documentation/core_plate/latest/core_plate/PlateSpec-class.html)s that the core widget layer paints.
+License plates for **Bahrain**, **Azerbaijan**, **Afghanistan**, **Armenia**, and **Tajikistan** — five countries with [`plate_core`](https://pub.dev/packages/plate_core). Data, not code: [`PlateCountry`](https://pub.dev/documentation/plate_core/latest/plate_core/PlateCountry-class.html)s, [`PlateAlphabet`](https://pub.dev/documentation/plate_core/latest/plate_core/PlateAlphabet-class.html)s and [`PlateSpec`](https://pub.dev/documentation/plate_core/latest/plate_core/PlateSpec-class.html)s that the widget layer paints.
 
 ## Bahrain
 
@@ -166,7 +172,7 @@ Import and use:
 
 ```dart
 import 'package:iranshahr_plate/iranshahr.dart';
-import 'package:core_plate/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 
 PlateCanvas(
   spec: BahrainPlates.eu,
@@ -185,3 +191,15 @@ PlateCanvas(
 - `assets/emblems/` — the Darul Aman line art, in a dark and a light ink
 
 The four countries' code is completely independent — no cross-imports, no shared constants.
+
+## Also available
+
+Hoping to return to our homeland:
+
+- [`plate_core`](https://pub.dev/packages/plate_core) - Paint license plates.
+- [`plate_keypad`](https://pub.dev/packages/plate_keypad) - A character picker for license plates.
+- [`iran_plate`](https://pub.dev/packages/iran_plate) - Iran's plates.
+- [`germany_plate`](https://pub.dev/packages/germany_plate) - Germany's plates.
+- [`palestine_plate`](https://pub.dev/packages/palestine_plate) - Palestine's plates.
+- [`yemen_plate`](https://pub.dev/packages/yemen_plate) - Yemen's plates.
+- [`plate_core_bloc`](https://pub.dev/packages/plate_core_bloc) - The optional bloc layer for `plate_core`.

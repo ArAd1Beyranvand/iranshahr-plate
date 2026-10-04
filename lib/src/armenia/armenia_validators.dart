@@ -1,4 +1,4 @@
-import 'package:core_plate/core_plate.dart';
+import 'package:plate_core/core_plate.dart';
 
 import 'armenia_alphabets.dart';
 import 'armenia_regions.dart';

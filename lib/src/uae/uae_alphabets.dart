@@ -1,4 +1,4 @@
-import 'package:core_plate/core_plate.dart';
+import 'package:plate_core/core_plate.dart';
 import 'package:plate_alphabet/plate_alphabet.dart';
 
 /// The characters a UAE plate is composed of: western Arabic numerals for the
