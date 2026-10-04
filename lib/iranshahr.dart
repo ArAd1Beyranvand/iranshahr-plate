@@ -1,5 +1,5 @@
 /// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's,
-/// Qatar's, Iraq's, the UAE's and Turkey's licence plates for the `core_plate` library.
+/// Qatar's, Iraq's, the UAE's, Turkey's and Oman's licence plates for the `core_plate` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
 /// core widget layer paints. Nothing here knows about any other country
@@ -346,3 +346,31 @@ export 'src/turkey/turkey_plates.dart';
 /// The advisory validator: province codes, letters, class prefixes, and the
 /// six-character limit.
 export 'src/turkey/turkey_validators.dart';
+
+// ---------------------------------------------------------------------------
+// Oman. An eleventh country on the same terms as the others: its own folder
+// (`src/oman/`), no import across any line, and no constant shared with any
+// of them.
+//
+// One three-panel design — number, letters, `عمان` — in two liveries, black on
+// yellow for private cars and white on red for taxis. The digit count (four or
+// five) and the letter count (one or two) are parameters of one builder.
+// ---------------------------------------------------------------------------
+
+/// The yellow, red, black and white every Omani plate is printed in.
+export 'src/oman/oman_colors.dart';
+
+/// The digits and the Latin and Arabic letter rows.
+export 'src/oman/oman_alphabets.dart';
+
+/// The panel-less country value every Omani spec carries.
+export 'src/oman/oman_country.dart';
+
+/// The private and taxi liveries.
+export 'src/oman/oman_themes.dart';
+
+/// The standard builder and its four named forms.
+export 'src/oman/oman_plates.dart';
+
+/// The advisory validator: every group complete.
+export 'src/oman/oman_validators.dart';
