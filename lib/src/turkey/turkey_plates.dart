@@ -45,9 +45,11 @@ abstract final class _Layout {
   static const double stripCentre = 284.4;
   static const double plainCentre = width / 2;
 
-  /// "TR": ink x 9.3..43.1, y 71.2..95.4 (24.2 tall).
-  static const PlateBox trBox = PlateBox(9.3, 71.2, 33.8, 24.2);
-  static const double trGlyph = 24.2 / ink;
+  /// "TR": ink x 9.3..43.1, y 71.2..95.4 (24.2 tall). Roboto's TR is wider
+  /// than the plate face's, so it is set a little smaller and further right
+  /// to sit inside the strip rather than run into the field.
+  static const PlateBox trBox = PlateBox(12, 71.2, 33.8, 24.2);
+  static const double trGlyph = 21.5 / ink;
 
   /// The taxi plate's black rule at the strip edge, x 49.6..53.2.
   static const double taxiDivider = 3.5;
@@ -110,8 +112,8 @@ abstract final class _Moto {
   static const double stripEnd = 36.3;
 
   /// "TR": ink x 8..30, y 130.9..145.5.
-  static const PlateBox trBox = PlateBox(8, 130.9, 22, 14.6);
-  static const double trGlyph = 14.6 / _Layout.ink;
+  static const PlateBox trBox = PlateBox(10, 130.9, 22, 14.6);
+  static const double trGlyph = 13.6 / _Layout.ink;
 }
 
 /// One register of a row: its key, alphabet, length and pitch.
