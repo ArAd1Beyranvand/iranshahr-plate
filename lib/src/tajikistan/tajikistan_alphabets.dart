@@ -1,4 +1,4 @@
-import 'package:plate_core/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 
 /// The alphabets a Tajik plate slot is drawn over.
 ///

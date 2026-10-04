@@ -1,4 +1,4 @@
-import 'package:plate_core/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 
 /// The alphabets an Armenian plate slot is drawn over, and the one piece of
 /// Armenian history that is data rather than prose: when each letter became
