@@ -2,6 +2,7 @@ name: iranshahr_plate
 description: "Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's, Qatar's, Iraq's and the UAE's licence plates for the plate_core library — country panels, and the Bahraini, Azerbaijani, Afghan, Armenian, Tajik, Kuwaiti, Qatari, Iraqi and Emirati plate specs."
 version: 0.1.0
 homepage: https://github.com/ArAd1Beyranvand/iranshahr_plate
+resolution: workspace
 
 environment:
   sdk: '>=3.10.0 <4.0.0'
@@ -13,8 +14,7 @@ dependencies:
     sdk: flutter
   plate_core: ^0.11.0
   # Shared alphabet definitions.
-  plate_alphabet:
-    path: ../plate_alphabet
+  plate_alphabet: ^0.1.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0
