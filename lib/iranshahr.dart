@@ -374,3 +374,46 @@ export 'src/oman/oman_plates.dart';
 
 /// The advisory validator: every group complete.
 export 'src/oman/oman_validators.dart';
+
+// ---------------------------------------------------------------------------
+// Turkmenistan, Uzbekistan and Kazakhstan. Moved in from their own packages,
+// on the same terms as the others: one folder each, no import across a line.
+// ---------------------------------------------------------------------------
+
+export 'src/turkmenistan/turkmenistan_colors.dart';
+
+export 'src/turkmenistan/turkmenistan_alphabets.dart';
+
+export 'src/turkmenistan/turkmenistan_country.dart';
+
+export 'src/turkmenistan/turkmenistan_themes.dart';
+
+export 'src/turkmenistan/turkmenistan_plates.dart';
+
+export 'src/turkmenistan/turkmenistan_validators.dart';
+
+export 'src/uzbekistan/uzbekistan_colors.dart';
+
+export 'src/uzbekistan/uzbekistan_alphabets.dart';
+
+export 'src/uzbekistan/uzbekistan_country.dart';
+
+export 'src/uzbekistan/uzbekistan_themes.dart';
+
+export 'src/uzbekistan/uzbekistan_plates.dart';
+
+export 'src/uzbekistan/uzbekistan_validators.dart';
+
+export 'src/kazakhstan/kazakhstan_colors.dart';
+
+export 'src/kazakhstan/kazakhstan_alphabets.dart';
+
+export 'src/kazakhstan/kazakhstan_country.dart';
+
+export 'src/kazakhstan/kazakhstan_themes.dart';
+
+export 'src/kazakhstan/kazakhstan_missions.dart';
+
+export 'src/kazakhstan/kazakhstan_plates.dart';
+
+export 'src/kazakhstan/kazakhstan_validators.dart';
