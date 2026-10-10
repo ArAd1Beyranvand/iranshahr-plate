@@ -12,7 +12,7 @@ import 'tajikistan_regions.dart';
 /// are this validator with the same three keys. What varies between them is data
 /// — how long the serial runs, how many letters there are, whether the region is
 /// checked at all — and so it is a constructor argument. See
-/// `core_plate/CLAUDE.md`: variation is data.
+/// `plate_core/CLAUDE.md`: variation is data.
 ///
 /// Advisory, like every validator in this workspace. It never prevents input: it
 /// is asked whether a number is well formed and answers, and what the host does

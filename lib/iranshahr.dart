@@ -1,5 +1,5 @@
 /// Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's,
-/// Qatar's, Iraq's, the UAE's, Turkey's and Oman's licence plates for the `core_plate` library.
+/// Qatar's, Iraq's, the UAE's, Turkey's and Oman's licence plates for the `plate_core` library.
 ///
 /// Data, not code: [PlateCountry]s, [PlateAlphabet]s and [PlateSpec]s that the
 /// core widget layer paints. Nothing here knows about any other country

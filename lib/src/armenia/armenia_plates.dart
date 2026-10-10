@@ -389,7 +389,7 @@ abstract final class ArmeniaPlates {
   /// Two specs rather than one, because newer plates print `ARM` where these
   /// print `AM` and the two are different widths of the same design. Built by
   /// [_diplomatic], so the pair differ in the one datum they actually differ
-  /// in: see `core_plate/CLAUDE.md` — variation is data.
+  /// in: see `plate_core/CLAUDE.md` — variation is data.
   static final PlateSpec diplomatic = _diplomatic(
     id: 'am.diplomatic',
     countryCode: 'AM',

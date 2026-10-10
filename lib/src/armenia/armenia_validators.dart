@@ -82,7 +82,7 @@ class ArmeniaPlateValidator extends GatedPlateValidator {
   /// added after the plate was issued.
   ///
   /// Static and taking a count, because the trailer plate runs the same rules
-  /// over one letter instead of two. See `core_plate/CLAUDE.md`: variation is
+  /// over one letter instead of two. See `plate_core/CLAUDE.md`: variation is
   /// data.
   static PlateValidation validateLetters(
     String letters, {

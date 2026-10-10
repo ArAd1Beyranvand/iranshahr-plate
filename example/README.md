@@ -1,6 +1,6 @@
 # iranshahr example
 
-A minimal example demonstrating how to render Bahraini and Azerbaijani licence plates using the `iranshahr` package and `core_plate`.
+A minimal example demonstrating how to render Bahraini and Azerbaijani licence plates using the `iranshahr` package and `plate_core`.
 
 ## Running the example
 
