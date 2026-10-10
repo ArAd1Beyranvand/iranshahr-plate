@@ -1,7 +1,7 @@
 name: iranshahr_plate
-description: "Bahrain's, Azerbaijan's, Afghanistan's, Armenia's, Tajikistan's, Kuwait's, Qatar's, Iraq's, the UAE's, Turkey's, Oman's, Turkmenistan's, Uzbekistan's and Kazakhstan's licence plates for the plate_core library — country panels, and the Bahraini, Azerbaijani, Afghan, Armenian, Tajik, Kuwaiti, Qatari, Iraqi, Emirati, Turkish, Omani, Turkmen, Uzbek and Kazakh plate specs."
+description: "Licence plates of Bahrain, Azerbaijan, Afghanistan, Armenia, Tajikistan, Kuwait, Qatar, Iraq, UAE, Turkey, Oman, Turkmenistan, Uzbekistan and Kazakhstan for plate_core."
 version: 0.1.0
-homepage: https://github.com/ArAd1Beyranvand/iranshahr_plate
+repository: https://github.com/ArAd1Beyranvand/iranshahr-plate
 resolution: workspace
 
 environment:
