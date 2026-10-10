@@ -164,8 +164,9 @@ class ArmeniaPublicPlateValidator extends GatedPlateValidator {
     final tail = entry.group('tail');
     // Quiet until both halves are there: a combination is a pair of letters and
     // a pair of digits, and three quarters of one matches nothing.
-    if (letters.length < 2 || tail.length < 2)
+    if (letters.length < 2 || tail.length < 2) {
       return const PlateValidation.valid();
+    }
     if (!isDigitsOfLength(tail, 2)) {
       return const PlateValidation.invalid('The last group is two digits.');
     }

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:iranshahr_plate/iranshahr.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 import 'package:plate_core/plate_core.dart';
 
 /// Code 007 must be refused in every layer, always with "COUNTRY NOT FOUND".

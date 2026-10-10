@@ -4,7 +4,7 @@ import 'package:plate_core/plate_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:iranshahr_plate/iranshahr.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 
 /// A golden per Turkish category, each in its own livery, plus the validator.
 ///
@@ -88,7 +88,12 @@ void main() {
       TurkeyThemes.police,
       '34SGH1234',
     ),
-    ('tr_consulate', TurkeyPlates.consulate, TurkeyThemes.consulate, '34CC0001'),
+    (
+      'tr_consulate',
+      TurkeyPlates.consulate,
+      TurkeyThemes.consulate,
+      '34CC0001',
+    ),
     (
       'tr_provincial',
       TurkeyPlates.provincialGovernment,
@@ -148,7 +153,14 @@ void main() {
   }
 
   group('every format builds and validates', () {
-    for (final (l, d) in const [(1, 4), (1, 5), (2, 3), (2, 4), (3, 2), (3, 3)]) {
+    for (final (l, d) in const [
+      (1, 4),
+      (1, 5),
+      (2, 3),
+      (2, 4),
+      (3, 2),
+      (3, 3),
+    ]) {
       test('strip $l letters $d figures', () {
         final spec = TurkeyPlates.strip(l, d);
         expect(debugValidateSpec(spec), isTrue);
@@ -159,13 +171,16 @@ void main() {
   });
 
   group('TurkeyPlateValidator', () {
-    PlateValidation check(PlateValidator v, PlateSpec spec, String value) => v
-        .validate(PlateEntry(spec: spec, values: value.split('')));
+    PlateValidation check(PlateValidator v, PlateSpec spec, String value) =>
+        v.validate(PlateEntry(spec: spec, values: value.split('')));
 
     test('accepts the article examples', () {
       expect(
-        check(TurkeyPlateValidator.general, TurkeyPlates.private, '34AB1234')
-            .isValid,
+        check(
+          TurkeyPlateValidator.general,
+          TurkeyPlates.private,
+          '34AB1234',
+        ).isValid,
         isTrue,
       );
       expect(
@@ -178,30 +193,42 @@ void main() {
       );
     });
 
-    test('rejects province 82, excluded letters, wrong prefix, seven chars', () {
-      expect(
-        check(TurkeyPlateValidator.general, TurkeyPlates.private, '82AB1234')
-            .isValid,
-        isFalse,
-      );
-      expect(
-        check(TurkeyPlateValidator.general, TurkeyPlates.private, '34QB1234')
-            .isValid,
-        isFalse,
-      );
-      expect(
-        check(TurkeyPlateValidator.diplomatic, TurkeyPlates.diplomatic, '34CC012')
-            .isValid,
-        isFalse,
-      );
-      expect(
-        check(
-          TurkeyPlateValidator.general,
-          TurkeyPlates.strip(3, 4),
-          '34ABC1234',
-        ).isValid,
-        isFalse,
-      );
-    });
+    test(
+      'rejects province 82, excluded letters, wrong prefix, seven chars',
+      () {
+        expect(
+          check(
+            TurkeyPlateValidator.general,
+            TurkeyPlates.private,
+            '82AB1234',
+          ).isValid,
+          isFalse,
+        );
+        expect(
+          check(
+            TurkeyPlateValidator.general,
+            TurkeyPlates.private,
+            '34QB1234',
+          ).isValid,
+          isFalse,
+        );
+        expect(
+          check(
+            TurkeyPlateValidator.diplomatic,
+            TurkeyPlates.diplomatic,
+            '34CC012',
+          ).isValid,
+          isFalse,
+        );
+        expect(
+          check(
+            TurkeyPlateValidator.general,
+            TurkeyPlates.strip(3, 4),
+            '34ABC1234',
+          ).isValid,
+          isFalse,
+        );
+      },
+    );
   });
 }

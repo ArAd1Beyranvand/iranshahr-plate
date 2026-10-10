@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:iranshahr_plate/iranshahr.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 import 'package:plate_core/plate_core.dart';
 
 /// One golden per design and livery, rendered with real bold faces so the ink

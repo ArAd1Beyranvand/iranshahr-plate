@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:iranshahr_plate/iranshahr.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 
 // Throwaway: ink extent per unit glyphHeight for every UAE caption.
 void main() {

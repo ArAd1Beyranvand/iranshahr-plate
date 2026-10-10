@@ -4,7 +4,7 @@ import 'package:plate_core/plate_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:iranshahr_plate/iranshahr.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 
 /// Goldens for every Kuwaiti spec, one image per category.
 ///

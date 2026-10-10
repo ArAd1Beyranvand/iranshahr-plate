@@ -241,79 +241,79 @@ abstract final class TurkeyPlates {
   static final Map<String, PlateSpec> _cache = <String, PlateSpec>{};
 
   /// A TR-strip plate printing `99`, [letters] letters and [digits] figures.
-  static PlateSpec strip(int letters, int digits) =>
-      _cache.putIfAbsent('tr.strip.$letters.$digits', () {
-        return _spec(
-          id: 'tr.strip.$letters.$digits',
-          row: _row(
-            _standardRuns(letters, digits),
-            centre: _Layout.stripCentre,
-          ),
-          background: _withStrip(PlateSection.plain),
-          labels: const <PlateLabel>[_tr],
-        );
-      });
+  static PlateSpec strip(int letters, int digits) => _cache.putIfAbsent(
+    'tr.strip.$letters.$digits',
+    () {
+      return _spec(
+        id: 'tr.strip.$letters.$digits',
+        row: _row(_standardRuns(letters, digits), centre: _Layout.stripCentre),
+        background: _withStrip(PlateSection.plain),
+        labels: const <PlateLabel>[_tr],
+      );
+    },
+  );
 
   /// A stripless plate printing `99`, [letters] letters (none on a
   /// governor's plate) and [digits] figures.
-  static PlateSpec plain(int letters, int digits) =>
-      _cache.putIfAbsent('tr.plain.$letters.$digits', () {
-        return _spec(
-          id: 'tr.plain.$letters.$digits',
-          row: _row(
-            _standardRuns(letters, digits),
-            centre: _Layout.plainCentre,
-          ),
-        );
-      });
+  static PlateSpec plain(int letters, int digits) => _cache.putIfAbsent(
+    'tr.plain.$letters.$digits',
+    () {
+      return _spec(
+        id: 'tr.plain.$letters.$digits',
+        row: _row(_standardRuns(letters, digits), centre: _Layout.plainCentre),
+      );
+    },
+  );
 
   /// A motorcycle plate: `99` and [letters] letters over [digits] figures.
-  static PlateSpec motorcycle(int letters, int digits) =>
-      _cache.putIfAbsent('tr.motorcycle.$letters.$digits', () {
-        final top = _row(
-          <_Run>[
-            ('province', TurkeyAlphabets.digits, 2, _Moto.topDigitPitch),
-            ('letters', TurkeyAlphabets.letters, letters, _Moto.topLetterPitch),
-          ],
-          centre: _Moto.topCentre,
-          top: _Moto.topTop,
-          height: _Moto.topHeight,
-          gap: _Moto.topGap,
-          // At this row's size an M fits its pitch, and the letters reach the
-          // right edge, so a wider box would leave the canvas.
-          letterBoxRatio: 1,
-        );
-        final bottom = _row(
-          <_Run>[('serial', TurkeyAlphabets.digits, digits, _Moto.bottomPitch)],
-          centre: _Moto.bottomCentre,
-          top: _Moto.bottomTop,
-          height: _Moto.bottomHeight,
-          firstIndex: 2 + letters,
-        );
-        return _spec(
-          id: 'tr.motorcycle.$letters.$digits',
-          width: _Moto.width,
-          height: _Moto.height,
-          row: (<PlateSlot>[...top.$1, ...bottom.$1], [...top.$2, ...bottom.$2]),
-          background: const PlateSection.rows(<PlatePart>[
-            PlatePart(PlateSection.plain, end: _Moto.stripTop),
-            PlatePart(
-              PlateSection.columns(<PlatePart>[
-                PlatePart(_stripColumn, end: _Moto.stripEnd),
-                PlatePart(PlateSection.plain),
-              ]),
-            ),
-          ]),
-          labels: const <PlateLabel>[
-            PlateLabel(
-              text: 'TR',
-              box: _Moto.trBox,
-              glyphHeight: _Moto.trGlyph,
-              color: TurkeyColors.white,
-            ),
-          ],
-        );
-      });
+  static PlateSpec motorcycle(int letters, int digits) => _cache.putIfAbsent(
+    'tr.motorcycle.$letters.$digits',
+    () {
+      final top = _row(
+        <_Run>[
+          ('province', TurkeyAlphabets.digits, 2, _Moto.topDigitPitch),
+          ('letters', TurkeyAlphabets.letters, letters, _Moto.topLetterPitch),
+        ],
+        centre: _Moto.topCentre,
+        top: _Moto.topTop,
+        height: _Moto.topHeight,
+        gap: _Moto.topGap,
+        // At this row's size an M fits its pitch, and the letters reach the
+        // right edge, so a wider box would leave the canvas.
+        letterBoxRatio: 1,
+      );
+      final bottom = _row(
+        <_Run>[('serial', TurkeyAlphabets.digits, digits, _Moto.bottomPitch)],
+        centre: _Moto.bottomCentre,
+        top: _Moto.bottomTop,
+        height: _Moto.bottomHeight,
+        firstIndex: 2 + letters,
+      );
+      return _spec(
+        id: 'tr.motorcycle.$letters.$digits',
+        width: _Moto.width,
+        height: _Moto.height,
+        row: (<PlateSlot>[...top.$1, ...bottom.$1], [...top.$2, ...bottom.$2]),
+        background: const PlateSection.rows(<PlatePart>[
+          PlatePart(PlateSection.plain, end: _Moto.stripTop),
+          PlatePart(
+            PlateSection.columns(<PlatePart>[
+              PlatePart(_stripColumn, end: _Moto.stripEnd),
+              PlatePart(PlateSection.plain),
+            ]),
+          ),
+        ]),
+        labels: const <PlateLabel>[
+          PlateLabel(
+            text: 'TR',
+            box: _Moto.trBox,
+            glyphHeight: _Moto.trGlyph,
+            color: TurkeyColors.white,
+          ),
+        ],
+      );
+    },
+  );
 
   // -------------------------------------------------------------------------
   // The named plates: one per category in the article's "Types" table, each a

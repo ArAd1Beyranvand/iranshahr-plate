@@ -1,6 +1,6 @@
 import 'package:plate_core/plate_core.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:iranshahr_plate/iranshahr.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 
 /// The Armenian rules this package claims to enforce, one test each.
 ///
