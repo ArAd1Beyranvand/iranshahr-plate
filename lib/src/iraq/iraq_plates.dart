@@ -1,6 +1,7 @@
 import 'package:plate_core/plate_core.dart';
 import 'package:flutter/widgets.dart';
 
+import '../plate_field.dart';
 import 'iraq_alphabets.dart';
 import 'iraq_country.dart';
 
@@ -194,7 +195,7 @@ abstract final class IraqPlates {
           padding: EdgeInsets.zero,
         ),
         slots: <PlateSlot>[
-          ...plateRegister(
+          plateField(
             alphabet: IraqAlphabets.digits,
             count: 2,
             left: _Layout.largeCodeLeft,
@@ -206,7 +207,7 @@ abstract final class IraqPlates {
             alphabet: IraqAlphabets.letters,
             box: _Layout.largeLetter,
           ),
-          ...plateRegister(
+          plateField(
             alphabet: IraqAlphabets.digits,
             count: 5,
             left: _Layout.largeSerialLeft,
@@ -233,9 +234,9 @@ abstract final class IraqPlates {
             ),
         ],
         textGroups: const <PlateTextGroup>[
-          PlateTextGroup(<int>[0, 1], key: 'governorate'),
-          PlateTextGroup(<int>[2], key: 'letter'),
-          PlateTextGroup(<int>[3, 4, 5, 6, 7], key: 'serial'),
+          PlateTextGroup(<int>[0], key: 'governorate'),
+          PlateTextGroup(<int>[1], key: 'letter'),
+          PlateTextGroup(<int>[2], key: 'serial'),
         ],
       );
 
@@ -253,7 +254,7 @@ abstract final class IraqPlates {
           padding: EdgeInsets.zero,
         ),
         slots: <PlateSlot>[
-          ...plateRegister(
+          plateField(
             alphabet: IraqAlphabets.digits,
             count: 2,
             left: _Layout.smallGridLeft,
@@ -265,7 +266,7 @@ abstract final class IraqPlates {
             alphabet: IraqAlphabets.letters,
             box: _Layout.smallLetter,
           ),
-          ...plateRegister(
+          plateField(
             alphabet: IraqAlphabets.digits,
             count: 5,
             left: _Layout.smallGridLeft,
@@ -277,9 +278,9 @@ abstract final class IraqPlates {
         background: _smallBackground,
         labels: <PlateLabel>[_smallStack, if (kurdistan) _smallKr],
         textGroups: const <PlateTextGroup>[
-          PlateTextGroup(<int>[0, 1], key: 'governorate'),
-          PlateTextGroup(<int>[2], key: 'letter'),
-          PlateTextGroup(<int>[3, 4, 5, 6, 7], key: 'serial'),
+          PlateTextGroup(<int>[0], key: 'governorate'),
+          PlateTextGroup(<int>[1], key: 'letter'),
+          PlateTextGroup(<int>[2], key: 'serial'),
         ],
       );
 
@@ -352,7 +353,7 @@ abstract final class IraqPlates {
       padding: EdgeInsets.zero,
     ),
     slots: <PlateSlot>[
-      ...plateRegister(
+      plateField(
         alphabet: IraqAlphabets.digits,
         count: 2,
         left: _Layout.temporaryGridLeft,
@@ -360,7 +361,7 @@ abstract final class IraqPlates {
         width: _Layout.temporaryGridCell,
         height: _Layout.smallRowHeight,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: IraqAlphabets.digits,
         count: 2,
         left: _Layout.temporaryGridLeft + 3 * _Layout.temporaryGridCell,
@@ -368,7 +369,7 @@ abstract final class IraqPlates {
         width: _Layout.temporaryGridCell,
         height: _Layout.smallRowHeight,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: IraqAlphabets.digits,
         count: 5,
         left: _Layout.smallGridLeft,
@@ -395,9 +396,9 @@ abstract final class IraqPlates {
       ),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0, 1], key: 'governorate'),
-      PlateTextGroup(<int>[2, 3], key: 'year'),
-      PlateTextGroup(<int>[4, 5, 6, 7, 8], key: 'serial'),
+      PlateTextGroup(<int>[0], key: 'governorate'),
+      PlateTextGroup(<int>[1], key: 'year'),
+      PlateTextGroup(<int>[2], key: 'serial'),
     ],
   );
 

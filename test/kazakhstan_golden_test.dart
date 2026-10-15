@@ -29,12 +29,12 @@ void main() {
         'private': (
           KazakhstanPlates.private,
           KazakhstanThemes.private,
-          '5 7 3 A B X 1 5',
+          '573 ABX 15',
         ),
         'non_private': (
           KazakhstanPlates.nonPrivate,
           KazakhstanThemes.nonPrivate,
-          '9 2 7 P K 0 6',
+          '927 PK 06',
         ),
       };
 
@@ -67,6 +67,10 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+      );
+      await tester.pump();
       await expectLater(
         find.byType(PlateView),
         matchesGoldenFile('goldens/kz_${c.key}.png'),

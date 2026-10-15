@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
+import '../plate_field.dart';
 import 'armenia_alphabets.dart';
 import 'armenia_country.dart';
 import 'armenia_validators.dart';
@@ -87,7 +88,7 @@ abstract final class ArmeniaPlates {
     panel: _euPanel,
     rules: const <PlateRule>[_identifierBand],
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 90,
@@ -99,7 +100,7 @@ abstract final class ArmeniaPlates {
       // Wider cells on a wider pitch: FE-Schrift prints a letter broader than a
       // digit, so the pair is its own register rather than a continuation of
       // the one before.
-      ...plateRegister(
+      plateField(
         alphabet: ArmeniaAlphabets.letters,
         count: 2,
         left: 204,
@@ -108,7 +109,7 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 60,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 338,
@@ -119,9 +120,9 @@ abstract final class ArmeniaPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'region'),
-      PlateTextGroup([2, 3], key: 'letters'),
-      PlateTextGroup([4, 5, 6], key: 'serial'),
+      PlateTextGroup([0], key: 'region'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -148,7 +149,7 @@ abstract final class ArmeniaPlates {
     ),
     rules: const <PlateRule>[PlateRule(box: PlateBox(60, 32, 9, 76))],
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 74,
@@ -157,7 +158,7 @@ abstract final class ArmeniaPlates {
         height: 62,
         pitch: 44,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: ArmeniaAlphabets.letters,
         count: 2,
         left: 170,
@@ -166,7 +167,7 @@ abstract final class ArmeniaPlates {
         height: 62,
         pitch: 48,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 108,
@@ -177,9 +178,9 @@ abstract final class ArmeniaPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'region'),
-      PlateTextGroup([2, 3], key: 'letters'),
-      PlateTextGroup([4, 5, 6], key: 'serial'),
+      PlateTextGroup([0], key: 'region'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -203,7 +204,7 @@ abstract final class ArmeniaPlates {
     ),
     slots: [
       // Head row: region and letters, hard against one another.
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 52,
@@ -212,7 +213,7 @@ abstract final class ArmeniaPlates {
         height: 44,
         pitch: 34,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: ArmeniaAlphabets.letters,
         count: 2,
         left: 120,
@@ -222,7 +223,7 @@ abstract final class ArmeniaPlates {
         pitch: 36,
       ),
       // Lower row: the serial, at the size the head row gave up.
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 50,
@@ -233,9 +234,9 @@ abstract final class ArmeniaPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'region'),
-      PlateTextGroup([2, 3], key: 'letters'),
-      PlateTextGroup([4, 5, 6], key: 'serial'),
+      PlateTextGroup([0], key: 'region'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -256,7 +257,7 @@ abstract final class ArmeniaPlates {
     panel: _euPanel,
     rules: const <PlateRule>[_identifierBand],
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 90,
@@ -265,7 +266,7 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 54,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: ArmeniaAlphabets.letters,
         count: 2,
         left: 258,
@@ -274,7 +275,7 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 58,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 380,
@@ -285,9 +286,9 @@ abstract final class ArmeniaPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'serial'),
-      PlateTextGroup([3, 4], key: 'letters'),
-      PlateTextGroup([5, 6], key: 'tail'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'tail'),
     ],
   );
 
@@ -311,7 +312,7 @@ abstract final class ArmeniaPlates {
       captionScale: 1.5,
     ),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 40,
@@ -326,7 +327,7 @@ abstract final class ArmeniaPlates {
         alphabet: ArmeniaAlphabets.letters,
         box: PlateBox(166, 22, 30, 46),
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 96,
@@ -337,9 +338,9 @@ abstract final class ArmeniaPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'serial'),
-      PlateTextGroup([3], key: 'letters'),
-      PlateTextGroup([4, 5], key: 'tail'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'tail'),
     ],
   );
 
@@ -358,7 +359,7 @@ abstract final class ArmeniaPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 100,
@@ -373,8 +374,8 @@ abstract final class ArmeniaPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
-      PlateTextGroup([4], key: 'class'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'class'),
     ],
   );
 
@@ -419,7 +420,7 @@ abstract final class ArmeniaPlates {
     noPanel: true,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 40,
@@ -435,7 +436,7 @@ abstract final class ArmeniaPlates {
         alphabet: ArmeniaAlphabets.diplomaticClass,
         box: PlateBox(160, 17, 56, 76),
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 228,
@@ -453,9 +454,9 @@ abstract final class ArmeniaPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'mission'),
-      PlateTextGroup([2], key: 'class'),
-      PlateTextGroup([3, 4, 5], key: 'serial'),
+      PlateTextGroup([0], key: 'mission'),
+      PlateTextGroup([1], key: 'class'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -479,7 +480,7 @@ abstract final class ArmeniaPlates {
     noPanel: true,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 190,
@@ -498,7 +499,7 @@ abstract final class ArmeniaPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 
@@ -523,7 +524,7 @@ abstract final class ArmeniaPlates {
     noPanel: true,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 170,
@@ -541,8 +542,8 @@ abstract final class ArmeniaPlates {
       PlateLabel(text: 'ՊՆ', box: PlateBox(40, 27.6, 112, 76), glyphHeight: 76),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
-      PlateTextGroup([4], key: 'class'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'class'),
     ],
   );
 

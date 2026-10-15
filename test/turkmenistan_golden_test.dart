@@ -29,52 +29,52 @@ void main() {
         'classic': (
           TurkmenistanPlates.classic,
           TurkmenistanThemes.classic,
-          'N 2 9 3 8 L B',
+          'N 29 38 LB',
         ),
         'private': (
           TurkmenistanPlates.private,
           TurkmenistanThemes.private,
-          'A T 0 1 2 3 A G',
+          'AT 0123 AG',
         ),
         'trailer': (
           TurkmenistanPlates.trailer,
           TurkmenistanThemes.private,
-          'A G 0 1 2 3 T R',
+          'AG 0123 TR',
         ),
         'foreign': (
           TurkmenistanPlates.foreign,
           TurkmenistanThemes.foreign,
-          '1 H 0 1 2 3 4',
+          '1 H 01234',
         ),
         'foreign_trailer': (
           TurkmenistanPlates.foreignTrailer,
           TurkmenistanThemes.foreign,
-          '1 H T 2 3 4 5',
+          '1 HT 2345',
         ),
         'export': (
           TurkmenistanPlates.export,
           TurkmenistanThemes.foreign,
-          'T D G 0 1 2 3',
+          'TDG 0123',
         ),
         'diplomatic': (
           TurkmenistanPlates.diplomatic,
           TurkmenistanThemes.diplomatic,
-          '0 1 C D 2 3 4',
+          '01 CD 234',
         ),
         'government': (
           TurkmenistanPlates.government,
           TurkmenistanThemes.government,
-          '0 1 2 3 A G A',
+          '0123 AGA',
         ),
         'military': (
           TurkmenistanPlates.military,
           TurkmenistanThemes.government,
-          '0 1 2 3 G M',
+          '0123 GM',
         ),
         'ceremony': (
           TurkmenistanPlates.ceremony,
           TurkmenistanThemes.government,
-          'D A B A R A 1',
+          'DABARA 1',
         ),
       };
 
@@ -105,6 +105,9 @@ void main() {
             ),
           ),
         ),
+      );
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
       );
       await tester.pumpAndSettle();
       await expectLater(

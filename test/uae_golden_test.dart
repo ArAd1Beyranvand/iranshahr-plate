@@ -43,9 +43,10 @@ void main() {
     required String digits,
     required String name,
   }) async {
+    final int codeLength = spec.slots.first.length;
     final values = <String?>[
-      for (var i = 0; i < spec.slotCount; i++)
-        i < digits.length ? digits[i] : '0',
+      digits.substring(0, codeLength),
+      digits.substring(codeLength),
     ];
     final controller = PlateController.fromValues(spec, values);
 

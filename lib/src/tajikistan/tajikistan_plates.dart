@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
+import '../plate_field.dart';
 import 'tajikistan_alphabets.dart';
 import 'tajikistan_country.dart';
 import 'tajikistan_validators.dart';
@@ -72,7 +73,7 @@ abstract final class TajikistanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 72,
@@ -81,7 +82,7 @@ abstract final class TajikistanPlates {
         height: 80,
         pitch: 50,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: TajikistanAlphabets.letters,
         count: 2,
         left: 286,
@@ -90,7 +91,7 @@ abstract final class TajikistanPlates {
         height: 80,
         pitch: 56,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 410,
@@ -101,9 +102,9 @@ abstract final class TajikistanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
-      PlateTextGroup([4, 5], key: 'letters'),
-      PlateTextGroup([6, 7], key: 'region'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'region'),
     ],
   );
 
@@ -124,7 +125,7 @@ abstract final class TajikistanPlates {
       captionScale: 1.6,
     ),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 100,
@@ -133,7 +134,7 @@ abstract final class TajikistanPlates {
         height: 84,
         pitch: 58,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: TajikistanAlphabets.letters,
         count: 2,
         left: 40,
@@ -142,7 +143,7 @@ abstract final class TajikistanPlates {
         height: 82,
         pitch: 68,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 190,
@@ -153,9 +154,9 @@ abstract final class TajikistanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
-      PlateTextGroup([4, 5], key: 'letters'),
-      PlateTextGroup([6, 7], key: 'region'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'region'),
     ],
   );
 
@@ -172,7 +173,7 @@ abstract final class TajikistanPlates {
       captionScale: 1.4,
     ),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 80,
@@ -185,7 +186,7 @@ abstract final class TajikistanPlates {
         alphabet: TajikistanAlphabets.letters,
         box: PlateBox(20, 88, 46, 68),
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 96,
@@ -196,9 +197,9 @@ abstract final class TajikistanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'serial'),
-      PlateTextGroup([3], key: 'letters'),
-      PlateTextGroup([4, 5], key: 'region'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'region'),
     ],
   );
 
@@ -218,7 +219,7 @@ abstract final class TajikistanPlates {
       captionScale: 1.6,
     ),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 100,
@@ -227,7 +228,7 @@ abstract final class TajikistanPlates {
         height: 84,
         pitch: 52,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: TajikistanAlphabets.letters,
         count: 2,
         left: 216,
@@ -236,7 +237,7 @@ abstract final class TajikistanPlates {
         height: 84,
         pitch: 58,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 60,
@@ -247,9 +248,9 @@ abstract final class TajikistanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'region'),
-      PlateTextGroup([2, 3], key: 'letters'),
-      PlateTextGroup([4, 5, 6, 7], key: 'serial'),
+      PlateTextGroup([0], key: 'region'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -266,7 +267,7 @@ abstract final class TajikistanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 72,
@@ -275,7 +276,7 @@ abstract final class TajikistanPlates {
         height: 80,
         pitch: 50,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 410,
@@ -289,8 +290,8 @@ abstract final class TajikistanPlates {
       PlateLabel(text: 'TT', box: PlateBox(288, 18, 96, 74), glyphHeight: 74),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
-      PlateTextGroup([4, 5], key: 'region'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'region'),
     ],
   );
 
@@ -307,7 +308,7 @@ abstract final class TajikistanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 72,
@@ -320,7 +321,7 @@ abstract final class TajikistanPlates {
         alphabet: TajikistanAlphabets.letters,
         box: PlateBox(300, 15, 50, 80),
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 410,
@@ -331,9 +332,9 @@ abstract final class TajikistanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
-      PlateTextGroup([4], key: 'letters'),
-      PlateTextGroup([5, 6], key: 'region'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'region'),
     ],
   );
 
@@ -351,7 +352,7 @@ abstract final class TajikistanPlates {
     noPanel: true,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 60,
@@ -364,7 +365,7 @@ abstract final class TajikistanPlates {
         alphabet: TajikistanAlphabets.letters,
         box: PlateBox(250, 15, 56, 80),
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 330,
@@ -375,9 +376,9 @@ abstract final class TajikistanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'prefix'),
-      PlateTextGroup([3], key: 'letters'),
-      PlateTextGroup([4, 5, 6], key: 'serial'),
+      PlateTextGroup([0], key: 'prefix'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -399,7 +400,7 @@ abstract final class TajikistanPlates {
     noPanel: true,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 40,
@@ -418,9 +419,9 @@ abstract final class TajikistanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'serial'),
-      PlateTextGroup([3], key: 'class'),
-      PlateTextGroup([4], key: 'tail'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'class'),
+      PlateTextGroup([2], key: 'tail'),
     ],
   );
 
@@ -441,7 +442,7 @@ abstract final class TajikistanPlates {
     panel: _euPanel,
     rules: const <PlateRule>[PlateRule(box: PlateBox(360, 10, 5, 90))],
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 40,
@@ -450,7 +451,7 @@ abstract final class TajikistanPlates {
         height: 80,
         pitch: 56,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: TajikistanAlphabets.letters,
         count: 2,
         left: 220,
@@ -459,7 +460,7 @@ abstract final class TajikistanPlates {
         height: 80,
         pitch: 60,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 385,
@@ -473,9 +474,9 @@ abstract final class TajikistanPlates {
       PlateLabel(text: 'RT', box: PlateBox(395, 74, 84, 22), glyphHeight: 20),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'serial'),
-      PlateTextGroup([3, 4], key: 'letters'),
-      PlateTextGroup([5, 6], key: 'region'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'region'),
     ],
   );
 

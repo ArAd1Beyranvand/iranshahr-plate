@@ -30,17 +30,13 @@ void main() {
       expect(ArmeniaPlates.all.map((s) => s.id).toSet(), hasLength(10));
     });
 
-    test('the private number is seven characters in three groups', () {
-      expect(ArmeniaPlates.car.slotCount, 7);
-      expect(ArmeniaPlates.car.indicesOfGroup('region'), hasLength(2));
-      expect(ArmeniaPlates.car.indicesOfGroup('letters'), hasLength(2));
-      expect(ArmeniaPlates.car.indicesOfGroup('serial'), hasLength(3));
+    test('the private number is three fields: region, letters, serial', () {
+      expect(ArmeniaPlates.car.slotCount, 3);
+      expect(ArmeniaPlates.car.slots.map((s) => s.length), [2, 2, 3]);
     });
 
     test('the state number is the same seven characters regrouped', () {
-      expect(ArmeniaPlates.public.slotCount, 7);
-      expect(ArmeniaPlates.public.indicesOfGroup('serial'), hasLength(3));
-      expect(ArmeniaPlates.public.indicesOfGroup('tail'), hasLength(2));
+      expect(ArmeniaPlates.public.slots.map((s) => s.length), [3, 2, 2]);
     });
 
     test('only the 2014 designs carry the identifier band', () {
@@ -154,9 +150,9 @@ void main() {
 
   group('the private number', () {
     List<String?> plate(String region, String letters, String serial) => [
-      ...region.split(''),
-      ...letters.split(''),
-      ...serial.split(''),
+      region,
+      letters,
+      serial,
     ];
 
     test('accepts the plate in the article photographs', () {
@@ -259,9 +255,9 @@ void main() {
 
   group('the state number', () {
     List<String?> plate(String serial, String letters, String tail) => [
-      ...serial.split(''),
-      ...letters.split(''),
-      ...tail.split(''),
+      serial,
+      letters,
+      tail,
     ];
 
     test('accepts a combination from the table', () {
@@ -387,69 +383,41 @@ void main() {
     });
 
     test('the trailer plate takes one letter and two digits under it', () {
-      expect(
-        judge(ArmeniaPlates.trailer, ['2', '9', '0', 'L', '0', '1']).isValid,
-        isTrue,
-      );
-      expect(
-        judge(ArmeniaPlates.trailer, ['2', '9', '0', 'G', '0', '1']).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.trailer, ['290', 'L', '01']).isValid, isTrue);
+      expect(judge(ArmeniaPlates.trailer, ['290', 'G', '01']).isValid, isFalse);
     });
 
     test('a bus is S or L', () {
-      expect(
-        judge(ArmeniaPlates.bus, ['1', '2', '3', '4', 'S']).isValid,
-        isTrue,
-      );
-      expect(
-        judge(ArmeniaPlates.bus, ['1', '2', '3', '4', 'L']).isValid,
-        isTrue,
-      );
+      expect(judge(ArmeniaPlates.bus, ['1234', 'S']).isValid, isTrue);
+      expect(judge(ArmeniaPlates.bus, ['1234', 'L']).isValid, isTrue);
       // Four digits, not three: the class is set, so the number is finished
       // and a short serial is a wrong one rather than an unfinished one.
-      expect(
-        judge(ArmeniaPlates.bus, ['1', '2', '3', null, 'L']).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.bus, ['123', 'L']).isValid, isFalse);
     });
 
     test('a diplomatic plate is D or T', () {
       expect(
-        judge(ArmeniaPlates.diplomatic, ['0', '4', 'D', '0', '5', '7']).isValid,
+        judge(ArmeniaPlates.diplomatic, ['04', 'D', '057']).isValid,
         isTrue,
       );
       expect(
-        judge(ArmeniaPlates.diplomatic, ['0', '4', 'T', '0', '5', '7']).isValid,
+        judge(ArmeniaPlates.diplomatic, ['04', 'T', '057']).isValid,
         isTrue,
       );
       expect(
-        judge(ArmeniaPlates.diplomatic, [
-          '0',
-          '4',
-          null,
-          '0',
-          '5',
-          '7',
-        ]).isValid,
+        judge(ArmeniaPlates.diplomatic, ['04', null, '057']).isValid,
         isFalse,
       );
     });
 
     test('a military plate is four digits and a class', () {
-      expect(
-        judge(ArmeniaPlates.military, ['1', '0', '0', '7', 'M']).isValid,
-        isTrue,
-      );
-      expect(
-        judge(ArmeniaPlates.military, ['1', '0', '7', null, 'M']).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.military, ['1007', 'M']).isValid, isTrue);
+      expect(judge(ArmeniaPlates.military, ['107', 'M']).isValid, isFalse);
     });
 
     test('the UN plate has nothing left to judge but its three digits', () {
-      expect(judge(ArmeniaPlates.un, ['0', '8', '0']).isValid, isTrue);
-      expect(judge(ArmeniaPlates.un, [null, null, null]).isValid, isTrue);
+      expect(judge(ArmeniaPlates.un, ['080']).isValid, isTrue);
+      expect(judge(ArmeniaPlates.un, [null]).isValid, isTrue);
     });
   });
 }

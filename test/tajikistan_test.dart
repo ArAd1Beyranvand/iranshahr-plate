@@ -25,11 +25,8 @@ void main() {
       expect(TajikistanPlates.all.map((s) => s.id).toSet(), hasLength(9));
     });
 
-    test('the private number is eight characters in three groups', () {
-      expect(TajikistanPlates.car.slotCount, 8);
-      expect(TajikistanPlates.car.indicesOfGroup('serial'), hasLength(4));
-      expect(TajikistanPlates.car.indicesOfGroup('letters'), hasLength(2));
-      expect(TajikistanPlates.car.indicesOfGroup('region'), hasLength(2));
+    test('the private number is three fields: serial, letters, region', () {
+      expect(TajikistanPlates.car.slots.map((s) => s.length), [4, 2, 2]);
     });
 
     test('the flagless coloured classes carry no country block', () {
@@ -58,8 +55,8 @@ void main() {
     test('public transport prints its fixed TT and has no letter slots', () {
       expect(TajikistanPlates.publicTransport.labels.single.text, 'TT');
       expect(
-        TajikistanPlates.publicTransport.indicesOfGroup('serial'),
-        hasLength(4),
+        TajikistanPlates.publicTransport.slots.map((s) => s.length),
+        [4, 2],
       );
     });
 
@@ -90,75 +87,37 @@ void main() {
 
   group('validation', () {
     test('a well-formed private plate is accepted', () {
-      expect(
-        judge(TajikistanPlates.car, [
-          '9',
-          '9',
-          '9',
-          '9',
-          'M',
-          'K',
-          '0',
-          '2',
-        ]).isValid,
-        isTrue,
-      );
+      expect(judge(TajikistanPlates.car, ['9999', 'MK', '02']).isValid, isTrue);
     });
 
     test('a region code Tajikistan does not issue is rejected', () {
       expect(
-        judge(TajikistanPlates.car, [
-          '9',
-          '9',
-          '9',
-          '9',
-          'M',
-          'K',
-          '0',
-          '9',
-        ]).isValid,
+        judge(TajikistanPlates.car, ['9999', 'MK', '09']).isValid,
         isFalse,
       );
     });
 
     test('a letter outside the register is rejected', () {
       expect(
-        judge(TajikistanPlates.car, [
-          '9',
-          '9',
-          '9',
-          '9',
-          'Q',
-          'T',
-          '0',
-          '2',
-        ]).isValid,
+        judge(TajikistanPlates.car, ['9999', 'QT', '02']).isValid,
         isFalse,
       );
     });
 
     test('the diplomatic class must be one of the five codes', () {
       expect(
-        judge(TajikistanPlates.diplomatic, ['0', '9', '1', 'CMD', '1']).isValid,
+        judge(TajikistanPlates.diplomatic, ['091', 'CMD', '1']).isValid,
         isTrue,
       );
       expect(
-        judge(TajikistanPlates.diplomatic, ['0', '9', '1', 'D', '1']).isValid,
+        judge(TajikistanPlates.diplomatic, ['091', 'D', '1']).isValid,
         isTrue,
       );
     });
 
     test('the foreign plate takes no region and any three-digit halves', () {
       expect(
-        judge(TajikistanPlates.foreign, [
-          '2',
-          '0',
-          '0',
-          'P',
-          '0',
-          '0',
-          '5',
-        ]).isValid,
+        judge(TajikistanPlates.foreign, ['200', 'P', '005']).isValid,
         isTrue,
       );
     });

@@ -75,27 +75,7 @@ class _Panels {
   /// y of the digit ink's centre.
   final double digitCentre;
 
-  /// Artwork: panels 3.9..176 | 183.4..336.6 | 343.7..516.1, so dividers at
-  /// 179.7 and 340.3, 7 thick (7.4 and 6.7 measured). Digit ink 11.7..162.5
-  /// for `4517` — centres 29.5 / 67.6 / 105 / 147, pitch 38. Letters: `B`
-  /// centre 214, `M` 304.7, panel centre 260, pitch 91 (the ink of `M` is
-  /// wider than `B`'s). Name ink 371.5..494.3, centre 433 (panel centre 430);
-  /// digit ink y centre 56.5.
-  static const _Panels artwork = _Panels(
-    dividerA: 179.7,
-    dividerB: 340.3,
-    thickness: 7,
-    digitsLeft: 10.5,
-    digitPitch: 38,
-    letterCentre: 260,
-    letterPitch: 91,
-    letterCell: 60,
-    nameCentre: 433,
-    nameGlyph: 78,
-    digitCentre: 64,
-  );
-
-  /// Photograph: panels 4.4..221.2 | 224.4..335.8 | 339.3..515.3, dividers at
+  /// The photograph's geometry, the widest of the two sources: panels 4.4..221.2 | 224.4..335.8 | 339.3..515.3, dividers at
   /// 222.8 and 337.5, 3.3 thick. Digits `91169`: first `9` centre 34.3, last
   /// 200.3, so pitch 41.5 — but the left edge is 10.8, not the 13.5 that gives:
   /// a slot shrinks Roboto's `9` to its cell, and 13.5 inked 2.7 right of the
@@ -125,19 +105,23 @@ class _Panels {
 /// lists other classes (government, diplomatic, tractor, export, …) without
 /// artwork, so none is implemented.
 abstract final class OmanPlates {
-  /// `1234 AB`: [digits] (4 or 5) and [letters] (1 or 2). The Latin letters
-  /// are the slots; the Arabic row above is a mirror of them, and reads in the
-  /// opposite order (`BM` prints `م` over `B` and `ب` over `M`). Only four
-  /// digits with two letters, and five with one, are photographed or drawn;
-  /// the others use the same rule.
-  static PlateSpec standard({required int digits, required int letters}) {
-    assert((digits == 4 || digits == 5) && (letters == 1 || letters == 2));
-    final p = digits == 4 ? _Panels.artwork : _Panels.photo;
+  /// `1234 AB`: a number of four or five digits and one or two letters. The
+  /// letters are picked from a list, so each is its own slot, and the plate
+  /// comes in two forms by letter count. The Arabic row above is an editable
+  /// mirror of each letter, and reads in the opposite order (`BM` prints `م`
+  /// over `B` and `ب` over `M`). Four digits with two letters, and five with
+  /// one, are the formats photographed or drawn; the others use the same rule.
+  /// A four-digit number sits centred in the box laid out for five.
+  static final PlateSpec oneLetter = _standard(1);
+  static final PlateSpec twoLetters = _standard(2);
+
+  static PlateSpec _standard(int letters) {
+    const p = _Panels.photo;
     final first = p.letterCentre - (letters - 1) * p.letterPitch / 2;
     double cellLeft(int i) => first + i * p.letterPitch - p.letterCell / 2;
 
     return PlateSpec(
-      id: 'om.d$digits.l$letters',
+      id: 'om.letters$letters',
       country: OmanCountry.oman,
       canvasWidth: _Layout.width,
       canvasHeight: _Layout.height,
@@ -152,28 +136,32 @@ abstract final class OmanPlates {
         const PlatePart(PlateSection.plain),
       ]),
       slots: <PlateSlot>[
-        ...plateRegister(
+        PlateSlot(
           alphabet: OmanAlphabets.digits,
-          count: digits,
-          left: p.digitsLeft,
-          top: p.digitCentre - _Layout.digitHeight / 2,
-          width: p.digitPitch,
-          height: _Layout.digitHeight,
+          box: PlateBox(
+            p.digitsLeft,
+            p.digitCentre - _Layout.digitHeight / 2,
+            5 * p.digitPitch,
+            _Layout.digitHeight,
+          ),
+          length: 5,
+          minLength: 4,
         ),
-        ...plateRegister(
-          alphabet: OmanAlphabets.letters,
-          count: letters,
-          left: cellLeft(0),
-          top: _Layout.latinTop,
-          width: p.letterCell,
-          height: _Layout.latinHeight,
-          pitch: p.letterPitch,
-        ),
+        for (var i = 0; i < letters; i++)
+          PlateSlot(
+            alphabet: OmanAlphabets.letters,
+            box: PlateBox(
+              cellLeft(i),
+              _Layout.latinTop,
+              p.letterCell,
+              _Layout.latinHeight,
+            ),
+          ),
       ],
       mirrors: <PlateMirror>[
         for (var i = 0; i < letters; i++)
           PlateMirror(
-            source: digits + letters - 1 - i,
+            source: letters - i,
             box: PlateBox(
               cellLeft(i),
               _Layout.arabicTop,
@@ -198,25 +186,13 @@ abstract final class OmanPlates {
         ),
       ],
       textGroups: <PlateTextGroup>[
+        const PlateTextGroup(<int>[0], key: 'number'),
         PlateTextGroup(<int>[
-          for (var i = 0; i < digits; i++) i,
-        ], key: 'number'),
-        PlateTextGroup(<int>[
-          for (var i = 0; i < letters; i++) digits + i,
+          for (var i = 0; i < letters; i++) 1 + i,
         ], key: 'letters'),
       ],
     );
   }
 
-  static final PlateSpec fourDigitOneLetter = standard(digits: 4, letters: 1);
-  static final PlateSpec fourDigitTwoLetter = standard(digits: 4, letters: 2);
-  static final PlateSpec fiveDigitOneLetter = standard(digits: 5, letters: 1);
-  static final PlateSpec fiveDigitTwoLetter = standard(digits: 5, letters: 2);
-
-  static final List<PlateSpec> all = <PlateSpec>[
-    fourDigitOneLetter,
-    fourDigitTwoLetter,
-    fiveDigitOneLetter,
-    fiveDigitTwoLetter,
-  ];
+  static final List<PlateSpec> all = <PlateSpec>[oneLetter, twoLetters];
 }

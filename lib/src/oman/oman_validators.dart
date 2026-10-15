@@ -1,6 +1,6 @@
 import 'package:plate_core/plate_core.dart';
 
-/// Every slot filled. The article gives no rule beyond the format, and the
+/// Every field at least at its minimum length. The article gives no rule beyond the format, and the
 /// letter list is incomplete, so nothing else is judged.
 class OmanPlateValidator extends PlateValidator {
   const OmanPlateValidator();
@@ -12,8 +12,10 @@ class OmanPlateValidator extends PlateValidator {
     for (final g in entry.spec.textGroups) {
       final key = g.key;
       if (key == null) continue;
-      if (entry.group(key).length != g.indices.length) {
-        return PlateValidation.invalid('The $key is incomplete.');
+      for (final i in g.indices) {
+        if (!entry.spec.slots[i].isComplete(entry.values[i])) {
+          return PlateValidation.invalid('The $key is incomplete.');
+        }
       }
     }
     return const PlateValidation.valid();

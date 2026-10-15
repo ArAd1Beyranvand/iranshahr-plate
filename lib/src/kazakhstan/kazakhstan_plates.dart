@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart' show AssetImage, EdgeInsets;
 import 'package:plate_alphabet/plate_alphabet.dart';
 import 'package:plate_core/plate_core.dart';
@@ -51,19 +53,22 @@ final class _Run {
   final double firstCx, pitch, inkTop, inkBottom;
 }
 
-List<PlateSlot> _cells(PlateAlphabet alphabet, _Run run, int count) {
+PlateSlot _field(PlateAlphabet alphabet, _Run run, int count) {
   final double centre = (run.inkTop + run.inkBottom) / 2;
   final double fit =
       2 * (centre < _Layout.height - centre ? centre : _Layout.height - centre);
   final double wanted = (run.inkBottom - run.inkTop) / 0.55;
   final double height = wanted < fit ? wanted : fit;
-  return plateRegister(
+  return PlateSlot(
     alphabet: alphabet,
-    count: count,
-    left: run.firstCx - run.pitch / 2,
-    top: centre - height / 2,
-    width: run.pitch,
-    height: height,
+    box: PlateBox(
+      run.firstCx - run.pitch / 2,
+      centre - height / 2,
+      count * run.pitch,
+      height,
+    ),
+    length: count,
+    spacing: max(0, run.pitch - 0.6 * 0.72 * height),
   );
 }
 
@@ -93,13 +98,8 @@ PlateSpec _spec(
   final List<PlateSlot> slots = <PlateSlot>[];
   final List<PlateTextGroup> groups = <PlateTextGroup>[];
   for (final _Register r in registers) {
-    final List<PlateSlot> cells = _cells(r.alphabet, r.run, r.count);
-    groups.add(
-      PlateTextGroup(<int>[
-        for (var i = 0; i < cells.length; i++) slots.length + i,
-      ], key: r.key),
-    );
-    slots.addAll(cells);
+    groups.add(PlateTextGroup(<int>[slots.length], key: r.key));
+    slots.add(_field(r.alphabet, r.run, r.count));
   }
   return PlateSpec(
     id: id,

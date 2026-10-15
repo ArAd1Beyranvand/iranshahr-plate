@@ -17,17 +17,11 @@ import 'qatar_country.dart';
 ///
 /// After the block the plate is plain: `قطر` in the middle distance, then the
 /// serial. Qatar prints up to five digits — single digits belong to the royal
-/// family — and the design does not change with the count, so the three
-/// civilian sizes ([civilian], [civilian4], [civilian3]) are one description
-/// built at three lengths rather than three hand-laid specs. The serial fills
-/// the same room at every length, its figures spreading *and* widening as they
-/// get fewer.
+/// family — and the design does not change with the count, so [civilian] is
+/// one spec whose serial is a field of three to five digits.
 ///
 /// The exception is [motorcycle], which is a different plate and not a shorter
 /// one: near-square, three bands, and no hoist block at all.
-///
-/// `final`, not `const`: the serials are built by [plateRegister], and a `const`
-/// constructor cannot run a loop.
 ///
 /// Every coordinate below is read off the reference photograph on Wikipedia's
 /// "Vehicle registration plates of Qatar" article (1000 × 221 px, scaled to this
@@ -84,61 +78,33 @@ abstract final class QatarPlates {
   static const double _serialLeft = 209;
   static const double _serialRight = 500;
 
-  /// The civilian slots for a serial of [count] digits, spread across the room
-  /// between [_serialLeft] and [_serialRight].
-  ///
-  /// The digits grow as well as spread. A three-digit plate sets its figures
-  /// wider than a five-digit one — this is the Gulf convention, and it is why
-  /// the short serials do not look like a long plate with the tail missing —
-  /// but only up to [_maxGlyphWidth], past which a digit stops reading as one
-  /// of a set and starts reading as a logo.
-  static List<PlateSlot> _civilianSerial(int count) {
-    const maxGlyphWidth = 64.0;
-    const room = _serialRight - _serialLeft;
-    final pitch = room / count;
-    final width = (pitch * 0.87).clamp(0.0, maxGlyphWidth);
-    // Re-centre whatever the width clamp left over, so a short serial sits in
-    // the middle of the room rather than against its left edge.
-    final left = _serialLeft + (room - (pitch * (count - 1) + width)) / 2;
-    return plateRegister(
-      alphabet: PlateAlphabet.latinDigits,
-      count: count,
-      left: left,
-      top: 20,
-      width: width,
-      height: 68,
-      pitch: pitch,
-    );
-  }
+  /// The civilian serial: one field of three to five digits across the room
+  /// between [_serialLeft] and [_serialRight]. A shorter serial sits centred
+  /// in it, its figures set at the same size.
+  static const PlateSlot _civilianSerial = PlateSlot(
+    alphabet: PlateAlphabet.latinDigits,
+    box: PlateBox(_serialLeft, 20, _serialRight - _serialLeft, 68),
+    length: 5,
+    minLength: 3,
+  );
 
-  /// One civilian plate (520 × 110): the maroon hoist block, `قطر`, then a
-  /// serial of [count] digits. The furniture is identical at every length —
-  /// only the serial changes — so this builds all three from one description.
-  static PlateSpec _civilian(String id, int count) => PlateSpec(
-    id: id,
+  /// The civilian plate (520 × 110): the maroon hoist block, `قطر`, then a
+  /// serial of three to five digits — the longest Qatar issues, and the
+  /// everyday registration at five. The article notes single digits are the
+  /// royal family's, so three is the shortest an ordinary registration reaches.
+  static final PlateSpec civilian = PlateSpec(
+    id: 'qa.civilian',
     country: QatarCountry.civilian,
     canvasWidth: 520,
     canvasHeight: 110,
     panel: _hoist,
     background: _hoistBackground,
-    slots: _civilianSerial(count),
+    slots: const <PlateSlot>[_civilianSerial],
     labels: const [_qatarLetters, _qatarArabic],
-    textGroups: [
-      PlateTextGroup(List<int>.generate(count, (i) => i), key: 'serial'),
+    textGroups: const [
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
-
-  /// The five-digit civilian plate: the longest Qatar issues, and the everyday
-  /// registration.
-  static final PlateSpec civilian = _civilian('qa.civilian', 5);
-
-  /// The four-digit civilian plate.
-  static final PlateSpec civilian4 = _civilian('qa.civilian4', 4);
-
-  /// The three-digit civilian plate: the shortest Qatar issues, and — the
-  /// article notes single digits are the royal family's — the shortest an
-  /// ordinary registration reaches.
-  static final PlateSpec civilian3 = _civilian('qa.civilian3', 3);
 
   /// The motorcycle plate (300 × 220): near-square, and the one civilian
   /// design with no maroon block on it at all.
@@ -156,15 +122,12 @@ abstract final class QatarPlates {
     canvasHeight: 220,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), flagScale: 0),
-    slots: [
-      ...plateRegister(
+    slots: const [
+      PlateSlot(
         alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: 22,
-        top: 62,
-        width: 46,
-        height: 94,
-        pitch: 52,
+        box: PlateBox(22, 62, 4 * 52 + 46, 94),
+        length: 5,
+        spacing: 11.4,
       ),
     ],
     labels: const [
@@ -179,7 +142,7 @@ abstract final class QatarPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3, 4], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 
@@ -197,15 +160,12 @@ abstract final class QatarPlates {
     canvasHeight: 165,
     noPanel: true,
     panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), flagScale: 0),
-    slots: [
-      ...plateRegister(
+    slots: const [
+      PlateSlot(
         alphabet: PlateAlphabet.latinDigits,
-        count: 4,
-        left: 88,
-        top: 18,
-        width: 38,
-        height: 56,
-        pitch: 42,
+        box: PlateBox(88, 18, 3 * 42 + 38, 56),
+        length: 4,
+        spacing: 17.8,
       ),
     ],
     // The white rules the real plate is ruled with: the box around the serial
@@ -230,20 +190,14 @@ abstract final class QatarPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 
-  /// The civilian car plate at each length Qatar issues, longest first. A host
-  /// that lets someone pick a serial length walks this.
-  static final List<PlateSpec> civilianSizes = List<PlateSpec>.unmodifiable(
-    <PlateSpec>[civilian, civilian4, civilian3],
-  );
-
   /// Every Qatari design, in the order they are introduced above. A picker
-  /// iterates this rather than naming five constants.
+  /// iterates this rather than naming three constants.
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
-    ...civilianSizes,
+    civilian,
     motorcycle,
     police,
   ]);

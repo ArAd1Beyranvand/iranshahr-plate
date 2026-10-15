@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:plate_core/plate_core.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +44,13 @@ void main() {
     required String digits,
     required String name,
   }) async {
+    var at = 0;
     final values = <String?>[
-      for (var i = 0; i < spec.slotCount; i++)
-        i < digits.length ? digits[i] : '0',
+      for (final slot in spec.slots)
+        if (at < digits.length)
+          digits.substring(at, at = math.min(at + slot.length, digits.length))
+        else
+          '0' * slot.length,
     ];
     final controller = PlateController.fromValues(spec, values);
 

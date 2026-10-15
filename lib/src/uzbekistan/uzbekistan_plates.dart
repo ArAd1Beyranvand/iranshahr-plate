@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 import 'package:plate_alphabet/plate_alphabet.dart';
@@ -82,20 +84,19 @@ abstract final class _Layout {
 
 /// The designs, in colours the host's `UzbekistanThemes` supplies.
 abstract final class UzbekistanPlates {
-  static List<PlateSlot> _across(
+  /// One field of [count] cells printed from [left] to [right].
+  static PlateSlot _across(
     PlateAlphabet a,
     int count,
     double left,
     double right,
     double top,
     double height,
-  ) => plateRegisterAcross(
+  ) => PlateSlot(
     alphabet: a,
-    count: count,
-    left: left,
-    right: right,
-    top: top,
-    height: height,
+    box: PlateBox(left, top, right - left, height),
+    length: count,
+    spacing: max(0, (right - left) / count - 0.6 * 0.72 * height),
   );
 
   static PlateSlot _cell(
@@ -130,7 +131,7 @@ abstract final class UzbekistanPlates {
     panel: _Layout.passengerPanel,
     background: _split(_Layout.passengerDivider),
     slots: [
-      ..._across(
+      _across(
         UzbekistanAlphabets.digits,
         2,
         33.8,
@@ -145,7 +146,7 @@ abstract final class UzbekistanPlates {
         _Layout.passengerTop,
         _Layout.passengerHeight,
       ),
-      ..._across(
+      _across(
         UzbekistanAlphabets.digits,
         3,
         207.3,
@@ -153,7 +154,7 @@ abstract final class UzbekistanPlates {
         _Layout.passengerTop,
         _Layout.passengerHeight,
       ),
-      ..._across(
+      _across(
         UzbekistanAlphabets.letters,
         2,
         345,
@@ -163,10 +164,10 @@ abstract final class UzbekistanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'region'),
-      PlateTextGroup([2], key: 'series', prefix: ' '),
-      PlateTextGroup([3, 4, 5], key: 'serial'),
-      PlateTextGroup([6, 7], key: 'letters'),
+      PlateTextGroup([0], key: 'region'),
+      PlateTextGroup([1], key: 'series', prefix: ' '),
+      PlateTextGroup([2], key: 'serial'),
+      PlateTextGroup([3], key: 'letters'),
     ],
   );
 
@@ -204,20 +205,16 @@ abstract final class UzbekistanPlates {
       panel: _Layout.none,
       noPanel: true,
       background: _split(dividerAt),
-      slots: regionFirst ? [...region, ...digits] : [...digits, ...region],
+      slots: regionFirst ? [region, digits] : [digits, region],
       labels: [_prefix(prefix, prefixCentre, 50)],
       textGroups: regionFirst
           ? [
-              const PlateTextGroup([0, 1], key: 'region'),
-              PlateTextGroup(
-                [2, 3, 4, 5, 6, 7],
-                key: 'serial',
-                prefix: '$prefix ',
-              ),
+              const PlateTextGroup([0], key: 'region'),
+              PlateTextGroup([1], key: 'serial', prefix: '$prefix '),
             ]
           : [
-              PlateTextGroup([0, 1, 2, 3, 4, 5], key: 'serial', prefix: prefix),
-              const PlateTextGroup([6, 7], key: 'region', prefix: ' '),
+              PlateTextGroup([0], key: 'serial', prefix: prefix),
+              const PlateTextGroup([1], key: 'region', prefix: ' '),
             ],
     );
   }
@@ -267,6 +264,7 @@ abstract final class UzbekistanPlates {
     required double digitsRight,
   }) {
     final n = status.length;
+    final middle = (digitsLeft + digitsRight) / 2;
     return PlateSpec(
       id: id,
       country: UzbekistanCountry.uzbekistan,
@@ -276,10 +274,18 @@ abstract final class UzbekistanPlates {
       noPanel: true,
       slots: [
         ...status,
-        ..._across(
+        _across(
           UzbekistanAlphabets.digits,
-          6,
+          3,
           digitsLeft,
+          middle,
+          _Layout.rowTop,
+          _Layout.rowHeight,
+        ),
+        _across(
+          UzbekistanAlphabets.digits,
+          3,
+          middle,
           digitsRight,
           _Layout.rowTop,
           _Layout.rowHeight,
@@ -287,18 +293,9 @@ abstract final class UzbekistanPlates {
       ],
       labels: labels,
       textGroups: [
-        if (n > 0)
-          PlateTextGroup([for (var i = 0; i < n; i++) i], key: 'status'),
-        PlateTextGroup(
-          [for (var i = 0; i < 3; i++) n + i],
-          key: 'mission',
-          prefix: n > 0 ? '' : 'CMD',
-        ),
-        PlateTextGroup(
-          [for (var i = 3; i < 6; i++) n + i],
-          key: 'serial',
-          prefix: ' ',
-        ),
+        if (n > 0) PlateTextGroup([0], key: 'status'),
+        PlateTextGroup([n], key: 'mission', prefix: n > 0 ? '' : 'CMD'),
+        PlateTextGroup([n + 1], key: 'serial', prefix: ' '),
       ],
       restrictions: const [UzbekistanMissions.restriction],
     );
@@ -341,17 +338,19 @@ abstract final class UzbekistanPlates {
     canvasHeight: _Layout.height,
     panel: _Layout.none,
     noPanel: true,
-    slots: _across(
-      UzbekistanAlphabets.digits,
-      4,
-      216,
-      405.2,
-      _Layout.rowTop,
-      _Layout.rowHeight,
-    ),
+    slots: [
+      _across(
+        UzbekistanAlphabets.digits,
+        4,
+        216,
+        405.2,
+        _Layout.rowTop,
+        _Layout.rowHeight,
+      ),
+    ],
     labels: [_prefix('UN', 148.5, 100)],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial', prefix: 'UN'),
+      PlateTextGroup([0], key: 'serial', prefix: 'UN'),
     ],
   );
 
@@ -390,14 +389,14 @@ abstract final class UzbekistanPlates {
     panel: _Layout.trailerPanel,
     background: _trailerBackground,
     slots: [
-      ..._across(UzbekistanAlphabets.digits, 4, 41.6, 218.2, 2.2, 70),
-      ..._across(UzbekistanAlphabets.letters, 2, 33, 125, 70, 82),
-      ..._across(UzbekistanAlphabets.digits, 2, 154.7, 224.7, 63.8, 85),
+      _across(UzbekistanAlphabets.digits, 4, 41.6, 218.2, 2.2, 70),
+      _across(UzbekistanAlphabets.letters, 2, 33, 125, 70, 82),
+      _across(UzbekistanAlphabets.digits, 2, 154.7, 224.7, 63.8, 85),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
-      PlateTextGroup([4, 5], key: 'letters', prefix: ' '),
-      PlateTextGroup([6, 7], key: 'region', prefix: ' '),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters', prefix: ' '),
+      PlateTextGroup([2], key: 'region', prefix: ' '),
     ],
   );
 
@@ -427,14 +426,14 @@ abstract final class UzbekistanPlates {
       ),
     ]),
     slots: [
-      ..._across(UzbekistanAlphabets.digits, 3, 12.2, 118.8, 2, 75),
-      ..._across(UzbekistanAlphabets.letters, 2, 36.4, 107.6, 67, 90),
-      ..._across(UzbekistanAlphabets.digits, 2, 142.2, 187, 11, 51),
+      _across(UzbekistanAlphabets.digits, 3, 12.2, 118.8, 2, 75),
+      _across(UzbekistanAlphabets.letters, 2, 36.4, 107.6, 67, 90),
+      _across(UzbekistanAlphabets.digits, 2, 142.2, 187, 11, 51),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'serial'),
-      PlateTextGroup([3, 4], key: 'letters', prefix: ' '),
-      PlateTextGroup([5, 6], key: 'region', prefix: ' '),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'letters', prefix: ' '),
+      PlateTextGroup([2], key: 'region', prefix: ' '),
     ],
   );
 }

@@ -1,6 +1,7 @@
 import 'package:plate_core/plate_core.dart';
 import 'package:flutter/widgets.dart';
 
+import '../plate_field.dart';
 import 'kuwait_colors.dart';
 import 'kuwait_country.dart';
 
@@ -107,14 +108,16 @@ abstract final class KuwaitPlates {
       canvasHeight: _Layout.height,
       noPanel: true,
       panel: _noPanel,
-      slots: plateRegisterAcross(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 5,
-        left: faceLeft,
-        right: _Layout.faceRight,
-        top: _Layout.serialTop,
-        height: _Layout.serialHeight,
-      ),
+      slots: <PlateSlot>[
+        plateField(
+          alphabet: PlateAlphabet.latinDigits,
+          count: 5,
+          left: faceLeft,
+          width: (_Layout.faceRight - faceLeft) / 5,
+          top: _Layout.serialTop,
+          height: _Layout.serialHeight,
+        ),
+      ],
       background: band ? _bandBackground : PlateSection.plain,
       labels: <PlateLabel>[
         if (band) _kuwaitLabel(captionColor),
@@ -133,7 +136,7 @@ abstract final class KuwaitPlates {
         ),
       ],
       textGroups: const <PlateTextGroup>[
-        PlateTextGroup([0, 1, 2, 3, 4], key: 'serial'),
+        PlateTextGroup([0], key: 'serial'),
       ],
     );
   }
@@ -161,7 +164,7 @@ abstract final class KuwaitPlates {
       noPanel: true,
       panel: _noPanel,
       slots: <PlateSlot>[
-        ...plateRegister(
+        plateField(
           alphabet: PlateAlphabet.latinDigits,
           count: 2,
           left: _Layout.classLeft,
@@ -175,8 +178,8 @@ abstract final class KuwaitPlates {
       background: base.background,
       labels: base.labels,
       textGroups: const <PlateTextGroup>[
-        PlateTextGroup([0, 1], key: 'class'),
-        PlateTextGroup([2, 3, 4, 5, 6], key: 'serial'),
+        PlateTextGroup([0], key: 'class'),
+        PlateTextGroup([1], key: 'serial'),
       ],
     );
   }
@@ -216,7 +219,7 @@ abstract final class KuwaitPlates {
     noPanel: true,
     panel: _noPanel,
     slots: <PlateSlot>[
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 158,
@@ -225,7 +228,7 @@ abstract final class KuwaitPlates {
         height: 82,
         pitch: 58,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 5,
         left: 288,
@@ -249,8 +252,8 @@ abstract final class KuwaitPlates {
       PlateLabel(text: '-', box: PlateBox(266, 14, 20, 82), glyphHeight: 70),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup([0, 1], key: 'class'),
-      PlateTextGroup([2, 3, 4, 5, 6], key: 'serial'),
+      PlateTextGroup([0], key: 'class'),
+      PlateTextGroup([1], key: 'serial'),
     ],
   );
 
@@ -271,14 +274,16 @@ abstract final class KuwaitPlates {
     canvasHeight: _Layout.height,
     noPanel: true,
     panel: _noPanel,
-    slots: plateRegisterAcross(
-      alphabet: PlateAlphabet.latinDigits,
-      count: 5,
-      left: _Layout.faceLeft,
-      right: _Layout.faceRight,
-      top: _Layout.serialTop,
-      height: _Layout.serialHeight,
-    ),
+    slots: <PlateSlot>[
+      plateField(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 5,
+        left: _Layout.faceLeft,
+        width: (_Layout.faceRight - _Layout.faceLeft) / 5,
+        top: _Layout.serialTop,
+        height: _Layout.serialHeight,
+      ),
+    ],
     background: _bandBackground,
     labels: <PlateLabel>[
       _kuwaitLabel(null),
@@ -294,7 +299,7 @@ abstract final class KuwaitPlates {
       ),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup([0, 1, 2, 3, 4], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 
@@ -321,7 +326,7 @@ abstract final class KuwaitPlates {
       ),
     ],
     slots: <PlateSlot>[
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 55,
@@ -330,7 +335,7 @@ abstract final class KuwaitPlates {
         height: _diplomaticSerialHeight,
         pitch: _diplomaticPitch,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 55 + 4 * _diplomaticPitch,
@@ -366,8 +371,8 @@ abstract final class KuwaitPlates {
       ),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup([0, 1, 2], key: 'class'),
-      PlateTextGroup([3, 4, 5], key: 'serial'),
+      PlateTextGroup([0], key: 'class'),
+      PlateTextGroup([1], key: 'serial'),
     ],
   );
 
@@ -499,11 +504,11 @@ abstract final class KuwaitPlates {
     noPanel: true,
     panel: _noPanel,
     slots: <PlateSlot>[
-      ...plateRegisterAcross(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: _Layout.squareFaceLeft,
-        right: _Layout.squareFaceRight,
+        width: (_Layout.squareFaceRight - _Layout.squareFaceLeft) / 4,
         top: 52,
         height: 42,
       ),
@@ -527,8 +532,8 @@ abstract final class KuwaitPlates {
       ),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
-      PlateTextGroup([4], key: 'class'),
+      PlateTextGroup([0], key: 'serial'),
+      PlateTextGroup([1], key: 'class'),
     ],
   );
 
@@ -540,14 +545,16 @@ abstract final class KuwaitPlates {
     canvasHeight: _Layout.squareSide,
     noPanel: true,
     panel: _noPanel,
-    slots: plateRegisterAcross(
-      alphabet: PlateAlphabet.latinDigits,
-      count: 4,
-      left: _Layout.squareFaceLeft,
-      right: _Layout.squareFaceRight,
-      top: 52,
-      height: 38,
-    ),
+    slots: <PlateSlot>[
+      plateField(
+        alphabet: PlateAlphabet.latinDigits,
+        count: 4,
+        left: _Layout.squareFaceLeft,
+        width: (_Layout.squareFaceRight - _Layout.squareFaceLeft) / 4,
+        top: 52,
+        height: 38,
+      ),
+    ],
     background: _squareBackground,
     labels: <PlateLabel>[
       _squareKuwaitLabel,
@@ -563,7 +570,7 @@ abstract final class KuwaitPlates {
       ),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 

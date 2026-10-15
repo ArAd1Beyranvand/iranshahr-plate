@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
+import '../plate_field.dart';
 import 'bahrain_colors.dart';
 import 'bahrain_country.dart';
 
@@ -25,11 +26,6 @@ import 'bahrain_country.dart';
 ///    coloured bands carry their own [PlateLabel.color], because the band's ink
 ///    is not the serial's.
 ///
-/// `final`, not `const`: the serials are built by [plateRegister], and a
-/// `const` constructor cannot run a loop. Initialised lazily, once per isolate;
-/// [PlateSpec] equality is over `id` alone, so nothing here depended on const
-/// canonicalisation.
-///
 /// Every coordinate below is sampled by eye from plate photographs and is a
 /// calibration target.
 abstract final class BahrainPlates {
@@ -49,7 +45,7 @@ abstract final class BahrainPlates {
       padding: EdgeInsets.zero,
     ),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 6,
         left: 80,
@@ -83,7 +79,7 @@ abstract final class BahrainPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3, 4, 5], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 
@@ -100,7 +96,7 @@ abstract final class BahrainPlates {
       padding: EdgeInsets.zero,
     ),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 6,
         left: 16,
@@ -128,7 +124,7 @@ abstract final class BahrainPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3, 4, 5], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 
@@ -146,7 +142,7 @@ abstract final class BahrainPlates {
       padding: EdgeInsets.zero,
     ),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 34,
@@ -174,7 +170,7 @@ abstract final class BahrainPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 
@@ -211,7 +207,7 @@ abstract final class BahrainPlates {
     ),
     background: _headBand(54),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 60,
@@ -248,7 +244,7 @@ abstract final class BahrainPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 
@@ -270,7 +266,7 @@ abstract final class BahrainPlates {
     ),
     background: _headBand(44),
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 4,
         left: 40,
@@ -297,7 +293,7 @@ abstract final class BahrainPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2, 3], key: 'serial'),
+      PlateTextGroup([0], key: 'serial'),
     ],
   );
 

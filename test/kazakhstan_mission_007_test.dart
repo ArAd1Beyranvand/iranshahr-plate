@@ -6,7 +6,11 @@ import 'package:plate_core/plate_core.dart';
 void main() {
   const String notFound = 'COUNTRY NOT FOUND';
   final PlateSpec spec = KazakhstanPlates.diplomatic;
-  List<String?> values(String s) => s.split('');
+  List<String?> values(String s) => <String?>[
+    s[0],
+    s.substring(1, 4),
+    s.substring(4),
+  ];
 
   test('registry: name() throws, all omits it', () {
     expect(
@@ -23,14 +27,15 @@ void main() {
   });
 
   test('controller refuses 007', () {
-    final PlateController c = PlateController.fromValues(
-      spec,
-      values('D00_618'),
-    );
-    expect(c.setAt(3, '7'), isFalse);
+    final PlateController c = PlateController.fromValues(spec, <String?>[
+      'D',
+      '00',
+      '618',
+    ]);
+    expect(c.setAt(1, '007'), isFalse);
     expect(c.rejection.value?.reason, notFound);
     expect(c.setGroup('mission', '007'), isFalse);
-    expect(c.setAt(3, '8'), isTrue);
+    expect(c.setAt(1, '008'), isTrue);
     c.dispose();
   });
 

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart' show AssetImage, EdgeInsets;
 import 'package:plate_alphabet/plate_alphabet.dart';
 import 'package:plate_core/plate_core.dart';
@@ -14,7 +16,7 @@ import 'turkmenistan_country.dart';
 /// last, so a narrow `1` sits a few units off its cell, as the typeface sets it.
 ///
 /// A slot's ink is about 55% of its box height (`glyphStyle` is 0.72 of the
-/// box, a bold cap 0.75 of that), so [_cells] boxes each register at
+/// box, a bold cap 0.75 of that), so [_field] boxes each register at
 /// ink / 0.55 centred on the measured ink, and shrinks it where it would leave
 /// the canvas. The yellow and classic plates' ~80 of ink would need a box of
 /// 145 on a 110-high plate and land near 59 (about 74%); the others fit
@@ -111,7 +113,7 @@ abstract final class _Layout {
   static const PlateBox crescent = PlateBox(58.6, 12.8, 52.1, 47.4);
 }
 
-/// One register's cells: the first at [firstCx], each [pitch] wide and apart,
+/// One register as a single field: the first at [firstCx], each [pitch] wide and apart,
 /// with the ink spanning [inkTop]–[inkBottom].
 final class _Run {
   const _Run(this.firstCx, this.pitch, this.inkTop, this.inkBottom);
@@ -127,24 +129,27 @@ final class _Ink {
 /// A named register, so the text groups come out of the order it is listed in.
 final class _Register {
   _Register(this.key, PlateAlphabet alphabet, _Run run, int count)
-    : slots = _cells(alphabet, run, count);
+    : slot = _field(alphabet, run, count);
   final String key;
-  final List<PlateSlot> slots;
+  final PlateSlot slot;
 }
 
-List<PlateSlot> _cells(PlateAlphabet alphabet, _Run run, int count) {
+PlateSlot _field(PlateAlphabet alphabet, _Run run, int count) {
   final double centre = (run.inkTop + run.inkBottom) / 2;
   final double room = _Layout.height - centre;
   final double fit = 2 * (centre < room ? centre : room);
   final double wanted = (run.inkBottom - run.inkTop) / 0.55;
   final double height = wanted < fit ? wanted : fit;
-  return plateRegister(
+  return PlateSlot(
     alphabet: alphabet,
-    count: count,
-    left: run.firstCx - run.pitch / 2,
-    top: centre - height / 2,
-    width: run.pitch,
-    height: height,
+    box: PlateBox(
+      run.firstCx - run.pitch / 2,
+      centre - height / 2,
+      run.pitch * count,
+      height,
+    ),
+    length: count,
+    spacing: count == 1 ? 0 : max(0, run.pitch - 0.6 * 0.72 * height),
   );
 }
 
@@ -187,12 +192,8 @@ PlateSpec _spec(String id, _Badge badge, List<_Register> registers) {
   final List<PlateSlot> slots = <PlateSlot>[];
   final List<PlateTextGroup> groups = <PlateTextGroup>[];
   for (final _Register r in registers) {
-    groups.add(
-      PlateTextGroup(<int>[
-        for (var i = 0; i < r.slots.length; i++) slots.length + i,
-      ], key: r.key),
-    );
-    slots.addAll(r.slots);
+    groups.add(PlateTextGroup(<int>[slots.length], key: r.key));
+    slots.add(r.slot);
   }
   return PlateSpec(
     id: id,
@@ -256,7 +257,7 @@ final _Badge _greenBadge = _Badge(const <PlateDecal>[
 /// Not implemented: the 1980–1993 Soviet `к 3361 АШ` plates (Cyrillic,
 /// superseded). The screw heads in the photographs are not drawn. The groups
 /// of digits the plates print as pairs (`01 23`) are one evenly pitched
-/// register, so the gap between the pairs is not reproduced. The article gives
+/// field, so the gap between the pairs is not reproduced. The article gives
 /// no text for the trailer, military or ceremony plates; their registers
 /// follow the pictures. The ceremony word is typed, not fixed.
 abstract final class TurkmenistanPlates {

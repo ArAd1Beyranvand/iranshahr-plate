@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
+import '../plate_field.dart';
 import 'afghanistan_alphabets.dart';
 import 'afghanistan_colors.dart';
 import 'afghanistan_provinces.dart';
 
 /// Afghan plates: class (Persian letter over Latin code), serial (3–6 figures,
 /// above/below), province (name, emblem, code). Province is a [PlateCountry]
-/// (varies at runtime). Eleven specs only where *shape* changes: serial count,
-/// Kabul6 extra digit, diplomatic/governmental/UN no-class forms, temporary's
+/// (varies at runtime). Specs only where *shape* changes: Kabul6 extra digit, diplomatic/governmental/UN no-class forms, temporary's
 /// two inks, international's Latin-only row. Geometry calibrated by eye from
 /// Wikipedia; 420×175 mm full-size, 265×105 mm two-wheeler. `final` not `const`.
 abstract final class AfghanistanPlates {
@@ -30,26 +30,10 @@ abstract final class AfghanistanPlates {
   static const double _lowerTop = 82;
   static const double _bandHeight = 78;
 
-  /// The right-hand edge of the serial, shared by every full-size design. The
-  /// serial's *left* edge moves with how many figures it has — fewer figures
-  /// are set wider apart at the same size, which is what the photographs show —
-  /// so [_serialLeft] computes it and this stays put.
+  /// The serial's edges on a full-size plate. One field box spans them for the
+  /// longest run; a shorter run sits centred in it.
+  static const double _serialLeft = 106;
   static const double _serialRight = 310;
-
-  /// Where a serial of [count] figures starts.
-  ///
-  /// Three values and not a formula, because the block does not scale with the
-  /// serial and no arithmetic over `count` says so honestly: 60 units per
-  /// figure at three, 48 at four, 41 at five. Figures are set at one size and
-  /// spread to fill, so a three-figure plate reads wider-spaced rather than
-  /// bigger — which is what the Takhar, Zabul and Herat photographs show. The
-  /// left edge also has [_panel]'s 100 to clear, and a formula that looked
-  /// tidy ran under it at five.
-  static double _serialLeft(int count) => switch (count) {
-    3 => 130,
-    4 => 118,
-    _ => 106,
-  };
 
   /// The province block: the name, the emblem and the code, printed straight
   /// onto the field.
@@ -89,43 +73,43 @@ abstract final class AfghanistanPlates {
     alphabet: AfghanistanAlphabets.classLatin,
   );
 
-  /// Serial: [count] Latin lower, Iranian mirrors upper (editable).
-  static List<PlateSlot> _serialSlots(int count) => plateRegisterAcross(
+  /// Serial: [count] Latin figures lower, one field; the Iranian echo is above.
+  static PlateSlot _serial(
+    int count, {
+    double left = _serialLeft,
+    int? minLength,
+  }) => plateField(
     alphabet: AfghanistanAlphabets.digits,
     count: count,
-    left: _serialLeft(count),
-    right: _serialRight,
+    left: left,
+    width: (_serialRight - left) / count,
     top: _lowerTop,
     height: _bandHeight,
+    minLength: minLength,
   );
 
-  static List<PlateMirror> _serialEcho(int count, {int from = 0}) {
-    final left = _serialLeft(count);
-    final cell = (_serialRight - left) / count;
-    return plateEcho(
-      sources: <int>[for (var i = 0; i < count; i++) from + i],
-      left: left,
-      top: _upperTop,
-      width: cell,
-      height: _bandHeight,
-      alphabet: AfghanistanAlphabets.iranianDigits,
-      editable: true,
-    );
-  }
+  static PlateMirror _serialEcho(int source, {double left = _serialLeft}) =>
+      PlateMirror(
+        source: source,
+        box: PlateBox(left, _upperTop, _serialRight - left, _bandHeight),
+        glyphHeight: _bandHeight,
+        alphabet: AfghanistanAlphabets.iranianDigits,
+        editable: true,
+      );
 
-  /// Ordinary plate: [count] figures, class register, province block.
-  static PlateSpec _car(int count) => PlateSpec(
-    id: 'af.car$count',
+  /// Ordinary plate: three to five figures, class register, province block.
+  static final PlateSpec car = PlateSpec(
+    id: 'af.car',
     country: _defaultProvince,
     canvasWidth: _width,
     canvasHeight: _height,
     textDirection: TextDirection.rtl,
     panel: _panel,
-    slots: <PlateSlot>[..._serialSlots(count), ..._classSlot],
-    mirrors: <PlateMirror>[..._serialEcho(count), _classMirror(count)],
-    textGroups: <PlateTextGroup>[
-      PlateTextGroup(<int>[count], key: 'class'),
-      PlateTextGroup(<int>[for (var i = 0; i < count; i++) i], key: 'serial'),
+    slots: <PlateSlot>[_serial(5, minLength: 3), ..._classSlot],
+    mirrors: <PlateMirror>[_serialEcho(0), _classMirror(1)],
+    textGroups: const <PlateTextGroup>[
+      PlateTextGroup(<int>[1], key: 'class'),
+      PlateTextGroup(<int>[0], key: 'serial'),
     ],
   );
 
@@ -137,16 +121,6 @@ abstract final class AfghanistanPlates {
   /// province the vehicle is registered in.
   static final PlateCountry _defaultProvince = AfghanistanProvince.kabul
       .country();
-
-  /// A three-figure plate, e.g. Takhar `١٢٣` / `123`.
-  static final PlateSpec car3 = _car(3);
-
-  /// A four-figure plate, e.g. Zabul `١٢٣٤` / `1234`.
-  static final PlateSpec car4 = _car(4);
-
-  /// A five-figure plate, e.g. Herat `١٢٣٤٦` / `12346` — the longest an
-  /// ordinary province issues.
-  static final PlateSpec car5 = _car(5);
 
   /// Kabul's six-figure plate: a five-figure serial, and a sixth figure set
   /// apart ahead of it between two hyphens.
@@ -161,7 +135,7 @@ abstract final class AfghanistanPlates {
   ///
   /// It is the plate's most significant figure, so it leads [textGroups]' serial
   /// group. The five that follow have their own register at a tighter left edge
-  /// than [car5]'s, to make room for it.
+  /// than [car]'s, to make room for it.
   static final PlateSpec kabul6 = PlateSpec(
     id: 'af.kabul6',
     country: _defaultProvince,
@@ -174,28 +148,10 @@ abstract final class AfghanistanPlates {
         alphabet: AfghanistanAlphabets.iranianDigits,
         box: PlateBox(106, 46, 44, 74),
       ),
-      ...plateRegisterAcross(
-        alphabet: AfghanistanAlphabets.digits,
-        count: 5,
-        left: 154,
-        right: _serialRight,
-        top: _lowerTop,
-        height: _bandHeight,
-      ),
+      _serial(5, left: 154),
       ..._classSlot,
     ],
-    mirrors: <PlateMirror>[
-      ...plateEcho(
-        sources: const <int>[1, 2, 3, 4, 5],
-        left: 154,
-        top: _upperTop,
-        width: (_serialRight - 154) / 5,
-        height: _bandHeight,
-        alphabet: AfghanistanAlphabets.iranianDigits,
-        editable: true,
-      ),
-      _classMirror(6),
-    ],
+    mirrors: <PlateMirror>[_serialEcho(1, left: 154), _classMirror(2)],
     // The two hyphens that bracket the extra figure. Labels and not rules: a
     // hyphen is a character, printed in the serial's own ink at the serial's
     // own size, where a PlateRule takes the theme's divider colour and would
@@ -205,8 +161,8 @@ abstract final class AfghanistanPlates {
       PlateLabel(text: '-', box: PlateBox(106, 124, 44, 38), glyphHeight: 38),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[6], key: 'class'),
-      PlateTextGroup(<int>[0, 1, 2, 3, 4, 5], key: 'serial'),
+      PlateTextGroup(<int>[2], key: 'class'),
+      PlateTextGroup(<int>[0, 1], key: 'serial'),
     ],
   );
 
@@ -229,68 +185,55 @@ abstract final class AfghanistanPlates {
     captionScale: 1.8,
   );
 
-  /// A two-wheeler plate with [count] figures: a motorcycle (`م`/`M`) at three,
-  /// a rickshaw (`ر`/`TRC`) at four.
-  ///
-  /// The same three columns as [_car] on a plate two-thirds the width, and the
-  /// same rule about what is and is not a spec: which of the two vehicles this
-  /// is is a value in the class register, so both share whichever of
-  /// [cycle3]/[cycle4] matches their serial length.
-  static PlateSpec _cycle(int count) {
-    // 82 at three figures, 70 at four — the same "spread, don't grow" rule as
-    // [_serialLeft], against [_cyclePanel]'s right edge of 64.
-    final left = count == 3 ? 82.0 : 70.0;
-    final cell = (_cycleSerialRight - left) / count;
-    return PlateSpec(
-      id: 'af.cycle$count',
-      country: _defaultProvince,
-      canvasWidth: _cycleWidth,
-      canvasHeight: _cycleHeight,
-      textDirection: TextDirection.rtl,
-      panel: _cyclePanel,
-      slots: <PlateSlot>[
-        ...plateRegisterAcross(
-          alphabet: AfghanistanAlphabets.digits,
-          count: count,
-          left: left,
-          right: _cycleSerialRight,
-          top: _cycleLowerTop,
-          height: _cycleBandHeight,
+  /// The two-wheeler plate: three figures for a motorcycle (`م`/`M`), four for
+  /// a rickshaw (`ر`/`TRC`). Which vehicle it is is a value in the class field.
+  static final PlateSpec cycle = PlateSpec(
+    id: 'af.cycle',
+    country: _defaultProvince,
+    canvasWidth: _cycleWidth,
+    canvasHeight: _cycleHeight,
+    textDirection: TextDirection.rtl,
+    panel: _cyclePanel,
+    slots: <PlateSlot>[
+      plateField(
+        alphabet: AfghanistanAlphabets.digits,
+        count: 4,
+        left: 70,
+        width: (_cycleSerialRight - 70) / 4,
+        top: _cycleLowerTop,
+        height: _cycleBandHeight,
+        minLength: 3,
+      ),
+      const PlateSlot(
+        alphabet: AfghanistanAlphabets.vehicleClass,
+        box: PlateBox(212, _cycleUpperTop, 38, _cycleBandHeight),
+      ),
+    ],
+    mirrors: const <PlateMirror>[
+      PlateMirror(
+        source: 0,
+        box: PlateBox(
+          70,
+          _cycleUpperTop,
+          _cycleSerialRight - 70,
+          _cycleBandHeight,
         ),
-        const PlateSlot(
-          alphabet: AfghanistanAlphabets.vehicleClass,
-          box: PlateBox(212, _cycleUpperTop, 38, _cycleBandHeight),
-        ),
-      ],
-      mirrors: <PlateMirror>[
-        ...plateEcho(
-          sources: <int>[for (var i = 0; i < count; i++) i],
-          left: left,
-          top: _cycleUpperTop,
-          width: cell,
-          height: _cycleBandHeight,
-          alphabet: AfghanistanAlphabets.iranianDigits,
-          editable: true,
-        ),
-        PlateMirror(
-          source: count,
-          box: const PlateBox(202, _cycleLowerTop, 58, _cycleBandHeight),
-          glyphHeight: 40,
-          alphabet: AfghanistanAlphabets.classLatin,
-        ),
-      ],
-      textGroups: <PlateTextGroup>[
-        PlateTextGroup(<int>[count], key: 'class'),
-        PlateTextGroup(<int>[for (var i = 0; i < count; i++) i], key: 'serial'),
-      ],
-    );
-  }
-
-  /// The motorcycle plate, e.g. Nimruz `١٢٣` / `123` with `م` over `M`.
-  static final PlateSpec cycle3 = _cycle(3);
-
-  /// The rickshaw plate, e.g. Nangarhar `١٢٣٤` / `1234` with `ر` over `TRC`.
-  static final PlateSpec cycle4 = _cycle(4);
+        glyphHeight: _cycleBandHeight,
+        alphabet: AfghanistanAlphabets.iranianDigits,
+        editable: true,
+      ),
+      PlateMirror(
+        source: 1,
+        box: PlateBox(202, _cycleLowerTop, 58, _cycleBandHeight),
+        glyphHeight: 40,
+        alphabet: AfghanistanAlphabets.classLatin,
+      ),
+    ],
+    textGroups: const <PlateTextGroup>[
+      PlateTextGroup(<int>[1], key: 'class'),
+      PlateTextGroup(<int>[0], key: 'serial'),
+    ],
+  );
 
   // ---------------------------------------------------------------------------
   // The three classes that carry no class register, and the two that print
@@ -315,7 +258,7 @@ abstract final class AfghanistanPlates {
     textDirection: TextDirection.rtl,
     panel: _panel,
     slots: <PlateSlot>[
-      ...plateRegister(
+      plateField(
         alphabet: AfghanistanAlphabets.digits,
         count: 2,
         left: 106,
@@ -323,7 +266,7 @@ abstract final class AfghanistanPlates {
         width: 42,
         height: _bandHeight,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: AfghanistanAlphabets.digits,
         count: 2,
         left: 232,
@@ -332,22 +275,18 @@ abstract final class AfghanistanPlates {
         height: _bandHeight,
       ),
     ],
-    mirrors: <PlateMirror>[
-      ...plateEcho(
-        sources: const <int>[0, 1],
-        left: 106,
-        top: _upperTop,
-        width: 42,
-        height: _bandHeight,
+    mirrors: const <PlateMirror>[
+      PlateMirror(
+        source: 0,
+        box: PlateBox(106, _upperTop, 84, _bandHeight),
+        glyphHeight: _bandHeight,
         alphabet: AfghanistanAlphabets.iranianDigits,
         editable: true,
       ),
-      ...plateEcho(
-        sources: const <int>[2, 3],
-        left: 232,
-        top: _upperTop,
-        width: 42,
-        height: _bandHeight,
+      PlateMirror(
+        source: 1,
+        box: PlateBox(232, _upperTop, 84, _bandHeight),
+        glyphHeight: _bandHeight,
         alphabet: AfghanistanAlphabets.iranianDigits,
         editable: true,
       ),
@@ -369,8 +308,8 @@ abstract final class AfghanistanPlates {
     // keyed register of four unevenly pitched cells is the exact thing
     // `debugValidateSpec` fails a spec for.
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0, 1], key: 'mission'),
-      PlateTextGroup(<int>[2, 3], key: 'serial'),
+      PlateTextGroup(<int>[0], key: 'mission'),
+      PlateTextGroup(<int>[1], key: 'serial'),
     ],
   );
 
@@ -379,7 +318,7 @@ abstract final class AfghanistanPlates {
   ///
   /// The dash is the class — a government vehicle's type is not printed — so it
   /// is fixed wording in both bands rather than a slot with a mirror, and this
-  /// is a spec and not [car4] in another livery.
+  /// is a spec and not [car] in another livery.
   static final PlateSpec governmental = PlateSpec(
     id: 'af.governmental',
     country: _defaultProvince,
@@ -387,8 +326,8 @@ abstract final class AfghanistanPlates {
     canvasHeight: _height,
     textDirection: TextDirection.rtl,
     panel: _panel,
-    slots: _serialSlots(4),
-    mirrors: _serialEcho(4),
+    slots: <PlateSlot>[_serial(4, left: 118)],
+    mirrors: <PlateMirror>[_serialEcho(0, left: 118)],
     labels: const <PlateLabel>[
       PlateLabel(
         text: '—',
@@ -402,7 +341,7 @@ abstract final class AfghanistanPlates {
       ),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0, 1, 2, 3], key: 'serial'),
+      PlateTextGroup(<int>[0], key: 'serial'),
     ],
   );
 
@@ -417,10 +356,10 @@ abstract final class AfghanistanPlates {
     canvasHeight: _height,
     textDirection: TextDirection.rtl,
     panel: _panel,
-    slots: _serialSlots(4),
-    mirrors: _serialEcho(4),
+    slots: <PlateSlot>[_serial(4, left: 118)],
+    mirrors: <PlateMirror>[_serialEcho(0, left: 118)],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0, 1, 2, 3], key: 'serial'),
+      PlateTextGroup(<int>[0], key: 'serial'),
     ],
   );
 
@@ -448,8 +387,8 @@ abstract final class AfghanistanPlates {
     canvasHeight: _height,
     textDirection: TextDirection.rtl,
     panel: _panel,
-    slots: _serialSlots(5),
-    mirrors: _serialEcho(5),
+    slots: <PlateSlot>[_serial(5)],
+    mirrors: <PlateMirror>[_serialEcho(0)],
     labels: const <PlateLabel>[
       PlateLabel(text: 'ش', box: _classBox, glyphHeight: _bandHeight),
       PlateLabel(
@@ -466,7 +405,7 @@ abstract final class AfghanistanPlates {
       ),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0, 1, 2, 3, 4], key: 'serial'),
+      PlateTextGroup(<int>[0], key: 'serial'),
     ],
   );
 
@@ -496,11 +435,11 @@ abstract final class AfghanistanPlates {
     textDirection: TextDirection.ltr,
     panel: _panel,
     slots: <PlateSlot>[
-      ...plateRegisterAcross(
+      plateField(
         alphabet: AfghanistanAlphabets.digits,
         count: 5,
         left: 112,
-        right: 306,
+        width: (306 - 112) / 5,
         top: 40,
         height: 96,
       ),
@@ -514,26 +453,22 @@ abstract final class AfghanistanPlates {
       ),
     ],
     textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0, 1, 2, 3, 4], key: 'serial'),
-      PlateTextGroup(<int>[5], key: 'category'),
+      PlateTextGroup(<int>[0], key: 'serial'),
+      PlateTextGroup(<int>[1], key: 'category'),
     ],
   );
 
   /// Every Afghan geometry, in the order they are introduced above. A picker
-  /// iterates this rather than naming eleven constants.
+  /// iterates this rather than naming each constant.
   ///
-  /// Eleven specs, and rather more than eleven plates on the road: a bus, a
-  /// taxi, a lorry, a private car and a duplicate are all [car5] with a
-  /// different class and a different theme, and any of the five can be a
-  /// three- or four-figure plate instead. A picker that wants to offer a taxi
-  /// offers `(car5, AfghanistanThemes.transport, 'T')`.
+  /// Rather more plates on the road than specs: a bus, a taxi, a lorry, a
+  /// private car and a duplicate are all [car] with a different class and a
+  /// different theme. A picker that wants to offer a taxi
+  /// offers `(car, AfghanistanThemes.transport, 'T')`.
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
-    car3,
-    car4,
-    car5,
+    car,
     kabul6,
-    cycle3,
-    cycle4,
+    cycle,
     diplomatic,
     governmental,
     un,

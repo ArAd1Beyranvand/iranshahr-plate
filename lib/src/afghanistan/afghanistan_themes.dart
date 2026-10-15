@@ -18,7 +18,7 @@ import 'afghanistan_colors.dart';
 ///
 /// ```dart
 /// PlateCanvas(
-///   spec: AfghanistanPlates.car5,          // the same geometry ...
+///   spec: AfghanistanPlates.car,          // the same geometry ...
 ///   theme: AfghanistanThemes.transport,    // ... printed as a taxi's plate
 ///   country: AfghanistanProvince.kabul.country(),
 /// )

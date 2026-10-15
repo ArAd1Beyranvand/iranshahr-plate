@@ -56,9 +56,10 @@ abstract final class UaePlates {
     color: color,
   );
 
-  /// [count] cells centred from [firstCx] at [pitch], reproducing ink spanning
-  /// [y0]..[y1] on a canvas [canvasH] tall.
-  static List<PlateSlot> _cells({
+  /// One field of [count] cells centred from [firstCx] at [pitch], reproducing
+  /// ink spanning [y0]..[y1] on a canvas [canvasH] tall. A [minLength] makes it
+  /// variable.
+  static PlateSlot _cells({
     required PlateAlphabet alphabet,
     required int count,
     required double firstCx,
@@ -67,6 +68,7 @@ abstract final class UaePlates {
     required double y1,
     required double canvasH,
     double? width,
+    int? minLength,
     Color? color,
   }) {
     final cy = (y0 + y1) / 2;
@@ -75,19 +77,24 @@ abstract final class UaePlates {
       2 * math.min(cy, canvasH - cy),
     );
     final w = width ?? pitch * 0.96;
-    return plateRegister(
+    return PlateSlot(
       alphabet: alphabet,
-      count: count,
-      left: firstCx - w / 2,
-      top: cy - height / 2,
-      width: w,
-      height: height,
-      pitch: pitch,
+      box: PlateBox(
+        firstCx - w / 2,
+        cy - height / 2,
+        w + (count - 1) * pitch,
+        height,
+      ),
+      length: count,
+      minLength: minLength,
+      spacing: count == 1 || minLength != null
+          ? 0
+          : math.max(0, pitch - 0.6 * 0.72 * height),
       color: color,
     );
   }
 
-  static List<PlateSlot> _letter(
+  static PlateSlot _letter(
     double cx,
     double y0,
     double y1,
@@ -103,7 +110,7 @@ abstract final class UaePlates {
     canvasH: canvasH,
   );
 
-  static List<PlateSlot> _serial(
+  static PlateSlot _serial(
     double firstCx,
     double pitch,
     double y0,
@@ -112,6 +119,7 @@ abstract final class UaePlates {
   ) => _cells(
     alphabet: UaeAlphabets.digits,
     count: 5,
+    minLength: 1,
     firstCx: firstCx,
     pitch: pitch,
     y0: y0,
@@ -124,17 +132,17 @@ abstract final class UaePlates {
     padding: EdgeInsets.zero,
   );
 
-  /// Every design is a code (one or two cells) then a five-digit serial.
+  /// Every design is a code (one letter, or two digits) then a serial of one to
+/// five digits.
   static PlateSpec _spec({
     required String id,
     required bool long,
-    required List<PlateSlot> code,
-    required List<PlateSlot> serial,
+    required PlateSlot code,
+    required PlateSlot serial,
     required List<PlateLabel> labels,
     PlateSection background = PlateSection.plain,
     double? borderWidthRatioOverride,
   }) {
-    final n = code.length;
     return PlateSpec(
       id: id,
       country: UaeCountry.uae,
@@ -142,13 +150,13 @@ abstract final class UaePlates {
       canvasHeight: long ? _longH : _shortH,
       noPanel: true,
       panel: _noPanel,
-      slots: <PlateSlot>[...code, ...serial],
+      slots: <PlateSlot>[code, serial],
       labels: labels,
       background: background,
       borderWidthRatioOverride: borderWidthRatioOverride,
       textGroups: <PlateTextGroup>[
-        PlateTextGroup(<int>[for (var i = 0; i < n; i++) i], key: 'code'),
-        PlateTextGroup(<int>[for (var i = n; i < n + 5; i++) i], key: 'serial'),
+        PlateTextGroup(<int>[0], key: 'code'),
+        PlateTextGroup(<int>[1], key: 'serial'),
       ],
     );
   }

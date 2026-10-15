@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:plate_core/plate_core.dart';
 import 'package:flutter/widgets.dart';
 
@@ -32,7 +34,11 @@ abstract final class _Layout {
   /// private plate (396 measured, 397 here), the foreign-resident plate
   /// (364 / 357) and the gendarmerie plate (439 / 446).
   static const double digitPitch = 44;
-  static const double letterPitch = 52;
+
+  /// The pitches a variable row is fitted at so its longest form, three
+  /// letters and five figures, still fits the field right of the strip.
+  static const double varDigitPitch = 41;
+  static const double varLetterPitch = 48.4;
 
   /// A letter box's width over its pitch: Roboto Bold's M is ~0.87 em, 69 at
   /// this row's font size, against a 52 pitch. At full width it crowds its
@@ -116,13 +122,20 @@ abstract final class _Moto {
   static const double trGlyph = 13.6 / _Layout.ink;
 }
 
-/// One register of a row: its key, alphabet, length and pitch.
-typedef _Run = (String key, PlateAlphabet alphabet, int count, double pitch);
+/// One field of a row: its key, alphabet, longest and shortest length, and
+/// the pitch it is laid out at.
+typedef _Run = (
+  String key,
+  PlateAlphabet alphabet,
+  int count,
+  int? minLength,
+  double pitch,
+);
 
 /// The current Turkish plates (1996 onwards): `99 X 9999` to `99 XXX 999`, a
 /// province code, one to three letters and two to five figures.
 ///
-/// Every design is one of three shapes, and each shape is one builder:
+/// Every design is one of three shapes, and each shape is one spec:
 ///
 /// - [strip] — the TR strip at the hoist, one row centred on the field right
 ///   of it. Private and commercial, international organisations, diplomatic,
@@ -132,8 +145,8 @@ typedef _Run = (String key, PlateAlphabet alphabet, int count, double pitch);
 ///   with no letters, province governors.
 /// - [motorcycle] — two rows, the strip in one corner.
 ///
-/// Letter and figure counts are parameters, never forks; colour lives on the
-/// [TurkeyThemes] a host passes. On top of the three: [taxi] adds a rule at
+/// Letters (one to three) and figures (two to five) are variable fields, never
+/// forks; colour lives on the [TurkeyThemes] a host passes. On top of the three: [taxi] adds a rule at
 /// the strip, the two temporary plates a diagonal stripe, [sample] a caption
 /// band, and the parliament plates print no province.
 ///
@@ -159,14 +172,17 @@ abstract final class TurkeyPlates {
     color: TurkeyColors.white,
   );
 
-  static List<_Run> _standardRuns(int letters, int digits) => <_Run>[
-    ('province', TurkeyAlphabets.digits, 2, _Layout.digitPitch),
-    if (letters > 0)
-      ('letters', TurkeyAlphabets.letters, letters, _Layout.letterPitch),
-    ('serial', TurkeyAlphabets.digits, digits, _Layout.digitPitch),
+  /// Province, one to three letters and two to five figures, every format of
+  /// the strip and plain shapes. Variable fields are boxed for their longest
+  /// run, so the span is fitted at [_Layout.varDigitPitch] and
+  /// [_Layout.varLetterPitch]; shorter runs sit centred in their box.
+  static const List<_Run> _standardRuns = <_Run>[
+    ('province', TurkeyAlphabets.digits, 2, null, _Layout.varDigitPitch),
+    ('letters', TurkeyAlphabets.letters, 3, 1, _Layout.varLetterPitch),
+    ('serial', TurkeyAlphabets.digits, 5, 2, _Layout.varDigitPitch),
   ];
 
-  /// [runs] laid end to end, [gap] apart, centred on [centre].
+  /// [runs] laid end to end, [gap] apart, centred on [centre]; one slot each.
   static (List<PlateSlot>, List<PlateTextGroup>) _row(
     List<_Run> runs, {
     required double centre,
@@ -178,36 +194,29 @@ abstract final class TurkeyPlates {
   }) {
     var span = gap * (runs.length - 1);
     for (final r in runs) {
-      span += r.$3 * r.$4;
+      span += r.$3 * r.$5;
     }
     var left = centre - span / 2;
-    var index = firstIndex;
     final slots = <PlateSlot>[];
     final groups = <PlateTextGroup>[];
-    for (final (key, alphabet, count, pitch) in runs) {
-      // A letter box is wider than its pitch so a scaled-down slot does not
+    for (final (key, alphabet, count, min, pitch) in runs) {
+      final run = count * pitch;
+      // A letter box is wider than its run so a scaled-down slot does not
       // shrink Roboto's M, the one letter wider than the pitch.
       final width = identical(alphabet, TurkeyAlphabets.letters)
-          ? pitch * letterBoxRatio
-          : pitch;
-      slots.addAll(
-        plateRegister(
+          ? run * letterBoxRatio
+          : run;
+      groups.add(PlateTextGroup(<int>[firstIndex + slots.length], key: key));
+      slots.add(
+        PlateSlot(
           alphabet: alphabet,
-          count: count,
-          left: left - (width - pitch) / 2,
-          top: top,
-          width: width,
-          pitch: pitch,
-          height: height,
+          box: PlateBox(left - (width - run) / 2, top, width, height),
+          length: count,
+          minLength: min,
+          spacing: min == null ? math.max(0, pitch - 0.6 * 0.72 * height) : 0,
         ),
       );
-      groups.add(
-        PlateTextGroup(<int>[
-          for (var i = 0; i < count; i++) index + i,
-        ], key: key),
-      );
-      index += count;
-      left += count * pitch + gap;
+      left += run + gap;
     }
     return (slots, groups);
   }
@@ -238,82 +247,68 @@ abstract final class TurkeyPlates {
         PlatePart(field),
       ]);
 
-  static final Map<String, PlateSpec> _cache = <String, PlateSpec>{};
-
-  /// A TR-strip plate printing `99`, [letters] letters and [digits] figures.
-  static PlateSpec strip(int letters, int digits) => _cache.putIfAbsent(
-    'tr.strip.$letters.$digits',
-    () {
-      return _spec(
-        id: 'tr.strip.$letters.$digits',
-        row: _row(_standardRuns(letters, digits), centre: _Layout.stripCentre),
-        background: _withStrip(PlateSection.plain),
-        labels: const <PlateLabel>[_tr],
-      );
-    },
+  /// A TR-strip plate printing `99`, one to three letters and two to five
+  /// figures.
+  static final PlateSpec strip = _spec(
+    id: 'tr.strip',
+    row: _row(_standardRuns, centre: _Layout.stripCentre),
+    background: _withStrip(PlateSection.plain),
+    labels: const <PlateLabel>[_tr],
   );
 
-  /// A stripless plate printing `99`, [letters] letters (none on a
-  /// governor's plate) and [digits] figures.
-  static PlateSpec plain(int letters, int digits) => _cache.putIfAbsent(
-    'tr.plain.$letters.$digits',
-    () {
-      return _spec(
-        id: 'tr.plain.$letters.$digits',
-        row: _row(_standardRuns(letters, digits), centre: _Layout.plainCentre),
-      );
-    },
+  /// A stripless plate printing `99`, one to three letters and two to five
+  /// figures.
+  static final PlateSpec plain = _spec(
+    id: 'tr.plain',
+    row: _row(_standardRuns, centre: _Layout.plainCentre),
   );
 
-  /// A motorcycle plate: `99` and [letters] letters over [digits] figures.
-  static PlateSpec motorcycle(int letters, int digits) => _cache.putIfAbsent(
-    'tr.motorcycle.$letters.$digits',
-    () {
-      final top = _row(
-        <_Run>[
-          ('province', TurkeyAlphabets.digits, 2, _Moto.topDigitPitch),
-          ('letters', TurkeyAlphabets.letters, letters, _Moto.topLetterPitch),
-        ],
-        centre: _Moto.topCentre,
-        top: _Moto.topTop,
-        height: _Moto.topHeight,
-        gap: _Moto.topGap,
-        // At this row's size an M fits its pitch, and the letters reach the
-        // right edge, so a wider box would leave the canvas.
-        letterBoxRatio: 1,
-      );
-      final bottom = _row(
-        <_Run>[('serial', TurkeyAlphabets.digits, digits, _Moto.bottomPitch)],
-        centre: _Moto.bottomCentre,
-        top: _Moto.bottomTop,
-        height: _Moto.bottomHeight,
-        firstIndex: 2 + letters,
-      );
-      return _spec(
-        id: 'tr.motorcycle.$letters.$digits',
-        width: _Moto.width,
-        height: _Moto.height,
-        row: (<PlateSlot>[...top.$1, ...bottom.$1], [...top.$2, ...bottom.$2]),
-        background: const PlateSection.rows(<PlatePart>[
-          PlatePart(PlateSection.plain, end: _Moto.stripTop),
-          PlatePart(
-            PlateSection.columns(<PlatePart>[
-              PlatePart(_stripColumn, end: _Moto.stripEnd),
-              PlatePart(PlateSection.plain),
-            ]),
-          ),
-        ]),
-        labels: const <PlateLabel>[
-          PlateLabel(
-            text: 'TR',
-            box: _Moto.trBox,
-            glyphHeight: _Moto.trGlyph,
-            color: TurkeyColors.white,
-          ),
-        ],
-      );
-    },
-  );
+  /// A motorcycle plate: `99` and one or two letters over two to five figures.
+  static final PlateSpec motorcycle = () {
+    final top = _row(
+      const <_Run>[
+        ('province', TurkeyAlphabets.digits, 2, null, _Moto.topDigitPitch),
+        ('letters', TurkeyAlphabets.letters, 2, 1, _Moto.topLetterPitch),
+      ],
+      centre: _Moto.topCentre,
+      top: _Moto.topTop,
+      height: _Moto.topHeight,
+      gap: _Moto.topGap,
+      // At this row's size an M fits its pitch, and the letters reach the
+      // right edge, so a wider box would leave the canvas.
+      letterBoxRatio: 1,
+    );
+    final bottom = _row(
+      const <_Run>[('serial', TurkeyAlphabets.digits, 5, 2, _Moto.bottomPitch)],
+      centre: _Moto.bottomCentre,
+      top: _Moto.bottomTop,
+      height: _Moto.bottomHeight,
+      firstIndex: 2,
+    );
+    return _spec(
+      id: 'tr.motorcycle',
+      width: _Moto.width,
+      height: _Moto.height,
+      row: (<PlateSlot>[...top.$1, ...bottom.$1], [...top.$2, ...bottom.$2]),
+      background: const PlateSection.rows(<PlatePart>[
+        PlatePart(PlateSection.plain, end: _Moto.stripTop),
+        PlatePart(
+          PlateSection.columns(<PlatePart>[
+            PlatePart(_stripColumn, end: _Moto.stripEnd),
+            PlatePart(PlateSection.plain),
+          ]),
+        ),
+      ]),
+      labels: const <PlateLabel>[
+        PlateLabel(
+          text: 'TR',
+          box: _Moto.trBox,
+          glyphHeight: _Moto.trGlyph,
+          color: TurkeyColors.white,
+        ),
+      ],
+    );
+  }();
 
   // -------------------------------------------------------------------------
   // The named plates: one per category in the article's "Types" table, each a
@@ -321,31 +316,31 @@ abstract final class TurkeyPlates {
   // -------------------------------------------------------------------------
 
   /// Private and commercial vehicles, `99 XX 9999` — the article's example.
-  /// Any of the six formats is [strip] with its counts.
-  static final PlateSpec private = strip(2, 4);
+  /// Every format is [strip].
+  static final PlateSpec private = strip;
 
   /// Members of international organisations, `99 B 9999`, blue on white.
-  static final PlateSpec internationalOrganization = strip(1, 4);
+  static final PlateSpec internationalOrganization = strip;
 
   /// Diplomatic corps, `99 CD 999`, green on white.
-  static final PlateSpec diplomatic = strip(2, 3);
+  static final PlateSpec diplomatic = strip;
 
   /// Temporary customs, `99 GMR 999`, red on green.
-  static final PlateSpec temporaryCustoms = strip(3, 3);
+  static final PlateSpec temporaryCustoms = strip;
 
   /// Foreigners with a residence permit, `99 MA 999` to `99 MZ 999`.
-  static final PlateSpec foreignResident = strip(2, 3);
+  static final PlateSpec foreignResident = strip;
 
   /// Syrians with a residence permit, `99 SAA 999` to `99 SZZ 999`.
-  static final PlateSpec syrianResident = strip(3, 3);
+  static final PlateSpec syrianResident = strip;
 
   /// Istanbul taxis, `34 TAA 99` to `34 TKZ 99`.
-  static final PlateSpec istanbulTaxi = strip(3, 2);
+  static final PlateSpec istanbulTaxi = strip;
 
   /// Taxis outside Istanbul, `99 T 9999`: the strip closed by a black rule.
   static final PlateSpec taxi = _spec(
     id: 'tr.taxi',
-    row: _row(_standardRuns(1, 4), centre: _Layout.stripCentre),
+    row: _row(_standardRuns, centre: _Layout.stripCentre),
     background: _withStrip(PlateSection.plain, divider: _Layout.taxiDivider),
     labels: const <PlateLabel>[_tr],
   );
@@ -366,7 +361,7 @@ abstract final class TurkeyPlates {
   /// stripe, without the strip.
   static final PlateSpec temporary = _spec(
     id: 'tr.temporary',
-    row: _row(_standardRuns(1, 4), centre: _Layout.plainCentre),
+    row: _row(_standardRuns, centre: _Layout.plainCentre),
     background: _temporaryField,
   );
 
@@ -374,32 +369,38 @@ abstract final class TurkeyPlates {
   /// the field right of it.
   static final PlateSpec temporaryWithStrip = _spec(
     id: 'tr.temporary.strip',
-    row: _row(_standardRuns(1, 4), centre: _Layout.stripCentre),
+    row: _row(_standardRuns, centre: _Layout.stripCentre),
     background: _withStrip(_temporaryField),
     labels: const <PlateLabel>[_tr],
   );
 
   /// Police, `99 A 99999` (also `99 AA 999` and `99 AAA 999`), white on blue.
-  static final PlateSpec police = plain(1, 5);
+  static final PlateSpec police = plain;
 
   /// Gendarmerie, `99 JAA 9999`; the article's format says three figures, its
   /// artwork prints four.
-  static final PlateSpec gendarmerie = plain(3, 4);
+  static final PlateSpec gendarmerie = plain;
 
   /// Coast guard, `99 SGH 9999`, likewise.
-  static final PlateSpec coastGuard = plain(3, 4);
+  static final PlateSpec coastGuard = plain;
 
   /// Consulates, `99 CC 9999`, white on green. The artwork prints `34 CC 001`.
-  static final PlateSpec consulate = plain(2, 4);
+  static final PlateSpec consulate = plain;
 
   /// Provincial governments and university rectors, `99 AA 999`, red.
-  static final PlateSpec provincialGovernment = plain(2, 3);
+  static final PlateSpec provincialGovernment = plain;
 
   /// Government and public administrations, `99 AA 999`, white on black.
-  static final PlateSpec official = plain(2, 3);
+  static final PlateSpec official = plain;
 
   /// Province governors, `99 9999`, gold on red.
-  static final PlateSpec governor = plain(0, 4);
+  static final PlateSpec governor = _spec(
+    id: 'tr.governor',
+    row: _row(const <_Run>[
+      ('province', TurkeyAlphabets.digits, 2, null, _Layout.digitPitch),
+      ('serial', TurkeyAlphabets.digits, 4, null, _Layout.digitPitch),
+    ], centre: _Layout.plainCentre),
+  );
 
   /// The sample plate, `99 NUMUNE PLAKA 999`: the province code and a serial
   /// either side of a blue band captioned in white. The frame is broken where
@@ -408,14 +409,20 @@ abstract final class TurkeyPlates {
     id: 'tr.sample',
     row: () {
       final province = _row(<_Run>[
-        ('province', TurkeyAlphabets.digits, 2, _Layout.digitPitch),
+        ('province', TurkeyAlphabets.digits, 2, null, _Layout.digitPitch),
       ], centre: _Layout.sampleProvinceCentre);
       final serial = _row(
         <_Run>[
-          ('serial', TurkeyAlphabets.digits, 3, _Layout.sampleSerialPitch),
+          (
+            'serial',
+            TurkeyAlphabets.digits,
+            3,
+            null,
+            _Layout.sampleSerialPitch,
+          ),
         ],
         centre: _Layout.sampleSerialCentre,
-        firstIndex: 2,
+        firstIndex: 1,
       );
       return (
         <PlateSlot>[...province.$1, ...serial.$1],
@@ -449,7 +456,7 @@ abstract final class TurkeyPlates {
   static final PlateSpec parliament = _spec(
     id: 'tr.parliament',
     row: _row(<_Run>[
-      ('serial', TurkeyAlphabets.digits, 4, _Layout.digitPitch),
+      ('serial', TurkeyAlphabets.digits, 4, null, _Layout.digitPitch),
     ], centre: _Layout.plainCentre),
   );
 
@@ -458,7 +465,7 @@ abstract final class TurkeyPlates {
   static final PlateSpec parliamentLabelled = _spec(
     id: 'tr.parliament.labelled',
     row: _row(<_Run>[
-      ('serial', TurkeyAlphabets.digits, 3, _Layout.digitPitch),
+      ('serial', TurkeyAlphabets.digits, 3, null, _Layout.digitPitch),
     ], centre: _Layout.tbmmSerialCentre),
     labels: const <PlateLabel>[
       PlateLabel(

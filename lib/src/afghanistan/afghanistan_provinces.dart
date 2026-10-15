@@ -18,7 +18,7 @@ import 'afghanistan_colors.dart';
 ///
 /// ```dart
 /// PlateCanvas(
-///   spec: AfghanistanPlates.car5,
+///   spec: AfghanistanPlates.car,
 ///   theme: AfghanistanThemes.civilian,
 ///   country: AfghanistanProvince.herat.country(),
 /// )

@@ -41,9 +41,10 @@ void main() {
     required String value,
     required String name,
   }) async {
+    // One field after another: each takes as many characters as it holds.
+    var at = 0;
     final values = <String?>[
-      for (var i = 0; i < spec.slotCount; i++)
-        i < value.length ? value[i] : '0',
+      for (final slot in spec.slots) value.substring(at, at += slot.length),
     ];
     final controller = PlateController.fromValues(spec, values);
 

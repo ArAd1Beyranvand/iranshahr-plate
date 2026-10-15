@@ -23,27 +23,12 @@ void main() {
   });
 
   final cases = <(String, PlateSpec, PlateTheme, String)>[
-    ('private_4_1', OmanPlates.fourDigitOneLetter, OmanThemes.private, '4517A'),
-    (
-      'private_4_2',
-      OmanPlates.fourDigitTwoLetter,
-      OmanThemes.private,
-      '4517BM',
-    ),
-    (
-      'private_5_1',
-      OmanPlates.fiveDigitOneLetter,
-      OmanThemes.private,
-      '91169A',
-    ),
-    (
-      'private_5_2',
-      OmanPlates.fiveDigitTwoLetter,
-      OmanThemes.private,
-      '91169BM',
-    ),
-    ('taxi_4_2', OmanPlates.fourDigitTwoLetter, OmanThemes.taxi, '1255KK'),
-    ('taxi_5_1', OmanPlates.fiveDigitOneLetter, OmanThemes.taxi, '91169K'),
+    ('private_4_1', OmanPlates.oneLetter, OmanThemes.private, '4517 A'),
+    ('private_4_2', OmanPlates.twoLetters, OmanThemes.private, '4517 B M'),
+    ('private_5_1', OmanPlates.oneLetter, OmanThemes.private, '91169 A'),
+    ('private_5_2', OmanPlates.twoLetters, OmanThemes.private, '91169 B M'),
+    ('taxi_4_2', OmanPlates.twoLetters, OmanThemes.taxi, '1255 K K'),
+    ('taxi_5_1', OmanPlates.oneLetter, OmanThemes.taxi, '91169 K'),
   ];
 
   test('every spec has a golden', () {
@@ -52,10 +37,7 @@ void main() {
 
   for (final (name, spec, theme, values) in cases) {
     testWidgets(name, (tester) async {
-      final controller = PlateController.fromValues(
-        spec,
-        values.split('').toList(),
-      );
+      final controller = PlateController.fromValues(spec, values.split(' '));
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -83,17 +65,15 @@ void main() {
     });
   }
 
-  PlateEntry e(PlateSpec s, String v) => PlateEntry(
-    spec: s,
-    values: v.split('').map((c) => c == '_' ? null : c).toList(),
-  );
+  PlateEntry e(PlateSpec s, List<String?> v) => PlateEntry(spec: s, values: v);
 
-  test('complete plate is valid, an empty slot is flagged', () {
+  test('a field at its minimum is valid, one below is flagged', () {
     const v = OmanPlateValidator();
-    final spec = OmanPlates.fourDigitTwoLetter;
-    expect(v.validate(e(spec, '4517BM')).isValid, isTrue);
-    expect(v.validate(e(spec, '451_BM')).isValid, isFalse);
-    expect(v.validate(e(spec, '4517B_')).isValid, isFalse);
+    final spec = OmanPlates.twoLetters;
+    expect(v.validate(e(spec, ['4517', 'B', 'M'])).isValid, isTrue);
+    expect(v.validate(e(spec, ['91169', 'A', 'B'])).isValid, isTrue);
+    expect(v.validate(e(spec, ['451', 'B', 'M'])).isValid, isFalse);
+    expect(v.validate(e(spec, ['4517', 'B', null])).isValid, isFalse);
   });
 
   test('every spec passes debugValidateSpec', () {

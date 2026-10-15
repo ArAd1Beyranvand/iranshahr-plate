@@ -70,7 +70,7 @@ three-letter Latin code:
 
 ```dart
 PlateCanvas(
-  spec: AfghanistanPlates.car5,
+  spec: AfghanistanPlates.car,
   theme: AfghanistanThemes.civilian,
   country: AfghanistanProvince.herat.country(),
 )

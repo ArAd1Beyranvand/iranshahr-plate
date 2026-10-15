@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
+import '../plate_field.dart';
 import 'azerbaijan_country.dart';
 
 /// The Azerbaijani plate designs.
@@ -69,7 +70,7 @@ abstract final class AzerbaijanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 78,
@@ -80,7 +81,7 @@ abstract final class AzerbaijanPlates {
       ),
       // Wider cells on a wider pitch: a letter is broader than a digit, so the
       // pair is its own register rather than a continuation of the one before.
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinUppercase,
         count: 2,
         left: 204,
@@ -89,7 +90,7 @@ abstract final class AzerbaijanPlates {
         height: 76,
         pitch: 58,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 340,
@@ -112,9 +113,9 @@ abstract final class AzerbaijanPlates {
       PlateLabel(text: '-', box: PlateBox(314, 27.6, 22, 76), glyphHeight: 76),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'region'),
-      PlateTextGroup([2, 3], key: 'letters'),
-      PlateTextGroup([4, 5, 6], key: 'serial'),
+      PlateTextGroup([0], key: 'region'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -140,7 +141,7 @@ abstract final class AzerbaijanPlates {
     ),
     slots: [
       // Head row: the regional pair, smaller than the serial below it.
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
         left: 100,
@@ -154,7 +155,7 @@ abstract final class AzerbaijanPlates {
         alphabet: PlateAlphabet.latinUppercase,
         box: PlateBox(14, 82, 36, 54),
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 72,
@@ -169,9 +170,9 @@ abstract final class AzerbaijanPlates {
       PlateLabel(text: '-', box: PlateBox(52, 89.6, 18, 54), glyphHeight: 54),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1], key: 'region'),
-      PlateTextGroup([2], key: 'letters'),
-      PlateTextGroup([3, 4, 5], key: 'serial'),
+      PlateTextGroup([0], key: 'region'),
+      PlateTextGroup([1], key: 'letters'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -189,7 +190,7 @@ abstract final class AzerbaijanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 94,
@@ -202,7 +203,7 @@ abstract final class AzerbaijanPlates {
         alphabet: PlateAlphabet.latinUppercase,
         box: PlateBox(262, 17, 50, 76),
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 326,
@@ -213,9 +214,9 @@ abstract final class AzerbaijanPlates {
       ),
     ],
     textGroups: const [
-      PlateTextGroup([0, 1, 2], key: 'mission'),
-      PlateTextGroup([3], key: 'class'),
-      PlateTextGroup([4, 5, 6], key: 'serial'),
+      PlateTextGroup([0], key: 'mission'),
+      PlateTextGroup([1], key: 'class'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 
@@ -238,7 +239,7 @@ abstract final class AzerbaijanPlates {
         alphabet: PlateAlphabet.latinUppercase,
         box: PlateBox(94, 17, 50, 76),
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 158,
@@ -247,7 +248,7 @@ abstract final class AzerbaijanPlates {
         height: 76,
         pitch: 54,
       ),
-      ...plateRegister(
+      plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
         left: 326,
@@ -259,8 +260,8 @@ abstract final class AzerbaijanPlates {
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'class'),
-      PlateTextGroup([1, 2, 3], key: 'series'),
-      PlateTextGroup([4, 5, 6], key: 'serial'),
+      PlateTextGroup([1], key: 'series'),
+      PlateTextGroup([2], key: 'serial'),
     ],
   );
 

@@ -29,47 +29,47 @@ void main() {
         'passenger': (
           UzbekistanPlates.passenger,
           UzbekistanThemes.passenger,
-          '0 1 A 1 2 3 B C',
+          '01 A 123 BC',
         ),
         'foreign_citizen': (
           UzbekistanPlates.foreignCitizen,
           UzbekistanThemes.foreignCitizen,
-          '0 1 0 1 2 3 4 5',
+          '01 012345',
         ),
         'foreign_company': (
           UzbekistanPlates.foreignCompany,
           UzbekistanThemes.foreignCompany,
-          '1 0 0 1 2 3 4 5',
+          '10 012345',
         ),
         'temporary': (
           UzbekistanPlates.temporary,
           UzbekistanThemes.temporary,
-          '0 1 2 3 4 5 0 1',
+          '012345 01',
         ),
         'ambassador': (
           UzbekistanPlates.ambassador,
           UzbekistanThemes.diplomatic,
-          '0 1 2 3 4 5',
+          '012 345',
         ),
         'diplomat': (
           UzbekistanPlates.diplomat,
           UzbekistanThemes.diplomatic,
-          'D 0 1 2 3 4 5',
+          'D 012 345',
         ),
         'united_nations': (
           UzbekistanPlates.unitedNations,
           UzbekistanThemes.unitedNations,
-          '0 1 2 3',
+          '0123',
         ),
         'trailer': (
           UzbekistanPlates.trailer,
           UzbekistanThemes.trailer,
-          '0 1 2 3 A B 0 1',
+          '0123 AB 01',
         ),
         'motorcycle': (
           UzbekistanPlates.motorcycle,
           UzbekistanThemes.motorcycle,
-          '1 2 3 A B 0 1',
+          '123 AB 01',
         ),
       };
 
@@ -100,6 +100,9 @@ void main() {
             ),
           ),
         ),
+      );
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
       );
       await tester.pumpAndSettle();
       await expectLater(

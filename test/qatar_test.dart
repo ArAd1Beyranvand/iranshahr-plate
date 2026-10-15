@@ -17,55 +17,33 @@ void main() {
       }
     });
 
-    test('five designs, each with its own id', () {
-      expect(QatarPlates.all, hasLength(5));
-      expect(QatarPlates.all.map((s) => s.id).toSet(), hasLength(5));
+    test('three designs, each with its own id', () {
+      expect(QatarPlates.all, hasLength(3));
+      expect(QatarPlates.all.map((s) => s.id).toSet(), hasLength(3));
     });
 
-    test('the civilian plate runs three to five digits', () {
-      expect(QatarPlates.civilianSizes.map((s) => s.slotCount), <int>[5, 4, 3]);
-      for (final spec in QatarPlates.civilianSizes) {
-        expect(
-          spec.indicesOfGroup('serial'),
-          hasLength(spec.slotCount),
-          reason: spec.id,
-        );
-      }
+    test('the civilian serial is one field of three to five digits', () {
+      final spec = QatarPlates.civilian;
+      expect(spec.slotCount, 1);
+      expect(spec.slots.single.length, 5);
+      expect(spec.slots.single.minLength, 3);
+      expect(spec.indicesOfGroup('serial'), <int>[0]);
     });
 
-    test('every civilian length fills the same room', () {
-      // The point of the shared span: the serial is centred the same way at
-      // three, four and five digits, so the sizes read as one design.
-      for (final spec in QatarPlates.civilianSizes) {
-        final boxes = spec.slots.map((s) => s.box).toList();
-        final left = boxes.first.left;
-        final right = boxes.last.left + boxes.last.width;
-        expect(
-          (left + right) / 2,
-          closeTo((209 + 500) / 2, 1),
-          reason: spec.id,
-        );
-      }
+    test('the serial fills the room between the block and the edge', () {
+      final box = QatarPlates.civilian.slots.single.box;
+      expect(
+        (box.left + box.left + box.width) / 2,
+        closeTo((209 + 500) / 2, 1),
+      );
     });
 
-    test('the figures widen as they get fewer', () {
-      final widths = QatarPlates.civilianSizes
-          .map((s) => s.slots.first.box.width)
-          .toList();
-      // civilianSizes is longest-first, so each shorter serial sets wider.
-      expect(widths[1], greaterThan(widths[0]));
-      expect(widths[2], greaterThan(widths[1]));
-      // ...but never past the cap that would make a digit read as a logo.
-      expect(widths.last, lessThanOrEqualTo(64));
-    });
-
-    test('every civilian size shares the serrated hoist block', () {
-      for (final spec in QatarPlates.civilianSizes) {
-        expect(spec.panel.shape, isA<QatarFlagEdgeClipper>(), reason: spec.id);
-        // The block is the flag, so it holds no flag of its own.
-        expect(spec.country.flag, isNull, reason: spec.id);
-        expect(spec.panel.flagScale, 0, reason: spec.id);
-      }
+    test('the civilian plate shares the serrated hoist block', () {
+      final spec = QatarPlates.civilian;
+      expect(spec.panel.shape, isA<QatarFlagEdgeClipper>());
+      // The block is the flag, so it holds no flag of its own.
+      expect(spec.country.flag, isNull);
+      expect(spec.panel.flagScale, 0);
     });
 
     test('the motorcycle plate is its own design, not a shrunk car', () {
@@ -84,13 +62,13 @@ void main() {
         moto.labels.map((l) => l.text),
         containsAll(<String>['قطر', 'QATAR']),
       );
-      expect(moto.slotCount, 5);
+      expect(moto.slotCount, 1);
     });
 
     test('the police plate has no block and no serration', () {
       expect(QatarPlates.police.noPanel, isTrue);
       expect(QatarPlates.police.panel.shape, isNull);
-      expect(QatarPlates.police.slotCount, 4);
+      expect(QatarPlates.police.slotCount, 1);
     });
   });
 
