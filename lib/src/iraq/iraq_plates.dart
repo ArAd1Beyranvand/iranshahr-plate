@@ -5,21 +5,15 @@ import '../plate_field.dart';
 import 'iraq_alphabets.dart';
 import 'iraq_country.dart';
 
-/// Where the ink sits on an Iraqi plate, in plate coordinates.
+/// Where the ink sits, in plate coordinates.
 ///
-/// Measured off the reference artwork for the 2022/2024 series on Wikimedia
-/// Commons — `Iraq_-_License_Plate_-_{Private,Bus_and_Taxi,Governmental,Truck,
-/// Agricultural}.png`, the matching `Iraq_-_Kurdistan_-_*` files, their
-/// `-_Small_-` variants and
-/// `Iraq_-_Kurdistan_-_License_Plate_-_Temporary_-_Erbil_-_Sulimaniyah.png` —
-/// by normalising each file's plate rectangle to the physical size the article
-/// gives and projecting the ink onto each axis. Within a size the files agree
-/// to a tenth of a unit, which is why two templates cover all six classes.
+/// Measured off the 2022/2024 reference artwork on Wikimedia Commons by
+/// normalising each plate rectangle to the article's physical size and
+/// projecting the ink onto each axis; within a size the files agree to a tenth of
+/// a unit, so two templates cover all six classes.
 ///
-/// Both canvases are the article's millimetres, not the artwork's aspect: the
-/// 520x110 files are drawn at 4.635:1 against a true 4.727:1, and the 335x155
-/// files at 2.000:1 against a true 2.161:1. Laying out proportionally inside
-/// the documented size keeps Iraq consistent with every other package here.
+/// Both canvases are the article's millimetres, not the artwork's aspect (4.635:1
+/// against a true 4.727:1, and 2.000:1 against 2.161:1).
 abstract final class _Layout {
   // ---------------------------------------------------------------------
   // 520x110 — "Standard European size", the plate almost every vehicle gets.
@@ -29,28 +23,18 @@ abstract final class _Layout {
   static const double largeWidth = 520;
   static const double largeHeight = 110;
 
-  /// The band runs from the frame to the divider, the full height inside the
-  /// frame. Measured x 4.8..44.1, y 4.7..105.3. The red is a background
-  /// region running out under the frame, so these numbers only place the
-  /// "IRQ" stack on it; the region itself ends at the divider.
+  /// The band's size; the red is a background region running out under the frame.
   static const PlateBox largeBand = PlateBox(4.8, 4.7, 39.3, 100.6);
 
-  /// The divider is the frame's own width and runs edge to edge — top frame to
-  /// bottom frame, with no field showing past either end. Measured x
-  /// 44.1..48.4, ink contiguous over the full 0..110.
+  /// The divider is the frame's width, edge to edge.
   static const double largeDivider = 4.3;
   static const double largeBandEnd = 44.1 + largeDivider / 2;
 
-  /// Serial row. The reference ink is 66.7 units tall on a 110-unit plate —
-  /// 61% of the plate's whole height. A slot's box *is* its glyph height and
-  /// has to fit the canvas, and core prints about 0.525 of that box as ink, so
-  /// matching it would need a 127-unit box. 106 is the tallest that keeps the
-  /// ink centred where the reference puts it (y 53.7) and still fits, which
-  /// lands the digits at about 78% of reference size.
-  ///
-  /// The top is 1.4 rather than the 0.7 that would centre the *box* on 53.7:
-  /// the rendered ink sits 0.7 above its box's centre, measured off the
-  /// golden, because a cap occupies the upper part of the line box.
+  /// Serial row. The reference ink is 61% of the plate's height, but a slot's box is
+  /// its glyph height and core prints ~0.525 of it as ink, so matching it would need
+  /// a 127-unit box. 106 is the tallest that fits and keeps the ink centred, landing
+  /// at ~78% of reference. The top is 1.4, not 0.7: a cap sits 0.7 above its line
+  /// box's centre.
   static const double largeRowTop = 1.4;
   static const double largeRowHeight = 106;
 
@@ -77,9 +61,7 @@ abstract final class _Layout {
   static const double largeStackGlyph = 39.8;
   static const double largeStackLineHeight = 1.22;
 
-  /// Kurdistan tightens the "IRQ" stack and lifts it to make room for "KR":
-  /// the three letters keep their 20.9 cap but step by 23.95, and the group
-  /// centres on y 43.8 rather than 54.75.
+  /// Kurdistan tightens the "IRQ" stack and lifts it to make room for "KR".
   static const double largeStackLineHeightKr = 0.835;
   static const PlateBox largeStackKr = PlateBox(4.8, 3.8, 39.3, 80);
 
@@ -102,18 +84,10 @@ abstract final class _Layout {
   static const double smallDivider = 3.7;
   static const double smallBandEnd = 38.6 + smallDivider / 2;
 
-  /// Both rows print at the same 55.5-unit cap, centred on y 42.0 and y
-  /// 113.9. The same box-inside-the-canvas limit as [largeRowHeight] binds
-  /// here and harder, because the rows sit near the edges: the top row can be
-  /// at most 84 units and the bottom at most 82.2. One height for both keeps
-  /// the two rows the same size, as the reference has them, at about 78% of
-  /// reference, and at about 80% of it.
-  ///
-  /// The tops carry the same 1.3-unit correction as [largeRowTop] for where a
-  /// cap sits inside its line box. The bottom row cannot take it: 73 is the
-  /// last top that keeps an 82-unit box on a 155-unit canvas, so its ink
-  /// centres on 112.5 against the reference's 113.9. The 1.4 is the canvas
-  /// running out, not a free choice.
+  /// Both rows print at one height, so the box-inside-the-canvas limit binds
+  /// (84 and 82.2 at most), at ~78% of reference. The bottom row cannot take the
+  /// 1.3 cap correction of [largeRowTop]: 73 is the last top that fits, so the 1.4
+  /// is the canvas running out.
   static const double smallRowHeight = 82;
   static const double smallTopRowTop = 2.3;
   static const double smallBottomRowTop = 73.0;
@@ -132,10 +106,7 @@ abstract final class _Layout {
     smallRowHeight,
   );
 
-  /// "IRQ" again, at a 22.0 cap and a 32.6 line pitch, centred on (20.45,
-  /// 59.5). Unlike the large plate, Kurdistan does not move it — the reference
-  /// puts the three letters at the same y in both regional designs and simply
-  /// adds "KR" below.
+  /// "IRQ" at a 22.0 cap; Kurdistan does not move it here, only adds "KR" below.
   static const PlateBox smallStack = PlateBox(4.2, 4.5, 32.5, 110);
   static const double smallStackGlyph = 41.9;
   static const double smallStackLineHeight = 1.08;
@@ -151,38 +122,20 @@ abstract final class _Layout {
   static const double temporaryGridCell = 47.7;
 }
 
-/// The Iraqi plate designs.
+/// Only the current series: the earlier four (1988-2001, 2001-2008, 2008-2024,
+/// and the Kurdistan Region's 1988 format until 2022) share no geometry with
+/// it and are not implemented.
 ///
-/// Only the current series is here. Iraq has had four: 1988-2001, 2001-2008,
-/// 2008-2024, and the 2022/2024 unification — the Kurdistan Region kept the
-/// 1988 format until 2022 while the rest of the country moved on twice. The
-/// earlier four are Arabic script and eastern Arabic numerals and share no
-/// geometry with these; they are deliberately not implemented.
+/// The format is `GG X #####`: governorate code, class letter, five-digit serial.
+/// The article's "Colour" column names the band down the left edge, not the
+/// field: all six classes are black on white, so the class is the band colour
+/// (the country's) and needs no spec. What needs a spec is the canvas (two
+/// sizes) and the region (Kurdistan adds "KR" under "IRQ").
 ///
-/// The current series was negotiated between the Federal Government and the
-/// Kurdistan Regional Government to unify the design. It reached the four
-/// Kurdistan governorates in April 2022 and the rest of Iraq in June 2024.
-/// The format is `GG X #####`: a two-digit governorate code, a class letter,
-/// and a five-digit serial.
-///
-/// **What varies is not what you would guess from the article's table.** That
-/// table's "Colour" column names the *band* down the left-hand edge, not the
-/// field: all six classes are black on white, and private vehicles get a white
-/// band that the divider alone separates from the face. So the class is a
-/// colour, the colour is the band's, the band's colour is the country's — and
-/// six classes need no specs of their own at all. What does need a spec is the
-/// canvas (two sizes) and the region (Kurdistan adds "KR" under the "IRQ").
-///
-/// The security hologram the artwork shows between the code and the letter is
-/// not reproduced: it is a physical anti-counterfeiting sticker rather than
-/// part of the registration, and there is no licensed artwork for it here.
+/// The security hologram between the code and the letter is a physical sticker
+/// and is not reproduced.
 abstract final class IraqPlates {
-  /// The 520x110 template: band, edge-to-edge divider, then the code, the
-  /// class letter and the serial across one row.
-  ///
-  /// [kurdistan] adds the smaller "KR" beneath the "IRQ" and retightens the
-  /// stack above it, which is the whole of the difference between the two
-  /// regional designs.
+  /// The 520x110 template. [kurdistan] adds "KR" beneath "IRQ" and retightens the stack.
   static PlateSpec _large({required String id, required bool kurdistan}) =>
       PlateSpec(
         id: id,
@@ -240,8 +193,7 @@ abstract final class IraqPlates {
         ],
       );
 
-  /// The 335x155 template: the same band and divider, the code and letter on
-  /// the top row, the serial on the bottom.
+  /// The 335x155 template: code and letter over the serial.
   static PlateSpec _small({required String id, required bool kurdistan}) =>
       PlateSpec(
         id: id,
@@ -284,8 +236,6 @@ abstract final class IraqPlates {
         ],
       );
 
-  /// The band in the panel colour, which [IraqCountry] varies by category,
-  /// then the field, with the divider on the boundary.
   static const PlateSection _largeBackground = PlateSection.columns(<PlatePart>[
     PlatePart(
       PlateSection.fill(PlateFill.panel),
@@ -335,13 +285,10 @@ abstract final class IraqPlates {
     kurdistan: true,
   );
 
-  /// 335x155 temporary, printed in red on white rather than black.
-  ///
-  /// Its own spec rather than a flag on [_small], because the top row is a
-  /// different thing: a governorate code, a dash and the two-digit expiry
-  /// year, on five evenly pitched cells of their own, where the permanent
-  /// plates put a code and a class letter on the shared grid. The article
-  /// documents it only for the Kurdistan Region, so it carries "KR".
+  /// 335x155 temporary, red on white. Its own spec because the top row is a
+  /// governorate code, a dash and the two-digit expiry year on five evenly pitched
+  /// cells, not a code and a class letter. Documented only for the Kurdistan
+  /// Region, so it carries "KR".
   static final PlateSpec smallTemporary = PlateSpec(
     id: 'iq.small.temporary',
     country: IraqCountry.temporary,

@@ -7,20 +7,16 @@ import 'turkey_alphabets.dart';
 import 'turkey_colors.dart';
 import 'turkey_country.dart';
 
-/// Where the ink sits, in plate millimetres. Measured off the SVG artwork on
-/// Wikimedia Commons linked from Wikipedia's "Vehicle registration plates of
-/// Turkey", normalising each file's plate rectangle to the article's 520x110.
-/// The artwork is drawn at 4.48:1 against the documented 4.73:1, so x is
-/// stretched proportionally.
+/// Where the ink sits, in plate millimetres, measured off the Commons SVG artwork
+/// normalised to the article's 520x110 (drawn at 4.48:1 against 4.73:1, so x is
+/// stretched proportionally).
 ///
-/// Every current design prints one row of ink, y 23.8..85.8 (62 tall), centred
-/// on the field the strip leaves: x 284.4 on a strip plate (ink extents of all
-/// nine strip references centre within 1 mm of it), x 260 on a stripless one.
+/// Every design prints one row of ink, y 23.8..85.8, centred on the field the
+/// strip leaves: x 284.4 on a strip plate, x 260 on a stripless one.
 ///
-/// Core paints a bold Roboto cap at about 0.51 of the box height, so the 62
-/// would need a 121 box on a 110 plate. [rowHeight] is the tallest box that
-/// stays on the canvas about the measured centre, and the ink comes out about
-/// 90% of reference.
+/// Core paints a bold cap at ~0.51 of the box height, so the 62 would need a 121
+/// box on a 110 plate. [rowHeight] is the tallest box that stays on the canvas,
+/// giving ~90% of reference ink.
 abstract final class _Layout {
   static const double width = 520;
   static const double height = 110;
@@ -28,21 +24,16 @@ abstract final class _Layout {
   static const double rowCentre = 54.8;
   static const double rowHeight = 2 * rowCentre;
 
-  /// The artwork's figures sit at a 44 pitch ("1234": right edges 394.5,
-  /// 436.7, 483.0), its letters at 52 (`A`/`B`, `S`/`A`/`B` centres), and
-  /// groups are a space of 14 apart: that reproduces the ink extent of the
-  /// private plate (396 measured, 397 here), the foreign-resident plate
-  /// (364 / 357) and the gendarmerie plate (439 / 446).
+  /// Figures sit at a 44 pitch, letters at 52, groups a space of 14 apart; this
+  /// reproduces the artwork's ink extents to within ~7.
   static const double digitPitch = 44;
 
-  /// The pitches a variable row is fitted at so its longest form, three
-  /// letters and five figures, still fits the field right of the strip.
+  /// Pitches at which the longest form (three letters, five figures) fits right of the strip.
   static const double varDigitPitch = 41;
   static const double varLetterPitch = 48.4;
 
-  /// A letter box's width over its pitch: Roboto Bold's M is ~0.87 em, 69 at
-  /// this row's font size, against a 52 pitch. At full width it crowds its
-  /// neighbours, so it is let scale ~10% down rather than ~25%.
+  /// A letter box's width over its pitch. Roboto Bold's M is ~0.87 em (69 here)
+  /// against a 52 pitch; it is let scale ~10% down rather than ~25%.
   static const double letterBoxRatio = 1.2;
   static const double groupGap = 14;
 
@@ -51,18 +42,14 @@ abstract final class _Layout {
   static const double stripCentre = 284.4;
   static const double plainCentre = width / 2;
 
-  /// "TR": ink x 9.3..43.1, y 71.2..95.4 (24.2 tall). Roboto's TR is wider
-  /// than the plate face's, so it is set a little smaller and further right
-  /// to sit inside the strip rather than run into the field.
+  /// "TR" is set smaller and further right than the artwork because Roboto's is wider.
   static const PlateBox trBox = PlateBox(12, 71.2, 33.8, 24.2);
   static const double trGlyph = 21.5 / ink;
 
   /// The taxi plate's black rule at the strip edge, x 49.6..53.2.
   static const double taxiDivider = 3.5;
 
-  /// The temporary plate's white stripe falls 0.21 per mm left to right
-  /// (centres y 62.9 at x 300, 91 at x 450), 18.8 tall measured vertically,
-  /// crossing the field's centreline at y 52.
+  /// The temporary plate's stripe falls 0.21 per mm, 18.8 tall, crossing the centreline at y 52.
   static const double stripeAngle = -0.207;
   static const double stripeTop = 52 - 9.4;
   static const double stripeBottom = 52 + 9.4;
@@ -75,9 +62,7 @@ abstract final class _Layout {
   static const double sampleProvinceCentre = 118.9;
   static const double sampleSerialCentre = 436.2;
 
-  /// Roboto's figures are wider than the plate face's, so at [digitPitch] the
-  /// serial's first figure touches the band; a 38 pitch scales them down to
-  /// clear it, as the reference does.
+  /// Roboto's figures are wider than the artwork's, so a 38 pitch keeps the first figure clear of the band.
   static const double sampleSerialPitch = 38;
   static const double sampleCaptionGlyph = 24.6 / ink;
 
@@ -90,12 +75,10 @@ abstract final class _Layout {
   static const double ink = 0.512;
 }
 
-/// The motorcycle plate, 240x150 — the article's 150x240 — measured off the
-/// one photograph the article carries (no artwork exists), so to perhaps 2 mm.
-///
-/// Two rows: province and letters over the serial, and the TR strip in the
-/// bottom-left corner only, x 0..36.3 below y 89. The photograph's rows are
-/// 66 and 63 tall; boxes that fit the canvas give about 60% of that.
+/// The motorcycle plate, 240x150 (the article's 150x240), measured off the one
+/// photograph the article carries, so to perhaps 2 mm. Two rows, with the TR strip
+/// in the bottom-left corner only. Boxes that fit the canvas give ~60% of the
+/// photographed ink height.
 abstract final class _Moto {
   static const double width = 240;
   static const double height = 150;
@@ -132,29 +115,21 @@ typedef _Run = (
   double pitch,
 );
 
-/// The current Turkish plates (1996 onwards): `99 X 9999` to `99 XXX 999`, a
-/// province code, one to three letters and two to five figures.
+/// The current plates (1996 onwards): `99 X 9999` to `99 XXX 999`.
 ///
-/// Every design is one of three shapes, and each shape is one spec:
+/// Every design is one of three shapes, each one spec:
 ///
-/// - [strip] — the TR strip at the hoist, one row centred on the field right
-///   of it. Private and commercial, international organisations, diplomatic,
-///   temporary customs, foreign and Syrian residents, Istanbul taxis.
-/// - [plain] — no strip, one row centred on the plate. Police, gendarmerie,
-///   coast guard, consulates, provincial governments, official vehicles and,
-///   with no letters, province governors.
-/// - [motorcycle] — two rows, the strip in one corner.
+/// - [strip]: the TR strip at the hoist, one row centred on the field right of it.
+/// - [plain]: no strip, one row centred on the plate.
+/// - [motorcycle]: two rows, the strip in one corner.
 ///
-/// Letters (one to three) and figures (two to five) are variable fields, never
-/// forks; colour lives on the [TurkeyThemes] a host passes. On top of the three: [taxi] adds a rule at
-/// the strip, the two temporary plates a diagonal stripe, [sample] a caption
-/// band, and the parliament plates print no province.
+/// Letters and figures are variable fields, never forks; colour lives on the
+/// [TurkeyThemes] a host passes. [taxi] adds a rule at the strip, the temporary
+/// plates a diagonal stripe, [sample] a caption band; parliament's print no
+/// province.
 ///
-/// Not implemented: the presidential plate and parliament's emblem plate, both
-/// of which print a seal (a crest — artwork, not geometry); the
-/// stencilled military number, which is painted on the bumper rather than a
-/// plate; the 210x320 and 150x300 sizes, for which the article has no
-/// artwork; and the pre-1996 and pre-1962 series.
+/// Not implemented: plates that print a seal (presidential, parliament's emblem),
+/// the stencilled military number, sizes with no artwork, and the pre-1996 series.
 abstract final class TurkeyPlates {
   static const PlatePanel _noPanel = PlatePanel(
     box: PlateBox(0, 0, 0, 0),
@@ -172,10 +147,8 @@ abstract final class TurkeyPlates {
     color: TurkeyColors.white,
   );
 
-  /// Province, one to three letters and two to five figures, every format of
-  /// the strip and plain shapes. Variable fields are boxed for their longest
-  /// run, so the span is fitted at [_Layout.varDigitPitch] and
-  /// [_Layout.varLetterPitch]; shorter runs sit centred in their box.
+  /// Variable fields are boxed for their longest run, fitted at
+  /// [_Layout.varDigitPitch] and [_Layout.varLetterPitch]; shorter runs sit centred.
   static const List<_Run> _standardRuns = <_Run>[
     ('province', TurkeyAlphabets.digits, 2, null, _Layout.varDigitPitch),
     ('letters', TurkeyAlphabets.letters, 3, 1, _Layout.varLetterPitch),
@@ -247,8 +220,6 @@ abstract final class TurkeyPlates {
         PlatePart(field),
       ]);
 
-  /// A TR-strip plate printing `99`, one to three letters and two to five
-  /// figures.
   static final PlateSpec strip = _spec(
     id: 'tr.strip',
     row: _row(_standardRuns, centre: _Layout.stripCentre),
@@ -256,14 +227,11 @@ abstract final class TurkeyPlates {
     labels: const <PlateLabel>[_tr],
   );
 
-  /// A stripless plate printing `99`, one to three letters and two to five
-  /// figures.
   static final PlateSpec plain = _spec(
     id: 'tr.plain',
     row: _row(_standardRuns, centre: _Layout.plainCentre),
   );
 
-  /// A motorcycle plate: `99` and one or two letters over two to five figures.
   static final PlateSpec motorcycle = () {
     final top = _row(
       const <_Run>[

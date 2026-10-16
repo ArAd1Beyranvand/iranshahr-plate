@@ -5,16 +5,10 @@ import '../plate_field.dart';
 import 'kuwait_colors.dart';
 import 'kuwait_country.dart';
 
-/// Where the ink sits on a Kuwaiti plate, in plate coordinates.
-///
-/// Kuwait prints almost every category on one template, so the numbers live
-/// here once and the specs below name them. They were measured off the
-/// reference artwork on Wikimedia Commons (`Public_Taxis.png`,
-/// `Commercial_Vehicle_Plate.png`, `Emiri_Bureau.png`, `Export_2024.png`,
-/// `Temporary_Customs_2024.png`) by normalising each file's plate rectangle to
-/// the 335x155 mm the article gives as the physical size, then projecting the
-/// ink onto each axis. The five files agree to within half a unit, which is
-/// why one template covers them.
+/// Where the ink sits, in plate coordinates. Almost every category prints on one
+/// template, measured off the Commons reference artwork by normalising each
+/// plate rectangle to the article's 335x155 mm and projecting the ink onto each
+/// axis; the files agree to within half a unit.
 abstract final class _Layout {
   static const double width = 335;
   static const double height = 155;
@@ -72,17 +66,9 @@ abstract final class _Layout {
   static const double squareFaceRight = 148;
 }
 
-/// The Kuwaiti plate designs.
-///
-/// Kuwait adopted its current format in 2008 and refreshed the artwork in
-/// 2024. Sizes follow the "Vehicle types" table on Wikipedia's "Vehicle
-/// registration plates of Kuwait":
-/// - 520x110 mm (EU): private, in the long format
-/// - 335x155 mm: everything else except motorcycles
-/// - 155x155 mm: motorcycle and police motorcycle
-///
-/// Only public transport carries a class code alongside the serial; every
-/// other 335x155 category prints a plain five-digit serial.
+/// Sizes: 520x110 (EU) for private long-format, 335x155 for everything but
+/// motorcycles, 155x155 for motorcycle and police motorcycle. Only public
+/// transport carries a class code beside the serial.
 abstract final class KuwaitPlates {
   /// The template every 335x155 plate but the diplomatic one is built from:
   /// "KUWAIT" band, rule, Arabic caption, five-digit serial.
@@ -189,7 +175,6 @@ abstract final class KuwaitPlates {
     padding: EdgeInsets.zero,
   );
 
-  /// The "KUWAIT" band and the face, divided by the rule.
   static const PlateSection _bandBackground = PlateSection.columns(<PlatePart>[
     PlatePart(
       PlateSection.plain,
@@ -404,7 +389,6 @@ abstract final class KuwaitPlates {
     ],
   );
 
-  /// Centred on the band, not on the plate.
   static const PlateBox _diplomaticCapsuleBox = PlateBox(
     150,
     _diplomaticBandTop,
@@ -412,7 +396,6 @@ abstract final class KuwaitPlates {
     _diplomaticBandHeight,
   );
 
-  /// Government: black on blue.
   static final PlateSpec government = _standard(
     id: 'kw.government',
     country: KuwaitCountry.government,
@@ -430,7 +413,6 @@ abstract final class KuwaitPlates {
     band: false,
   );
 
-  /// Army: black on beige.
   static final PlateSpec army = _standard(
     id: 'kw.army',
     country: KuwaitCountry.army,
@@ -438,7 +420,6 @@ abstract final class KuwaitPlates {
     captionGlyph: 42,
   );
 
-  /// Commercial: black on pink.
   static final PlateSpec commercial = _standard(
     id: 'kw.commercial',
     country: KuwaitCountry.commercial,
@@ -446,7 +427,6 @@ abstract final class KuwaitPlates {
     captionGlyph: 40,
   );
 
-  /// Construction: black on red-orange.
   static final PlateSpec construction = _standard(
     id: 'kw.construction',
     country: KuwaitCountry.construction,
@@ -454,7 +434,6 @@ abstract final class KuwaitPlates {
     captionGlyph: 37,
   );
 
-  /// General firefighting: black on orange-red.
   static final PlateSpec firefighting = _standard(
     id: 'kw.firefighting',
     country: KuwaitCountry.firefighting,
@@ -462,7 +441,6 @@ abstract final class KuwaitPlates {
     captionGlyph: 37,
   );
 
-  /// Export: black on green.
   static final PlateSpec exportPlate = _standard(
     id: 'kw.export',
     country: KuwaitCountry.export,
@@ -470,7 +448,6 @@ abstract final class KuwaitPlates {
     captionGlyph: 37,
   );
 
-  /// Temporary customs: black on lilac.
   static final PlateSpec customs = _standard(
     id: 'kw.customs',
     country: KuwaitCountry.customs,
@@ -478,7 +455,6 @@ abstract final class KuwaitPlates {
     captionGlyph: 32,
   );
 
-  /// Emiri Bureau: white on azure.
   static final PlateSpec emiri = _standard(
     id: 'kw.emiri',
     country: KuwaitCountry.emiri,
@@ -486,7 +462,6 @@ abstract final class KuwaitPlates {
     captionGlyph: 23,
   );
 
-  /// Emiri Guard: white on navy.
   static final PlateSpec emiriGuard = _standard(
     id: 'kw.emiriguard',
     country: KuwaitCountry.emiriGuard,

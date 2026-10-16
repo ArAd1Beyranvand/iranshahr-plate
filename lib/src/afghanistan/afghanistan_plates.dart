@@ -19,32 +19,24 @@ abstract final class AfghanistanPlates {
   static const double _width = 420;
   static const double _height = 175;
 
-  /// The upper band, where the iranian-numeral serial and the Persian class
-  /// letter are printed, and the lower band, where their Latin twins are.
-  ///
-  /// A band is taller than the figure in it: core sets a glyph at 0.72 of the
-  /// height it is handed and centres it, so a cell is about twice the ink it
-  /// carries. These two are as deep as two bands can be on a 175-deep plate and
-  /// still clear the frame.
+  /// The upper band holds the iranian-numeral serial and Persian class letter, the
+  /// lower its Latin twins. A band is taller than the figure in it: core sets a
+  /// glyph at 0.72 of the height it is handed, so a cell is about twice the ink it
+  /// carries. These are as deep as two bands can be and still clear the frame.
   static const double _upperTop = 2;
   static const double _lowerTop = 82;
   static const double _bandHeight = 78;
 
-  /// The serial's edges on a full-size plate. One field box spans them for the
-  /// longest run; a shorter run sits centred in it.
+  /// The serial's edges; a shorter run sits centred in the box.
   static const double _serialLeft = 106;
   static const double _serialRight = 310;
 
-  /// The province block: the name, the emblem and the code, printed straight
-  /// onto the field.
-  ///
-  /// Zero padding and a [PlatePanel.flagScale] of 0.82 make the emblem 69 wide,
-  /// and 69 at 200:128 is 44 deep — which leaves 112 of the block's 156 to be
-  /// split evenly between the name above and the code below.
-  /// [PlatePanel.captionScale] is set past what will fit on purpose:
-  /// `CountryPanel` puts both lines in a `BoxFit.scaleDown`, so a value too big
-  /// means "as large as the block allows" and a value too small would silently
-  /// leave half of it empty.
+  /// The province block, printed straight onto the field. Zero padding and a
+  /// [PlatePanel.flagScale] of 0.82 make the emblem 69 wide and 44 deep, leaving
+  /// 112 of the block's 156 split between the name and the code.
+  /// [PlatePanel.captionScale] is set past what fits on purpose: both lines are in a
+  /// `BoxFit.scaleDown`, so too big means "as large as allowed" and too small would
+  /// leave the block half empty.
   static const PlatePanel _panel = PlatePanel(
     box: PlateBox(16, 8, 84, 156),
     padding: EdgeInsets.zero,
@@ -61,7 +53,6 @@ abstract final class AfghanistanPlates {
   );
   static const double _classLatinGlyph = 62;
 
-  /// Class as slot, code as mirror (one value, printed twice).
   static List<PlateSlot> get _classSlot => const <PlateSlot>[
     PlateSlot(alphabet: AfghanistanAlphabets.vehicleClass, box: _classBox),
   ];
@@ -73,7 +64,6 @@ abstract final class AfghanistanPlates {
     alphabet: AfghanistanAlphabets.classLatin,
   );
 
-  /// Serial: [count] Latin figures lower, one field; the Iranian echo is above.
   static PlateSlot _serial(
     int count, {
     double left = _serialLeft,
@@ -97,7 +87,6 @@ abstract final class AfghanistanPlates {
         editable: true,
       );
 
-  /// Ordinary plate: three to five figures, class register, province block.
   static final PlateSpec car = PlateSpec(
     id: 'af.car',
     country: _defaultProvince,
@@ -113,29 +102,16 @@ abstract final class AfghanistanPlates {
     ],
   );
 
-  /// The province a spec names when a renderer is handed none.
-  ///
-  /// Kabul, because a default has to be *some* province and the capital is the
-  /// least surprising one. It is a default and nothing more: `PlateCanvas.country`
-  /// overrides it, and a host that draws Afghan plates is expected to pass the
-  /// province the vehicle is registered in.
+  /// The province a spec names when a renderer is handed none; hosts pass the
+  /// registered province via `PlateCanvas.country`.
   static final PlateCountry _defaultProvince = AfghanistanProvince.kabul
       .country();
 
-  /// Kabul's six-figure plate: a five-figure serial, and a sixth figure set
-  /// apart ahead of it between two hyphens.
-  ///
-  /// Kabul exhausted the five-figure range, and the extra figure was added
-  /// where there was room for it rather than by widening the serial — so it is
-  /// printed **once, in Persian only**, spanning both bands, with a hyphen
-  /// above and below it. That is why it is a slot of its own over
-  /// [AfghanistanAlphabets.iranianDigits] and carries no mirror: there is no
-  /// Latin twin to echo, and on a plate where everything else is said twice
-  /// that is the one thing worth saying about this design.
-  ///
-  /// It is the plate's most significant figure, so it leads [textGroups]' serial
-  /// group. The five that follow have their own register at a tighter left edge
-  /// than [car]'s, to make room for it.
+  /// Kabul's six-figure plate: a five-figure serial and a sixth figure set apart
+  /// ahead of it between two hyphens. The sixth is printed once, in Persian only,
+  /// spanning both bands, so it is a slot over [AfghanistanAlphabets.iranianDigits]
+  /// with no mirror. It leads the serial group; the five that follow sit at a
+  /// tighter left edge than [car]'s.
   static final PlateSpec kabul6 = PlateSpec(
     id: 'af.kabul6',
     country: _defaultProvince,
@@ -185,8 +161,7 @@ abstract final class AfghanistanPlates {
     captionScale: 1.8,
   );
 
-  /// The two-wheeler plate: three figures for a motorcycle (`م`/`M`), four for
-  /// a rickshaw (`ر`/`TRC`). Which vehicle it is is a value in the class field.
+  /// Three figures for a motorcycle (`م`/`M`), four for a rickshaw (`ر`/`TRC`).
   static final PlateSpec cycle = PlateSpec(
     id: 'af.cycle',
     country: _defaultProvince,
@@ -240,16 +215,10 @@ abstract final class AfghanistanPlates {
   // something else where one would go.
   // ---------------------------------------------------------------------------
 
-  /// The diplomatic plate: white on red, `١٢-٣٤` over `12-34`, with `CD` at the
-  /// head and no Persian class letter at all.
-  ///
-  /// Two things make it a spec rather than a livery. The number is **grouped**,
-  /// two and two with a hyphen between, where every other Afghan serial is one
-  /// run — and a hyphen is a gap a single evenly-pitched register cannot
-  /// express. And `CD` is printed **once**, not twice: there is no Persian code
-  /// for the diplomatic corps, so it is a [PlateLabel] on the face rather than
-  /// a class slot with a mirror. It sits between the two bands for that reason,
-  /// belonging to neither.
+  /// White on red, `١٢-٣٤` over `12-34`, with `CD` at the head and no Persian class
+  /// letter. A spec rather than a livery because the number is grouped by a hyphen,
+  /// a gap one evenly pitched register cannot express, and `CD` is a [PlateLabel]
+  /// printed once between the bands.
   static final PlateSpec diplomatic = PlateSpec(
     id: 'af.diplomatic',
     country: _defaultProvince,
@@ -313,12 +282,8 @@ abstract final class AfghanistanPlates {
     ],
   );
 
-  /// The governmental plate: white on black, a four-figure serial, and a dash
-  /// in each band where a class code would be.
-  ///
-  /// The dash is the class — a government vehicle's type is not printed — so it
-  /// is fixed wording in both bands rather than a slot with a mirror, and this
-  /// is a spec and not [car] in another livery.
+  /// White on black with a dash in each band where a class code would be. The dash
+  /// is fixed wording, so this is a spec and not [car] in another livery.
   static final PlateSpec governmental = PlateSpec(
     id: 'af.governmental',
     country: _defaultProvince,
@@ -345,10 +310,7 @@ abstract final class AfghanistanPlates {
     ],
   );
 
-  /// The United Nations plate: black on UN blue, a four-figure serial, and
-  /// nothing at all where a class would go.
-  ///
-  /// The plainest Afghan design: the province block and the number, twice.
+  /// Black on UN blue: the province block and a four-figure serial, no class.
   static final PlateSpec un = PlateSpec(
     id: 'af.un',
     country: _defaultProvince,
@@ -363,23 +325,13 @@ abstract final class AfghanistanPlates {
     ],
   );
 
-  /// The temporary plate, issued from September 2023 and valid three years: a
-  /// private five-figure plate printed in **two inks**.
+  /// Issued from September 2023, valid three years. Printed in two inks: `موقت` and
+  /// `TEMP` are red [PlateLabel]s with their own [PlateLabel.color] because a
+  /// [PlateTheme] carries one ink. The class is fixed (`ش`, private only), so it is
+  /// a label, not a slot.
   ///
-  /// `موقت` ("temporary") takes the place of the province's Latin code at the
-  /// foot of the block, and `TEMP` the place of the class code — both in red on
-  /// a plate that is otherwise black on white. That second ink is why this is a
-  /// spec: [PlateTheme] carries one ink and giving it red would print the
-  /// serial red too, so the two red words are [PlateLabel]s with their own
-  /// [PlateLabel.color] and the theme stays `AfghanistanThemes.civilian`.
-  ///
-  /// The class is fixed: only private vehicles are issued these, so `ش` is a
-  /// label rather than a class slot, and there is no register for a value that
-  /// can only take one.
-  ///
-  /// **Hand this one a bare province block** —
-  /// `AfghanistanProvince.herat.country(showCode: false)` — or the block will
-  /// print `HRT` under the emblem and the `موقت` label will land on top of it.
+  /// Hand this a bare province block, `AfghanistanProvince.herat.country(showCode:
+  /// false)`, or the code will print under the emblem beneath the `موقت` label.
   static final PlateSpec temporary = PlateSpec(
     id: 'af.temporary',
     country: _bareDefaultProvince,
@@ -409,24 +361,15 @@ abstract final class AfghanistanPlates {
     ],
   );
 
-  /// Kabul again, with the block's bottom line suppressed — [temporary]'s
-  /// default, for the reason that spec's doc gives.
+  /// Kabul with the bottom line suppressed, as [temporary] requires.
   static final PlateCountry _bareDefaultProvince = AfghanistanProvince.kabul
       .country(showCode: false);
 
-  /// The cross-border international plate, issued in Herat from January 2026 to
-  /// taxis, buses and cargo lorries running between Afghanistan and Iran.
-  ///
-  /// **Reconstructed from the article's text, not from a photograph.** No image
-  /// of one has been published, and the article says only that the plate bears
-  /// Western Arabic numerals and a spelled-out category. So the one thing this
-  /// spec asserts confidently is the thing the source states: there is no
-  /// iranian-numeral band and no Persian class letter, which makes it the only
-  /// Afghan design in this file that says anything once. Everything else here —
-  /// a five-figure serial on one centred row, the category at the head, the
-  /// province block unchanged — is a reasonable reading of "like the others,
-  /// minus the Persian half" and should be recalibrated the day a photograph
-  /// appears. // CALIBRATE
+  /// Cross-border plate issued in Herat from January 2026 to taxis, buses and
+  /// cargo lorries running to Iran. Reconstructed from the article's text, not a
+  /// photograph: only the absence of the iranian-numeral band and Persian class
+  /// letter is stated. The rest is a reading of "like the others, minus the
+  /// Persian half". // CALIBRATE
   static final PlateSpec international = PlateSpec(
     id: 'af.international',
     country: _defaultProvince,
@@ -458,13 +401,9 @@ abstract final class AfghanistanPlates {
     ],
   );
 
-  /// Every Afghan geometry, in the order they are introduced above. A picker
-  /// iterates this rather than naming each constant.
-  ///
-  /// Rather more plates on the road than specs: a bus, a taxi, a lorry, a
-  /// private car and a duplicate are all [car] with a different class and a
-  /// different theme. A picker that wants to offer a taxi
-  /// offers `(car, AfghanistanThemes.transport, 'T')`.
+  /// Every geometry, in the order introduced above. A bus, taxi, lorry or private
+  /// car is [car] with another class and theme, e.g.
+  /// `(car, AfghanistanThemes.transport, 'T')`.
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
     car,
     kabul6,
