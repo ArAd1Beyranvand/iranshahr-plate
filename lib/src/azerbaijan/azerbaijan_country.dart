@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
 import 'azerbaijan_colors.dart';
@@ -25,6 +26,14 @@ import 'azerbaijan_colors.dart';
 /// [PlateCountry.captionLines] lays out, and exactly what the Bahraini wording
 /// was not.
 abstract final class AzerbaijanCountry {
+  static const PlateDrawing _flag = PlateDrawing(600, 300, <PlateShape>[
+    PlateRectShape(0, 0, 600, 300, Color(0xFF00B9E4)),
+    PlateRectShape(0, 100, 600, 200, Color(0xFFED2939)),
+    PlateRectShape(0, 200, 600, 100, Color(0xFF509E2F)),
+    PlateCrescentShape(262, 150, 45, 15, 36, Color(0xFFFFFFFF)),
+    PlateStarShape(322, 150, 30, Color(0xFFFFFFFF), points: 8, innerRatio: 0.4133),
+  ]);
+
   /// Official ratio of the flag of Azerbaijan is 1:2 — width over height, which
   /// is what [PlateCountry.flagAspectRatio] wants, is 2.
   static const double _flagAspectRatio = 2;
@@ -37,9 +46,6 @@ abstract final class AzerbaijanCountry {
     panelColor: AzerbaijanColors.field,
     panelTextColor: AzerbaijanColors.ink,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset(
-      'assets/flags/Flag_of_Azerbaijan.svg',
-      package: 'iranshahr_plate',
-    ),
+    flag: _flag,
   );
 }

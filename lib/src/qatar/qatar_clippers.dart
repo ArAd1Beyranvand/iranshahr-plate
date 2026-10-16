@@ -10,7 +10,7 @@ import 'package:flutter/widgets.dart';
 /// [PlatePanel.shape].
 ///
 /// The geometry is the flag's own, not an eyeballed approximation. The official
-/// construction — the `Flag_of_Qatar.svg` this package ships — draws the white
+/// construction draws the white
 /// hoist as a path over a `75 × 18` field:
 ///
 /// ```

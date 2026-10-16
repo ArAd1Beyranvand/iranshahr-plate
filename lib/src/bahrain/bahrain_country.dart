@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
 import 'bahrain_colors.dart';
@@ -29,6 +30,12 @@ import 'bahrain_colors.dart';
 /// left-aligned column stacked under the flag, and no Bahraini plate sets its
 /// wording that way.
 abstract final class BahrainCountry {
+  static const PlateDrawing _flag = PlateDrawing(500, 300, <PlateShape>[
+    PlateRectShape(0, 0, 500, 300, Color(0xFFFFFFFF)),
+    PlateRectShape(180, 0, 320, 300, Color(0xFFCE1126)),
+    PlatePolygonShape(<Offset>[Offset(120, 0), Offset(180, 30), Offset(120, 60), Offset(180, 90), Offset(120, 120), Offset(180, 150), Offset(120, 180), Offset(180, 210), Offset(120, 240), Offset(180, 270), Offset(120, 300), Offset(180, 300), Offset(180, 0)], Color(0xFFCE1126)),
+  ]);
+
   /// Official ratio of the flag of Bahrain is 3:5 — width over height, which is
   /// what [PlateCountry.flagAspectRatio] wants, is 5/3.
   static const double _flagAspectRatio = 5 / 3;
@@ -42,10 +49,7 @@ abstract final class BahrainCountry {
     panelColor: BahrainColors.field,
     panelTextColor: BahrainColors.blue,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset(
-      'assets/flags/Flag_of_Bahrain.svg',
-      package: 'iranshahr_plate',
-    ),
+    flag: _flag,
     // The photographed plates print a fine black line around the flag's own
     // rectangle, distinct from the frame around the whole plate. // CALIBRATE
     flagBorderColor: BahrainColors.darkInk,

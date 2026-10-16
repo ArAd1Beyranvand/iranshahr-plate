@@ -3,9 +3,7 @@ import 'package:flutter/widgets.dart';
 /// Every colour a Qatari plate is printed in, in one place.
 abstract final class QatarColors {
   /// Qatar maroon. The one colour here that is not a calibration target: it is
-  /// the `#8a1538` of the official flag construction, which is also the fill in
-  /// the `Flag_of_Qatar.svg` this package ships, so the hoist block and the
-  /// flag it is cut from cannot drift apart.
+  /// the `#8a1538` of the official flag construction, the colour the hoist block is cut from.
   static const Color maroon = Color(0xFF8A1538);
 
   /// The white field, and the `QATAR` reversed out of the maroon block.

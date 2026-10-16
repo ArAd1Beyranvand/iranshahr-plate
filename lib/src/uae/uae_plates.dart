@@ -133,7 +133,7 @@ abstract final class UaePlates {
   );
 
   /// Every design is a code (one letter, or two digits) then a serial of one to
-/// five digits.
+  /// five digits.
   static PlateSpec _spec({
     required String id,
     required bool long,

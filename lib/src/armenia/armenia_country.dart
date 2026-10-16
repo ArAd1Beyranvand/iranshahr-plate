@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
 import 'armenia_colors.dart';
@@ -21,6 +22,12 @@ import 'armenia_colors.dart';
 /// tall, illegible at plate scale and illegible in every photograph of one; a
 /// second caption line would print it at a size the real plate never does.
 abstract final class ArmeniaCountry {
+  static const PlateDrawing _flag = PlateDrawing(600, 300, <PlateShape>[
+    PlateRectShape(0, 0, 600, 300, Color(0xFFD90012)),
+    PlateRectShape(0, 100, 600, 200, Color(0xFF0033A0)),
+    PlateRectShape(0, 200, 600, 100, Color(0xFFF2A800)),
+  ]);
+
   /// Official ratio of the flag of Armenia is 1:2 — width over height, which is
   /// what [PlateCountry.flagAspectRatio] wants, is 2.
   static const double _flagAspectRatio = 2;
@@ -33,9 +40,6 @@ abstract final class ArmeniaCountry {
     panelColor: ArmeniaColors.field,
     panelTextColor: ArmeniaColors.ink,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset(
-      'assets/flags/Flag_of_Armenia.svg',
-      package: 'iranshahr_plate',
-    ),
+    flag: _flag,
   );
 }

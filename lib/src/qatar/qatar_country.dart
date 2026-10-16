@@ -15,8 +15,8 @@ import 'qatar_colors.dart';
 ///   maroon, serrated down the inboard edge — so painting a flag rectangle
 ///   inside it would be painting the flag twice. [PlateCountry.flag] is null
 ///   and the shape comes from [QatarFlagEdgeClipper] on the spec's panel
-///   instead. The `Flag_of_Qatar.svg` this package ships is what the clipper's
-///   geometry is derived from, not something the panel draws.
+///   instead. The clipper's geometry is derived from the flag's
+///   construction, not from anything the panel draws.
 /// - **Its wording is a [PlateLabel], not a caption.** `QATAR` runs *down* the
 ///   block, one letter per line, which a caption — a left-aligned column set at
 ///   caption scale — cannot express. The stacked letters are a rotated label on

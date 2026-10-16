@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
 import 'kuwait_colors.dart';
@@ -14,6 +15,13 @@ import 'kuwait_colors.dart';
 /// Wikipedia's "Vehicle registration plates of Kuwait" article, one row per
 /// constant below.
 abstract final class KuwaitCountry {
+  static const PlateDrawing _flag = PlateDrawing(600, 300, <PlateShape>[
+    PlateRectShape(0, 0, 600, 300, Color(0xFF007A3D)),
+    PlateRectShape(0, 100, 600, 200, Color(0xFFFFFFFF)),
+    PlateRectShape(0, 200, 600, 100, Color(0xFFCE1126)),
+    PlatePolygonShape(<Offset>[Offset(0, 0), Offset(150, 100), Offset(150, 200), Offset(0, 300)], Color(0xFF000000)),
+  ]);
+
   /// Official ratio of the flag of Kuwait is 1:2 — width over height, which is
   /// what [PlateCountry.flagAspectRatio] wants, is 2/1.
   static const double _flagAspectRatio = 2 / 1;
@@ -25,10 +33,7 @@ abstract final class KuwaitCountry {
     panelColor: KuwaitColors.civField,
     panelTextColor: KuwaitColors.darkInk,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset(
-      'assets/flags/Flag_of_Kuwait.svg',
-      package: 'iranshahr_plate',
-    ),
+    flag: _flag,
   );
 
   /// Public: black on yellow, "دولة الكويت" (codes 90-99: 91 general, 92 buses,
@@ -39,10 +44,7 @@ abstract final class KuwaitCountry {
     panelColor: KuwaitColors.transField,
     panelTextColor: KuwaitColors.darkInk,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset(
-      'assets/flags/Flag_of_Kuwait.svg',
-      package: 'iranshahr_plate',
-    ),
+    flag: _flag,
   );
 
   /// Police: white on black, "POLICE شرطة".
@@ -70,10 +72,7 @@ abstract final class KuwaitCountry {
     panelColor: KuwaitColors.govField,
     panelTextColor: KuwaitColors.darkInk,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset(
-      'assets/flags/Flag_of_Kuwait.svg',
-      package: 'iranshahr_plate',
-    ),
+    flag: _flag,
   );
 
   /// Corps Diplomatique: blue text on white field, red band along the bottom,
@@ -93,10 +92,7 @@ abstract final class KuwaitCountry {
     panelColor: KuwaitColors.guardField,
     panelTextColor: KuwaitColors.transField,
     flagAspectRatio: _flagAspectRatio,
-    flag: SvgPlateAsset(
-      'assets/flags/Flag_of_Kuwait.svg',
-      package: 'iranshahr_plate',
-    ),
+    flag: _flag,
   );
 
   /// Army: black on beige, "الجيش الكويتي".
