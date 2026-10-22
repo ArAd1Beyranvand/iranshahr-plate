@@ -10,13 +10,10 @@ import 'package:iranshahr_plate/iranshahr_plate.dart';
 /// they decline to know about.
 void main() {
   /// Judges [values] against [spec]'s validator, as a filled-in plate.
-  PlateValidation judge(
-    PlateSpec spec,
-    List<String?> values, {
-    PlateValidator? validator,
-  }) => (validator ?? ArmeniaPlates.validatorFor(spec)).validate(
-    PlateEntry(spec: spec, values: values),
-  );
+  PlateValidation judge(PlateSpec spec, List<String?> values, {PlateValidator? validator}) =>
+      (validator ?? ArmeniaPlates.validatorFor(spec)).validate(
+        PlateEntry(spec: spec, values: values),
+      );
 
   group('the specs', () {
     test('every design is internally consistent', () {
@@ -40,11 +37,7 @@ void main() {
     });
 
     test('only the 2014 designs carry the identifier band', () {
-      for (final spec in [
-        ArmeniaPlates.car,
-        ArmeniaPlates.carTwoRow,
-        ArmeniaPlates.public,
-      ]) {
+      for (final spec in [ArmeniaPlates.car, ArmeniaPlates.carTwoRow, ArmeniaPlates.public]) {
         expect(spec.rules, isNotEmpty, reason: spec.id);
       }
       for (final spec in [ArmeniaPlates.trailer, ArmeniaPlates.bus]) {
@@ -53,11 +46,7 @@ void main() {
     });
 
     test('the three designs with their own wording carry no country block', () {
-      for (final spec in [
-        ArmeniaPlates.diplomatic,
-        ArmeniaPlates.un,
-        ArmeniaPlates.military,
-      ]) {
+      for (final spec in [ArmeniaPlates.diplomatic, ArmeniaPlates.un, ArmeniaPlates.military]) {
         expect(spec.noPanel, isTrue, reason: spec.id);
       }
       expect(ArmeniaPlates.car.noPanel, isFalse);
@@ -66,20 +55,14 @@ void main() {
     test('the two diplomatic specs differ only in the code they print', () {
       expect(ArmeniaPlates.diplomatic.labels.single.text, 'AM');
       expect(ArmeniaPlates.diplomaticArm.labels.single.text, 'ARM');
-      expect(
-        ArmeniaPlates.diplomatic.slotCount,
-        ArmeniaPlates.diplomaticArm.slotCount,
-      );
+      expect(ArmeniaPlates.diplomatic.slotCount, ArmeniaPlates.diplomaticArm.slotCount);
     });
 
-    test(
-      'the military plate prints its ministry and renders its class in Armenian',
-      () {
-        expect(ArmeniaPlates.military.labels.single.text, 'ՊՆ');
-        expect(ArmeniaAlphabets.militaryClass.render('M'), 'Մ');
-        expect(ArmeniaAlphabets.militaryClass.render('T'), 'Տ');
-      },
-    );
+    test('the military plate prints its ministry and renders its class in Armenian', () {
+      expect(ArmeniaPlates.military.labels.single.text, 'ՊՆ');
+      expect(ArmeniaAlphabets.militaryClass.render('M'), 'Մ');
+      expect(ArmeniaAlphabets.militaryClass.render('T'), 'Տ');
+    });
   });
 
   group('region codes', () {
@@ -115,21 +98,13 @@ void main() {
     test('all twenty-six are accepted and all twenty-six are dated', () {
       expect(ArmeniaAlphabets.letters.characters, hasLength(26));
       for (final letter in ArmeniaAlphabets.letters.characters) {
-        expect(
-          ArmeniaAlphabets.introduced.containsKey(letter),
-          isTrue,
-          reason: letter,
-        );
+        expect(ArmeniaAlphabets.introduced.containsKey(letter), isTrue, reason: letter);
       }
     });
 
     test('the four the system opened with were in use from the start', () {
       for (final letter in ['L', 'U', 'S', 'O']) {
-        expect(
-          ArmeniaAlphabets.inUseOn(letter, 1996, month: 1),
-          isTrue,
-          reason: letter,
-        );
+        expect(ArmeniaAlphabets.inUseOn(letter, 1996, month: 1), isTrue, reason: letter);
       }
     });
 
@@ -149,186 +124,84 @@ void main() {
   });
 
   group('the private number', () {
-    List<String?> plate(String region, String letters, String serial) => [
-      region,
-      letters,
-      serial,
-    ];
+    List<String?> plate(String region, String letters, String serial) => [region, letters, serial];
 
     test('accepts the plate in the article photographs', () {
-      expect(
-        judge(ArmeniaPlates.car, plate('01', 'AD', '234')).isValid,
-        isTrue,
-      );
-      expect(
-        judge(ArmeniaPlates.car, plate('77', 'LU', '555')).isValid,
-        isTrue,
-      );
-      expect(
-        judge(ArmeniaPlates.car, plate('31', 'OU', '192')).isValid,
-        isTrue,
-      );
+      expect(judge(ArmeniaPlates.car, plate('01', 'AD', '234')).isValid, isTrue);
+      expect(judge(ArmeniaPlates.car, plate('77', 'LU', '555')).isValid, isTrue);
+      expect(judge(ArmeniaPlates.car, plate('31', 'OU', '192')).isValid, isTrue);
     });
 
     test('stays quiet on an empty plate and on one with no serial yet', () {
-      expect(
-        judge(ArmeniaPlates.car, List<String?>.filled(7, null)).isValid,
-        isTrue,
-      );
+      expect(judge(ArmeniaPlates.car, List<String?>.filled(7, null)).isValid, isTrue);
       expect(judge(ArmeniaPlates.car, plate('00', 'GG', '')).isValid, isTrue);
     });
 
     test('rejects a region code no province or pool holds', () {
-      expect(
-        judge(ArmeniaPlates.car, plate('00', 'AD', '234')).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.car, plate('00', 'AD', '234')).isValid, isFalse);
     });
 
     test('rejects the letters reserved to the Police and the Prosecutor', () {
-      expect(
-        judge(ArmeniaPlates.car, plate('01', 'GG', '234')).isValid,
-        isFalse,
-      );
-      expect(
-        judge(ArmeniaPlates.car, plate('01', 'II', '234')).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.car, plate('01', 'GG', '234')).isValid, isFalse);
+      expect(judge(ArmeniaPlates.car, plate('01', 'II', '234')).isValid, isFalse);
       // Singly, too: no private plate carries either character at all.
-      expect(
-        judge(ArmeniaPlates.car, plate('01', 'AG', '234')).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.car, plate('01', 'AG', '234')).isValid, isFalse);
     });
 
     test('accepts a serial with a leading zero', () {
-      expect(
-        judge(ArmeniaPlates.car, plate('01', 'AD', '001')).isValid,
-        isTrue,
-      );
+      expect(judge(ArmeniaPlates.car, plate('01', 'AD', '001')).isValid, isTrue);
     });
 
     test('checks the letter timeline only when the year is given', () {
       const dated = ArmeniaPlateValidator(issuedYear: 2015);
-      expect(
-        judge(ArmeniaPlates.car, plate('01', 'JW', '234')).isValid,
-        isTrue,
-      );
-      expect(
-        judge(
-          ArmeniaPlates.car,
-          plate('01', 'JW', '234'),
-          validator: dated,
-        ).isValid,
-        isFalse,
-      );
-      expect(
-        judge(
-          ArmeniaPlates.car,
-          plate('01', 'LU', '234'),
-          validator: dated,
-        ).isValid,
-        isTrue,
-      );
+      expect(judge(ArmeniaPlates.car, plate('01', 'JW', '234')).isValid, isTrue);
+      expect(judge(ArmeniaPlates.car, plate('01', 'JW', '234'), validator: dated).isValid, isFalse);
+      expect(judge(ArmeniaPlates.car, plate('01', 'LU', '234'), validator: dated).isValid, isTrue);
     });
 
     test('the two-row and motorcycle plates are judged by the same rules', () {
       for (final spec in [ArmeniaPlates.carTwoRow, ArmeniaPlates.motorcycle]) {
-        expect(
-          ArmeniaPlates.validatorFor(spec),
-          isA<ArmeniaPlateValidator>(),
-          reason: spec.id,
-        );
-        expect(
-          judge(spec, plate('01', 'AD', '234')).isValid,
-          isTrue,
-          reason: spec.id,
-        );
-        expect(
-          judge(spec, plate('01', 'GG', '234')).isValid,
-          isFalse,
-          reason: spec.id,
-        );
+        expect(ArmeniaPlates.validatorFor(spec), isA<ArmeniaPlateValidator>(), reason: spec.id);
+        expect(judge(spec, plate('01', 'AD', '234')).isValid, isTrue, reason: spec.id);
+        expect(judge(spec, plate('01', 'GG', '234')).isValid, isFalse, reason: spec.id);
       }
     });
   });
 
   group('the state number', () {
-    List<String?> plate(String serial, String letters, String tail) => [
-      serial,
-      letters,
-      tail,
-    ];
+    List<String?> plate(String serial, String letters, String tail) => [serial, letters, tail];
 
     test('accepts a combination from the table', () {
       expect(
         judge(ArmeniaPlates.public, plate('001', 'NN', '01')).isValid,
         isTrue,
       ); // Security Council
-      expect(
-        judge(ArmeniaPlates.public, plate('123', 'GG', '01')).isValid,
-        isTrue,
-      ); // Prosecutor
+      expect(judge(ArmeniaPlates.public, plate('123', 'GG', '01')).isValid, isTrue); // Prosecutor
       expect(
         judge(ArmeniaPlates.public, plate('007', 'OO', '11')).isValid,
         isTrue,
       ); // National Assembly
-      expect(
-        judge(ArmeniaPlates.public, plate('007', 'SL', '33')).isValid,
-        isTrue,
-      ); // a bank
+      expect(judge(ArmeniaPlates.public, plate('007', 'SL', '33')).isValid, isTrue); // a bank
     });
 
     test('rejects a tail the institution is not issued', () {
-      expect(
-        judge(ArmeniaPlates.public, plate('001', 'NN', '02')).isValid,
-        isFalse,
-      );
-      expect(
-        judge(ArmeniaPlates.public, plate('007', 'OO', '12')).isValid,
-        isFalse,
-      );
-      expect(
-        judge(ArmeniaPlates.public, plate('007', 'SL', '34')).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.public, plate('001', 'NN', '02')).isValid, isFalse);
+      expect(judge(ArmeniaPlates.public, plate('007', 'OO', '12')).isValid, isFalse);
+      expect(judge(ArmeniaPlates.public, plate('007', 'SL', '34')).isValid, isFalse);
     });
 
     test('rejects a pair no institution holds', () {
-      expect(
-        judge(ArmeniaPlates.public, plate('001', 'AD', '01')).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.public, plate('001', 'AD', '01')).isValid, isFalse);
     });
 
     test('stays quiet until both halves of the combination are there', () {
-      expect(
-        judge(ArmeniaPlates.public, [
-          '0',
-          '0',
-          '1',
-          'N',
-          null,
-          '0',
-          null,
-        ]).isValid,
-        isTrue,
-      );
+      expect(judge(ArmeniaPlates.public, ['0', '0', '1', 'N', null, '0', null]).isValid, isTrue);
     });
 
     test('three bodies share SS, told apart by the tail', () {
-      expect(
-        ArmeniaSpecialPlates.lookup('SS', '01')?.institution,
-        'Court of Cassation',
-      );
-      expect(
-        ArmeniaSpecialPlates.lookup('SS', '02')?.institution,
-        'National Security Service',
-      );
-      expect(
-        ArmeniaSpecialPlates.lookup('SS', '03')?.institution,
-        'Government',
-      );
+      expect(ArmeniaSpecialPlates.lookup('SS', '01')?.institution, 'Court of Cassation');
+      expect(ArmeniaSpecialPlates.lookup('SS', '02')?.institution, 'National Security Service');
+      expect(ArmeniaSpecialPlates.lookup('SS', '03')?.institution, 'Government');
     });
 
     test('the Police II number leaves its digits open', () {
@@ -337,33 +210,22 @@ void main() {
     });
 
     test('the Police ՈՍ number is listed but cannot be typed', () {
-      final os = ArmeniaSpecialPlates.all.firstWhere(
-        (c) => c.armenianLetters == 'ՈՍ',
-      );
+      final os = ArmeniaSpecialPlates.all.firstWhere((c) => c.armenianLetters == 'ՈՍ');
       expect(os.letters, isNull);
       expect(os.matches('OS', '01'), isFalse);
       // "OS 01" is the Constitutional Court's, and nothing else claims it.
-      expect(
-        ArmeniaSpecialPlates.lookup('OS', '01')?.institution,
-        'Constitutional Court',
-      );
+      expect(ArmeniaSpecialPlates.lookup('OS', '01')?.institution, 'Constitutional Court');
     });
   });
 
   group('the other formats', () {
     test('each gets its own validator, not the private plate\'s', () {
-      expect(
-        ArmeniaPlates.validatorFor(ArmeniaPlates.public),
-        isA<ArmeniaPublicPlateValidator>(),
-      );
+      expect(ArmeniaPlates.validatorFor(ArmeniaPlates.public), isA<ArmeniaPublicPlateValidator>());
       expect(
         ArmeniaPlates.validatorFor(ArmeniaPlates.trailer),
         isA<ArmeniaTrailerPlateValidator>(),
       );
-      expect(
-        ArmeniaPlates.validatorFor(ArmeniaPlates.bus),
-        isA<ArmeniaBusPlateValidator>(),
-      );
+      expect(ArmeniaPlates.validatorFor(ArmeniaPlates.bus), isA<ArmeniaBusPlateValidator>());
       expect(
         ArmeniaPlates.validatorFor(ArmeniaPlates.diplomatic),
         isA<ArmeniaDiplomaticPlateValidator>(),
@@ -372,10 +234,7 @@ void main() {
         ArmeniaPlates.validatorFor(ArmeniaPlates.diplomaticArm),
         isA<ArmeniaDiplomaticPlateValidator>(),
       );
-      expect(
-        ArmeniaPlates.validatorFor(ArmeniaPlates.un),
-        isA<ArmeniaSerialPlateValidator>(),
-      );
+      expect(ArmeniaPlates.validatorFor(ArmeniaPlates.un), isA<ArmeniaSerialPlateValidator>());
       expect(
         ArmeniaPlates.validatorFor(ArmeniaPlates.military),
         isA<ArmeniaMilitaryPlateValidator>(),
@@ -396,18 +255,9 @@ void main() {
     });
 
     test('a diplomatic plate is D or T', () {
-      expect(
-        judge(ArmeniaPlates.diplomatic, ['04', 'D', '057']).isValid,
-        isTrue,
-      );
-      expect(
-        judge(ArmeniaPlates.diplomatic, ['04', 'T', '057']).isValid,
-        isTrue,
-      );
-      expect(
-        judge(ArmeniaPlates.diplomatic, ['04', null, '057']).isValid,
-        isFalse,
-      );
+      expect(judge(ArmeniaPlates.diplomatic, ['04', 'D', '057']).isValid, isTrue);
+      expect(judge(ArmeniaPlates.diplomatic, ['04', 'T', '057']).isValid, isTrue);
+      expect(judge(ArmeniaPlates.diplomatic, ['04', null, '057']).isValid, isFalse);
     });
 
     test('a military plate is four digits and a class', () {

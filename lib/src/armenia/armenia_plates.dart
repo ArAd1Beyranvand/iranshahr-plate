@@ -7,41 +7,28 @@ import 'armenia_country.dart';
 import 'armenia_validators.dart';
 
 /// Structurally European plates: a country block at the hoist end, then Latin
-/// groups read left to right with no divider between them.
+/// groups with no divider.
 ///
-/// `NN LL NNN` is a private vehicle; `NNN LL NN` is a state one, where the
-/// trailing pair is half of an institution's reserved combination. [car] and
-/// [public] are two specs because their registers differ (2/2/3 against 3/2/2).
+/// `NN LL NNN` is a private vehicle, `NNN LL NN` a state one whose trailing
+/// pair is half an institution's reserved combination; their registers differ,
+/// hence two specs. The diplomatic, UN and military plates print their own
+/// wording in place of the flag block and declare [PlateSpec.noPanel].
 ///
-/// The silver identifier band of the 2014 design is a [PlateRule], which is why
-/// `ArmeniaThemes.civilian` is not a [PlateTheme.monochrome]; the older [trailer]
-/// and [bus] declare no rule. The diplomatic, UN and military plates print their
-/// own wording in place of the flag block and declare [PlateSpec.noPanel].
-///
-/// Colour is never here, and [carTwoRow] is the same number as [car] on a deeper
-/// canvas, not a different class.
-///
-/// `final`, not `const`: the digit runs are built by [plateRegister]. Every
-/// coordinate is sampled by eye from photographs and is a calibration target.
+/// `final`, not `const`: the digit runs are built by [plateField]. Every
+/// coordinate is sampled by eye and is a calibration target.
 abstract final class ArmeniaPlates {
-  /// The flag over `AM`. Zero padding and a [PlatePanel.flagScale] of 1 make the
-  /// flag fill the box's width. [PlatePanel.captionScale] is set past what fits on
-  /// purpose: the caption is in a `BoxFit.scaleDown`, so too big means "as large as
-  /// the block allows" while too small would leave the block half empty.
+  /// The flag fills the box's width. The caption scale exceeds what fits on
+  /// purpose: the caption scales down, so "too big" means "as large as allowed".
   static const PlatePanel _euPanel = PlatePanel(
     box: PlateBox(10, 14, 48, 82),
     padding: EdgeInsets.zero,
     captionScale: 1.6,
   );
 
-  /// The 2014 design's silver strip between the flag block and the first digit.
-  /// A [PlateRule] and not a [PlateBand]: nothing is printed on it, and it takes
-  /// the theme's divider colour.
-  static const PlateRule _identifierBand = PlateRule(
-    box: PlateBox(66, 12, 10, 86),
-  );
+  /// The 2014 design's silver strip: a rule, so it takes the divider colour.
+  static const PlateRule _identifierBand = PlateRule(box: PlateBox(66, 12, 10, 86));
 
-  /// Private plate, e.g. `01 AD 234`; judged by [ArmeniaPlateValidator].
+  /// `01 AD 234`.
   static final PlateSpec car = PlateSpec(
     id: 'am.car',
     country: ArmeniaCountry.armenia,
@@ -59,9 +46,7 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 54,
       ),
-      // Wider cells on a wider pitch: FE-Schrift prints a letter broader than a
-      // digit, so the pair is its own register rather than a continuation of
-      // the one before.
+      // Letters print broader than digits, so wider cells on a wider pitch.
       plateField(
         alphabet: ArmeniaAlphabets.letters,
         count: 2,
@@ -88,14 +73,13 @@ abstract final class ArmeniaPlates {
     ],
   );
 
-  /// Two-row [car], e.g. `01 AD` over `234`; the flag block sits beside the serial.
+  /// `01 AD` over `234`; the flag block sits beside the serial.
   static final PlateSpec carTwoRow = PlateSpec(
     id: 'am.carTwoRow',
     country: ArmeniaCountry.armenia,
     canvasWidth: 300,
     canvasHeight: 150,
-    // Lower and shallower than the full-size block: on a two-row plate the
-    // block sits against the bottom row, not against the middle of the plate.
+    // Against the bottom row, not the middle of the plate.
     panel: const PlatePanel(
       box: PlateBox(12, 34, 42, 72),
       padding: EdgeInsets.zero,
@@ -138,8 +122,8 @@ abstract final class ArmeniaPlates {
     ],
   );
 
-  /// Motorcycle plate, e.g. `01AD` over `234`. The closed gap between region and
-  /// letters is the design, so this is not [carTwoRow] on a narrower canvas.
+  /// `01AD` over `234`. Region and letters abut, so this is not [carTwoRow]
+  /// on a narrower canvas.
   static final PlateSpec motorcycle = PlateSpec(
     id: 'am.motorcycle',
     country: ArmeniaCountry.armenia,
@@ -151,7 +135,6 @@ abstract final class ArmeniaPlates {
       captionScale: 1.5,
     ),
     slots: [
-      // Head row: region and letters, hard against one another.
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
@@ -170,7 +153,6 @@ abstract final class ArmeniaPlates {
         height: 44,
         pitch: 36,
       ),
-      // Lower row: the serial, at the size the head row gave up.
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -188,9 +170,7 @@ abstract final class ArmeniaPlates {
     ],
   );
 
-  /// State plate, e.g. `001 NN 01`. The trailing pair is a reserved combination
-  /// (`ArmeniaSpecialPlates`), judged by [ArmeniaPublicPlateValidator] as a
-  /// membership test rather than a shape.
+  /// `001 NN 01`; the trailing pair is an `ArmeniaSpecialPlates` combination.
   static final PlateSpec public = PlateSpec(
     id: 'am.public',
     country: ArmeniaCountry.armenia,
@@ -234,9 +214,7 @@ abstract final class ArmeniaPlates {
     ],
   );
 
-  /// Trailer plate, e.g. `290 L` over `01`; pre-2014, so no identifier band. The
-  /// letter is a slot because the article says the count was cut to one, not the
-  /// choice.
+  /// `290 L` over `01`; pre-2014, so no identifier band.
   static final PlateSpec trailer = PlateSpec(
     id: 'am.trailer',
     country: ArmeniaCountry.armenia,
@@ -257,12 +235,8 @@ abstract final class ArmeniaPlates {
         height: 58,
         pitch: 42,
       ),
-      // Set smaller than the digits beside it and dropped to their centre line,
-      // the way the photographed plates print it.
-      const PlateSlot(
-        alphabet: ArmeniaAlphabets.letters,
-        box: PlateBox(166, 22, 30, 46),
-      ),
+      // Smaller than the digits, on their centre line.
+      const PlateSlot(alphabet: ArmeniaAlphabets.letters, box: PlateBox(166, 22, 30, 46)),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
@@ -280,8 +254,7 @@ abstract final class ArmeniaPlates {
     ],
   );
 
-  /// Bus plate, e.g. `1234 S`; pre-2014 and still issued, so no identifier band.
-  /// The class letter is `S` (city bus) or `L` (coach).
+  /// `1234 S` (city) or `L` (coach); pre-2014, so no identifier band.
   static final PlateSpec bus = PlateSpec(
     id: 'am.bus',
     country: ArmeniaCountry.armenia,
@@ -298,10 +271,7 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 70,
       ),
-      const PlateSlot(
-        alphabet: ArmeniaAlphabets.busClass,
-        box: PlateBox(400, 17, 64, 76),
-      ),
+      const PlateSlot(alphabet: ArmeniaAlphabets.busClass, box: PlateBox(400, 17, 64, 76)),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
@@ -309,27 +279,17 @@ abstract final class ArmeniaPlates {
     ],
   );
 
-  /// Diplomatic plate, e.g. `04 D 057 AM`: mission code, class letter, serial and
-  /// Armenia's code as fixed wording. [diplomatic] and [diplomaticArm] differ only
-  /// in that wording and the room it takes.
-  static final PlateSpec diplomatic = _diplomatic(
-    id: 'am.diplomatic',
-    countryCode: 'AM',
-  );
+  /// `04 D 057 AM`: mission code, class letter, serial and the country code as
+  /// fixed wording.
+  static final PlateSpec diplomatic = _diplomatic(id: 'am.diplomatic', countryCode: 'AM');
 
   /// Prints `ARM` in place of [diplomatic]'s `AM`.
-  static final PlateSpec diplomaticArm = _diplomatic(
-    id: 'am.diplomaticArm',
-    countryCode: 'ARM',
-  );
+  static final PlateSpec diplomaticArm = _diplomatic(id: 'am.diplomaticArm', countryCode: 'ARM');
 
-  /// A label is laid out from the top of its box while a slot centres its glyph,
-  /// so the label top is 20 + 70/2 - 0.72*56/2 = 34.8 to sit on the digits' centre
+  /// A label lays out from the top of its box and a slot centres its glyph, so
+  /// the label top is 20 + 70/2 - 0.72*56/2 = 34.8 to sit on the digits' centre
   /// line.
-  static PlateSpec _diplomatic({
-    required String id,
-    required String countryCode,
-  }) => PlateSpec(
+  static PlateSpec _diplomatic({required String id, required String countryCode}) => PlateSpec(
     id: id,
     country: ArmeniaCountry.armenia,
     canvasWidth: 520,
@@ -346,13 +306,8 @@ abstract final class ArmeniaPlates {
         height: 70,
         pitch: 56,
       ),
-      // Taller than the digits either side of it, as the photographed plates
-      // print it: the class letter is the one character on a diplomatic plate
-      // that has to be read at a checkpoint.
-      const PlateSlot(
-        alphabet: ArmeniaAlphabets.diplomaticClass,
-        box: PlateBox(160, 17, 56, 76),
-      ),
+      // Taller than the digits, as photographed.
+      const PlateSlot(alphabet: ArmeniaAlphabets.diplomaticClass, box: PlateBox(160, 17, 56, 76)),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -363,13 +318,7 @@ abstract final class ArmeniaPlates {
         pitch: 56,
       ),
     ],
-    labels: [
-      PlateLabel(
-        text: countryCode,
-        box: PlateBox(400, 34.8, 104, 56),
-        glyphHeight: 56,
-      ),
-    ],
+    labels: [PlateLabel(text: countryCode, box: PlateBox(400, 34.8, 104, 56), glyphHeight: 56)],
     textGroups: const [
       PlateTextGroup([0], key: 'mission'),
       PlateTextGroup([1], key: 'class'),
@@ -377,9 +326,8 @@ abstract final class ArmeniaPlates {
     ],
   );
 
-  /// UN plate, e.g. `UN 080 AM`. Both words are labels because neither is a
-  /// choice. The label tops are on the slots' centre line: 17 + 76/2 - 0.72*76/2
-  /// for the head word, 17 + 38 - 0.72*56/2 for the smaller tail.
+  /// `UN 080 AM`; both words are labels. Their tops sit on the slots' centre
+  /// line: 17 + 76/2 - 0.72*76/2 for `UN`, 17 + 38 - 0.72*56/2 for `AM`.
   static final PlateSpec un = PlateSpec(
     id: 'am.un',
     country: ArmeniaCountry.armenia,
@@ -400,20 +348,16 @@ abstract final class ArmeniaPlates {
     ],
     labels: const [
       PlateLabel(text: 'UN', box: PlateBox(44, 27.6, 130, 76), glyphHeight: 76),
-      PlateLabel(
-        text: 'AM',
-        box: PlateBox(380, 34.8, 104, 56),
-        glyphHeight: 56,
-      ),
+      PlateLabel(text: 'AM', box: PlateBox(380, 34.8, 104, 56), glyphHeight: 56),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
     ],
   );
 
-  /// Ministry of Defence plate, e.g. `ՊՆ 1007 Մ`. The tail is a class letter in
-  /// [ArmeniaAlphabets.militaryClass] (genuine Armenian letters, not the
-  /// shape-sharing stand-ins of [ArmeniaAlphabets.letters]); `ՊՆ` is a label.
+  /// `ՊՆ 1007 Մ`. The class uses genuine Armenian letters
+  /// ([ArmeniaAlphabets.militaryClass]), not the lookalikes of
+  /// [ArmeniaAlphabets.letters]; `ՊՆ` is a label.
   static final PlateSpec military = PlateSpec(
     id: 'am.military',
     country: ArmeniaCountry.armenia,
@@ -431,21 +375,15 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 58,
       ),
-      const PlateSlot(
-        alphabet: ArmeniaAlphabets.militaryClass,
-        box: PlateBox(410, 17, 54, 76),
-      ),
+      const PlateSlot(alphabet: ArmeniaAlphabets.militaryClass, box: PlateBox(410, 17, 54, 76)),
     ],
-    labels: const [
-      PlateLabel(text: 'ՊՆ', box: PlateBox(40, 27.6, 112, 76), glyphHeight: 76),
-    ],
+    labels: const [PlateLabel(text: 'ՊՆ', box: PlateBox(40, 27.6, 112, 76), glyphHeight: 76)],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
       PlateTextGroup([1], key: 'class'),
     ],
   );
 
-  /// Every design, in the order introduced above.
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
     car,
     carTwoRow,
@@ -459,16 +397,13 @@ abstract final class ArmeniaPlates {
     military,
   ]);
 
-  /// The validator that judges [spec]. [ArmeniaPlateValidator] describes only
-  /// private registrations; handing it a public number would paint a correct
-  /// state plate red, so the choice is made from the spec. The UN plate has only
-  /// its three-digit serial left to check.
+  /// The validator for [spec]. [ArmeniaPlateValidator] describes only private
+  /// registrations and would flag a correct state plate.
   static PlateValidator validatorFor(PlateSpec spec) => switch (spec.id) {
     'am.public' => const ArmeniaPublicPlateValidator(),
     'am.trailer' => const ArmeniaTrailerPlateValidator(),
     'am.bus' => const ArmeniaBusPlateValidator(),
-    'am.diplomatic' ||
-    'am.diplomaticArm' => const ArmeniaDiplomaticPlateValidator(),
+    'am.diplomatic' || 'am.diplomaticArm' => const ArmeniaDiplomaticPlateValidator(),
     'am.un' => const ArmeniaSerialPlateValidator(length: 3),
     'am.military' => const ArmeniaMilitaryPlateValidator(),
     _ => const ArmeniaPlateValidator(),

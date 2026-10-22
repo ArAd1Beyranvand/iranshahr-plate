@@ -16,7 +16,8 @@ class UzbekistanValidator extends GatedPlateValidator {
     for (final g in entry.spec.textGroups) {
       final key = g.key;
       if (key == null) continue;
-      if (entry.group(key).length != g.indices.length) {
+      final int expected = g.indices.fold<int>(0, (int n, int i) => n + entry.spec.slots[i].length);
+      if (entry.group(key).length != expected) {
         return PlateValidation.invalid('The $key is incomplete.');
       }
     }
@@ -65,8 +66,7 @@ class UzbekistanUnitedNationsValidator extends GatedPlateValidator {
   String get gateGroup => 'serial';
 
   @override
-  PlateValidation judge(PlateEntry entry) =>
-      isDigitsOfLength(entry.group('serial'), 4)
+  PlateValidation judge(PlateEntry entry) => isDigitsOfLength(entry.group('serial'), 4)
       ? const PlateValidation.valid()
       : const PlateValidation.invalid('The serial is incomplete.');
 }

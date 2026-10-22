@@ -4,36 +4,25 @@ import 'package:plate_core/plate_core.dart';
 import '../plate_field.dart';
 import 'azerbaijan_country.dart';
 
-/// The Azerbaijani plate designs: four specs, five plates on the road.
+/// Four specs, five plates on the road: the serial grouping is the spec, the
+/// field colour is the theme, so a bus or taxi plate is [car] in
+/// `AzerbaijanThemes.transport`.
 ///
-/// The grouping of the serial is the spec; the field colour is the theme. A
-/// bus or taxi plate is [car] in `AzerbaijanThemes.transport`, not a separate
-/// spec, because a [PlateSpec] never carries colour.
-///
-/// The country block is [AzerbaijanCountry.azerbaijan] on every plate. Its
-/// [PlatePanel.box] stays clear of the frame: the panel is white, and a white
-/// block run out under a black frame would rub the frame out.
-///
-/// `final`, not `const`: the digit runs are built by [plateRegister].
-///
-/// Every coordinate is sampled by eye from plate photographs and is a
-/// calibration target.
+/// The white country block stays clear of the frame, or it would rub out the
+/// frame's edge. `final`, not `const`: the digit runs are built by
+/// [plateField]. Every coordinate is sampled by eye and is a calibration
+/// target.
 abstract final class AzerbaijanPlates {
-  /// The country block shared by the three full-size designs.
-  ///
-  /// [PlatePanel.captionScale] is set past what will fit on purpose:
-  /// `CountryPanel` scales the caption down, so too big means "as large as the
-  /// block allows" while too small would leave the block half empty.
+  /// Shared by the three full-size designs. The caption scale exceeds what fits
+  /// on purpose: the caption scales down, so "too big" means "as large as
+  /// allowed".
   static const PlatePanel _euPanel = PlatePanel(
     box: PlateBox(10, 26, 44, 60),
     padding: EdgeInsets.zero,
     captionScale: 1.6,
   );
 
-  /// The standard civilian plate (520×110), e.g. `88-BE-114`: a two-digit
-  /// regional code, two Latin letters, a three-digit serial, hyphenated.
-  ///
-  /// In `AzerbaijanThemes.transport` this is the blue bus-and-taxi plate.
+  /// `88-BE-114`: regional code, two letters, serial.
   static final PlateSpec car = PlateSpec(
     id: 'az.car',
     country: AzerbaijanCountry.azerbaijan,
@@ -69,9 +58,9 @@ abstract final class AzerbaijanPlates {
         pitch: 54,
       ),
     ],
-    // Hyphens are characters in the serial's ink, so labels, not PlateRules. A
-    // label is laid out from its box top while a slot centres its glyph:
-    // 17 + 76/2 - 0.72*76/2 = 27.6 puts the hyphen on the digits' centre line.
+    // Labels, not rules, so the hyphens take the ink. A label lays out from its
+    // box top and a slot centres its glyph: 17 + 76/2 - 0.72*76/2 = 27.6 puts
+    // the hyphen on the digits' centre line.
     labels: const [
       PlateLabel(text: '-', box: PlateBox(181, 27.6, 22, 76), glyphHeight: 76),
       PlateLabel(text: '-', box: PlateBox(314, 27.6, 22, 76), glyphHeight: 76),
@@ -83,22 +72,19 @@ abstract final class AzerbaijanPlates {
     ],
   );
 
-  /// The motorcycle plate (200×150), e.g. `07` over `T-096`.
-  ///
-  /// The characters of [car] across two rows, with one letter instead of two.
+  /// `07` over `T-096`: [car] across two rows with one letter.
   static final PlateSpec bicycle = PlateSpec(
     id: 'az.bicycle',
     country: AzerbaijanCountry.azerbaijan,
     canvasWidth: 200,
     canvasHeight: 150,
-    // Shallower than _euPanel: it shares the head row with the regional pair.
+    // Shallower than _euPanel: it shares the head row with the region.
     panel: const PlatePanel(
       box: PlateBox(14, 16, 40, 52),
       padding: EdgeInsets.zero,
       captionScale: 1.5,
     ),
     slots: [
-      // Head row: the regional pair.
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
@@ -108,10 +94,7 @@ abstract final class AzerbaijanPlates {
         height: 46,
         pitch: 42,
       ),
-      const PlateSlot(
-        alphabet: PlateAlphabet.latinUppercase,
-        box: PlateBox(14, 82, 36, 54),
-      ),
+      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(14, 82, 36, 54)),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -123,9 +106,7 @@ abstract final class AzerbaijanPlates {
       ),
     ],
     // 82 + 54/2 - 0.72*54/2 = 89.6. See car.
-    labels: const [
-      PlateLabel(text: '-', box: PlateBox(52, 89.6, 18, 54), glyphHeight: 54),
-    ],
+    labels: const [PlateLabel(text: '-', box: PlateBox(52, 89.6, 18, 54), glyphHeight: 54)],
     textGroups: const [
       PlateTextGroup([0], key: 'region'),
       PlateTextGroup([1], key: 'letters'),
@@ -133,12 +114,9 @@ abstract final class AzerbaijanPlates {
     ],
   );
 
-  /// The diplomatic plate (520×110), e.g. `013 D 004`: the mission's country
-  /// code, the class letter, and the serial — printed white on red by
-  /// `AzerbaijanThemes.diplomatic`.
-  ///
-  /// No hyphens; the groups are told apart by gaps wider than [car]'s. The
-  /// class letter is a slot because `D` is not the only one issued.
+  /// `013 D 004`: mission country code, class letter, serial. No hyphens; the
+  /// groups are told apart by gaps. The class is a slot because `D` is not the
+  /// only letter issued.
   static final PlateSpec diplomatic = PlateSpec(
     id: 'az.diplomatic',
     country: AzerbaijanCountry.azerbaijan,
@@ -155,10 +133,7 @@ abstract final class AzerbaijanPlates {
         height: 76,
         pitch: 54,
       ),
-      const PlateSlot(
-        alphabet: PlateAlphabet.latinUppercase,
-        box: PlateBox(262, 17, 50, 76),
-      ),
+      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(262, 17, 50, 76)),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -176,12 +151,8 @@ abstract final class AzerbaijanPlates {
     ],
   );
 
-  /// The foreign-owned company plate (520×110), e.g. `H 023 149`: the class
-  /// letter first, then six digits in two threes — printed black on yellow by
-  /// `AzerbaijanThemes.foreign`.
-  ///
-  /// The six digits are two registers, not one: a register's cells are evenly
-  /// pitched (`debugValidateSpec` checks), so it cannot express the gap.
+  /// `H 023 149`: class letter, then two groups of three digits. Two fields,
+  /// because one evenly pitched field cannot express the gap.
   static final PlateSpec foreign = PlateSpec(
     id: 'az.foreign',
     country: AzerbaijanCountry.azerbaijan,
@@ -189,10 +160,7 @@ abstract final class AzerbaijanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      const PlateSlot(
-        alphabet: PlateAlphabet.latinUppercase,
-        box: PlateBox(94, 17, 50, 76),
-      ),
+      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(94, 17, 50, 76)),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -219,8 +187,6 @@ abstract final class AzerbaijanPlates {
     ],
   );
 
-  /// Every Azerbaijani design. The blue transport plate is [car] under another
-  /// theme, so a picker offers it as `(car, AzerbaijanThemes.transport)`.
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
     car,
     bicycle,

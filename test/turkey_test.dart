@@ -37,68 +37,23 @@ void main() {
       TurkeyThemes.internationalOrganization,
       '34 B 0426',
     ),
-    (
-      'tr_diplomatic',
-      TurkeyPlates.diplomatic,
-      TurkeyThemes.diplomatic,
-      '34 CD 012',
-    ),
+    ('tr_diplomatic', TurkeyPlates.diplomatic, TurkeyThemes.diplomatic, '34 CD 012'),
     (
       'tr_temporary_customs',
       TurkeyPlates.temporaryCustoms,
       TurkeyThemes.temporaryCustoms,
       '34 GMR 032',
     ),
-    (
-      'tr_foreign_resident',
-      TurkeyPlates.foreignResident,
-      TurkeyThemes.civilian,
-      '34 MA 012',
-    ),
-    (
-      'tr_syrian_resident',
-      TurkeyPlates.syrianResident,
-      TurkeyThemes.civilian,
-      '34 SAB 012',
-    ),
-    (
-      'tr_istanbul_taxi',
-      TurkeyPlates.istanbulTaxi,
-      TurkeyThemes.civilian,
-      '34 TAB 12',
-    ),
+    ('tr_foreign_resident', TurkeyPlates.foreignResident, TurkeyThemes.civilian, '34 MA 012'),
+    ('tr_syrian_resident', TurkeyPlates.syrianResident, TurkeyThemes.civilian, '34 SAB 012'),
+    ('tr_istanbul_taxi', TurkeyPlates.istanbulTaxi, TurkeyThemes.civilian, '34 TAB 12'),
     ('tr_taxi', TurkeyPlates.taxi, TurkeyThemes.civilian, '06 T 0123'),
-    (
-      'tr_temporary',
-      TurkeyPlates.temporary,
-      TurkeyThemes.temporary,
-      '34 G 1234',
-    ),
-    (
-      'tr_temporary_strip',
-      TurkeyPlates.temporaryWithStrip,
-      TurkeyThemes.temporary,
-      '34 G 1234',
-    ),
+    ('tr_temporary', TurkeyPlates.temporary, TurkeyThemes.temporary, '34 G 1234'),
+    ('tr_temporary_strip', TurkeyPlates.temporaryWithStrip, TurkeyThemes.temporary, '34 G 1234'),
     ('tr_police', TurkeyPlates.police, TurkeyThemes.police, '16 A 01234'),
-    (
-      'tr_gendarmerie',
-      TurkeyPlates.gendarmerie,
-      TurkeyThemes.police,
-      '06 JAA 1234',
-    ),
-    (
-      'tr_coast_guard',
-      TurkeyPlates.coastGuard,
-      TurkeyThemes.police,
-      '34 SGH 1234',
-    ),
-    (
-      'tr_consulate',
-      TurkeyPlates.consulate,
-      TurkeyThemes.consulate,
-      '34 CC 0001',
-    ),
+    ('tr_gendarmerie', TurkeyPlates.gendarmerie, TurkeyThemes.police, '06 JAA 1234'),
+    ('tr_coast_guard', TurkeyPlates.coastGuard, TurkeyThemes.police, '34 SGH 1234'),
+    ('tr_consulate', TurkeyPlates.consulate, TurkeyThemes.consulate, '34 CC 0001'),
     (
       'tr_provincial',
       TurkeyPlates.provincialGovernment,
@@ -108,19 +63,9 @@ void main() {
     ('tr_official', TurkeyPlates.official, TurkeyThemes.official, '34 AB 123'),
     ('tr_governor', TurkeyPlates.governor, TurkeyThemes.state, '34 0001'),
     ('tr_parliament', TurkeyPlates.parliament, TurkeyThemes.state, '0019'),
-    (
-      'tr_parliament_labelled',
-      TurkeyPlates.parliamentLabelled,
-      TurkeyThemes.state,
-      '009',
-    ),
+    ('tr_parliament_labelled', TurkeyPlates.parliamentLabelled, TurkeyThemes.state, '009'),
     ('tr_sample', TurkeyPlates.sample, TurkeyThemes.civilian, '34 123'),
-    (
-      'tr_motorcycle',
-      TurkeyPlates.motorcycle,
-      TurkeyThemes.civilian,
-      '34 UF 2409',
-    ),
+    ('tr_motorcycle', TurkeyPlates.motorcycle, TurkeyThemes.civilian, '34 UF 2409'),
   ];
 
   for (final (name, spec, theme, value) in cases) {
@@ -148,10 +93,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await expectLater(
-        find.byType(PlateView),
-        matchesGoldenFile('goldens/$name.png'),
-      );
+      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/$name.png'));
       await tester.pumpWidget(const SizedBox.shrink());
       controller.dispose();
     });
@@ -159,22 +101,14 @@ void main() {
 
   group('variable fields', () {
     test('the shapes build', () {
-      for (final spec in [
-        TurkeyPlates.strip,
-        TurkeyPlates.plain,
-        TurkeyPlates.motorcycle,
-      ]) {
+      for (final spec in [TurkeyPlates.strip, TurkeyPlates.plain, TurkeyPlates.motorcycle]) {
         expect(debugValidateSpec(spec), isTrue);
       }
       expect(TurkeyPlates.strip.slotCount, 3);
     });
 
     test('letters and figures complete at their minimum', () {
-      final c = PlateController.fromValues(TurkeyPlates.strip, [
-        '34',
-        'A',
-        '12',
-      ]);
+      final c = PlateController.fromValues(TurkeyPlates.strip, ['34', 'A', '12']);
       expect(c.isCompleted, isTrue);
       c.setAt(2, '1');
       expect(c.isCompleted, isFalse);
@@ -188,59 +122,32 @@ void main() {
 
     test('accepts the article examples', () {
       expect(
-        check(
-          TurkeyPlateValidator.general,
-          TurkeyPlates.private,
-          '34 AB 1234',
-        ).isValid,
+        check(TurkeyPlateValidator.general, TurkeyPlates.private, '34 AB 1234').isValid,
         isTrue,
       );
       expect(
-        check(
-          TurkeyPlateValidator.gendarmerie,
-          TurkeyPlates.gendarmerie,
-          '06 JAA 1234',
-        ).isValid,
+        check(TurkeyPlateValidator.gendarmerie, TurkeyPlates.gendarmerie, '06 JAA 1234').isValid,
         isTrue,
       );
     });
 
-    test(
-      'rejects province 82, excluded letters, wrong prefix, seven chars',
-      () {
-        expect(
-          check(
-            TurkeyPlateValidator.general,
-            TurkeyPlates.private,
-            '82 AB 1234',
-          ).isValid,
-          isFalse,
-        );
-        expect(
-          check(
-            TurkeyPlateValidator.general,
-            TurkeyPlates.private,
-            '34 QB 1234',
-          ).isValid,
-          isFalse,
-        );
-        expect(
-          check(
-            TurkeyPlateValidator.diplomatic,
-            TurkeyPlates.diplomatic,
-            '34 CC 012',
-          ).isValid,
-          isFalse,
-        );
-        expect(
-          check(
-            TurkeyPlateValidator.general,
-            TurkeyPlates.strip,
-            '34 ABC 1234',
-          ).isValid,
-          isFalse,
-        );
-      },
-    );
+    test('rejects province 82, excluded letters, wrong prefix, seven chars', () {
+      expect(
+        check(TurkeyPlateValidator.general, TurkeyPlates.private, '82 AB 1234').isValid,
+        isFalse,
+      );
+      expect(
+        check(TurkeyPlateValidator.general, TurkeyPlates.private, '34 QB 1234').isValid,
+        isFalse,
+      );
+      expect(
+        check(TurkeyPlateValidator.diplomatic, TurkeyPlates.diplomatic, '34 CC 012').isValid,
+        isFalse,
+      );
+      expect(
+        check(TurkeyPlateValidator.general, TurkeyPlates.strip, '34 ABC 1234').isValid,
+        isFalse,
+      );
+    });
   });
 }

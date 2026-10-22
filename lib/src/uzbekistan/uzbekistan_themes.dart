@@ -6,14 +6,13 @@ import 'uzbekistan_colors.dart';
 /// One ink on one field, frame and dividers in the ink.
 abstract final class UzbekistanThemes {
   /// Frame ~3.5% of the height (4 of 110), corners ~8%, off the artwork.
-  static PlateTheme _mono(Color field, Color ink, Color inactive) =>
-      PlateTheme.monochrome(
-        field: field,
-        ink: ink,
-        inactive: inactive,
-        borderWidthRatio: 0.035,
-        plateRadiusRatio: 0.08,
-      );
+  static PlateTheme _mono(Color field, Color ink, Color inactive) => PlateTheme.monochrome(
+    field: field,
+    ink: ink,
+    inactive: inactive,
+    borderWidthRatio: 0.035,
+    plateRadiusRatio: 0.08,
+  );
 
   static final PlateTheme passenger = _mono(
     UzbekistanColors.white,

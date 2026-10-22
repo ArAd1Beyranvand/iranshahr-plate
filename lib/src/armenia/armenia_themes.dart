@@ -2,40 +2,15 @@ import 'package:plate_core/plate_core.dart';
 
 import 'armenia_colors.dart';
 
-/// The `PlateTheme`s an Armenian plate is printed in.
-///
-/// Colour never lives on a [PlateSpec] — a spec is geometry — so the host
-/// passes one:
-///
-/// ```dart
-/// PlateCanvas(
-///   spec: ArmeniaPlates.car,          // the same geometry ...
-///   theme: ArmeniaThemes.civilian,    // ... printed as a private car's plate
-///   ...
-/// )
-/// ```
-///
-/// Four of the five are [PlateTheme.monochrome] and [civilian] is not, and the
-/// difference is one strip of silver. The 2014 redesign put a holographic
-/// identifier band immediately to the right of the flag; it is a
-/// [PlateSpec.rules] entry, which takes [PlateTheme.dividerColor], and
-/// `monochrome` sets the divider to the ink. A monochrome civilian theme would
-/// print that band solid black. So [civilian] is written out in full for the
-/// sake of one field, and the other four — none of which carries a band — say
-/// what they are in five lines.
+/// [civilian] is the only theme not written as a monochrome: the identifier
+/// band is a [PlateSpec.rules] entry, which takes [PlateTheme.dividerColor], and
+/// `monochrome` would set that to the ink and print the band black.
 abstract final class ArmeniaThemes {
-  /// Frame thickness as a fraction of plate height. // CALIBRATE
-  static const double _borderWidthRatio = 0.035;
+  static const double _borderWidthRatio = 0.035; // CALIBRATE
+  static const double _plateRadiusRatio = 0.10; // CALIBRATE
 
-  /// // CALIBRATE
-  static const double _plateRadiusRatio = 0.10;
-
-  /// Private cars, motorcycles, trailers and public numbers: black on white,
-  /// with the silver identifier band.
-  ///
-  /// The band only appears on the plates whose spec declares the rule, so this
-  /// is also the trailer's theme: `ArmeniaPlates.trailer` is a pre-2014 design
-  /// with no band, and a divider colour it never paints costs it nothing.
+  /// Black on white with the silver band. Also the trailer's theme: its spec
+  /// declares no rule, so the divider colour is never painted.
   static const PlateTheme civilian = PlateTheme(
     plateBackground: ArmeniaColors.field,
     plateBorder: ArmeniaColors.ink,
@@ -47,8 +22,6 @@ abstract final class ArmeniaThemes {
     inactiveColor: ArmeniaColors.inactiveOnLight,
   );
 
-  /// Buses and long-range coaches: black on yellow, on
-  /// [ArmeniaPlates.bus]'s geometry.
   static const PlateTheme bus = PlateTheme.monochrome(
     field: ArmeniaColors.busYellow,
     ink: ArmeniaColors.onBusYellow,
@@ -57,7 +30,6 @@ abstract final class ArmeniaThemes {
     plateRadiusRatio: _plateRadiusRatio,
   );
 
-  /// The diplomatic corps: white on red, on [ArmeniaPlates.diplomatic].
   static const PlateTheme diplomatic = PlateTheme.monochrome(
     field: ArmeniaColors.diplomaticRed,
     ink: ArmeniaColors.onDiplomaticRed,
@@ -66,7 +38,6 @@ abstract final class ArmeniaThemes {
     plateRadiusRatio: _plateRadiusRatio,
   );
 
-  /// A United Nations office: white on blue, on [ArmeniaPlates.un].
   static const PlateTheme un = PlateTheme.monochrome(
     field: ArmeniaColors.unBlue,
     ink: ArmeniaColors.onUnBlue,
@@ -75,7 +46,6 @@ abstract final class ArmeniaThemes {
     plateRadiusRatio: _plateRadiusRatio,
   );
 
-  /// The Ministry of Defence: white on black, on [ArmeniaPlates.military].
   static const PlateTheme military = PlateTheme.monochrome(
     field: ArmeniaColors.militaryBlack,
     ink: ArmeniaColors.onMilitaryBlack,

@@ -55,18 +55,12 @@ final class _Run {
 
 PlateSlot _field(PlateAlphabet alphabet, _Run run, int count) {
   final double centre = (run.inkTop + run.inkBottom) / 2;
-  final double fit =
-      2 * (centre < _Layout.height - centre ? centre : _Layout.height - centre);
+  final double fit = 2 * (centre < _Layout.height - centre ? centre : _Layout.height - centre);
   final double wanted = (run.inkBottom - run.inkTop) / 0.55;
   final double height = wanted < fit ? wanted : fit;
   return PlateSlot(
     alphabet: alphabet,
-    box: PlateBox(
-      run.firstCx - run.pitch / 2,
-      centre - height / 2,
-      count * run.pitch,
-      height,
-    ),
+    box: PlateBox(run.firstCx - run.pitch / 2, centre - height / 2, count * run.pitch, height),
     length: count,
     spacing: max(0, run.pitch - 0.6 * 0.72 * height),
   );
@@ -106,10 +100,7 @@ PlateSpec _spec(
     country: KazakhstanCountry.kazakhstan,
     canvasWidth: _Layout.width,
     canvasHeight: _Layout.height,
-    panel: const PlatePanel(
-      box: PlateBox(0, 0, 0, 0),
-      padding: EdgeInsets.zero,
-    ),
+    panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     noPanel: true,
     background: background,
     slots: slots,
@@ -130,16 +121,10 @@ PlateSpec _registration(String id, _Run letters, int letterCount) => _spec(
     const _Register('region', KazakhstanAlphabets.digits, _Layout.region, 2),
   ],
   background: PlateSection.columns(<PlatePart>[
-    PlatePart(
-      PlateSection.plain,
-      end: _Layout.dividerCx,
-      divider: _Layout.dividerThickness,
-    ),
+    PlatePart(PlateSection.plain, end: _Layout.dividerCx, divider: _Layout.dividerThickness),
     PlatePart(PlateSection.plain),
   ]),
-  labels: const <PlateLabel>[
-    PlateLabel(text: 'KZ', box: _Layout.kz, glyphHeight: _Layout.kzGlyph),
-  ],
+  labels: const <PlateLabel>[PlateLabel(text: 'KZ', box: _Layout.kz, glyphHeight: _Layout.kzGlyph)],
   decals: const <PlateDecal>[PlateDecal(image: _flagImage, box: _Layout.flag)],
 );
 
@@ -154,38 +139,21 @@ PlateSpec _registration(String id, _Run letters, int letterCount) => _spec(
 /// and the yellow foreign-owner plate, which the article describes only in
 /// prose. Mission code `007` (Israel) is refused.
 abstract final class KazakhstanPlates {
-  static final PlateSpec private = _registration(
-    'kz.private',
-    _Layout.letters,
-    3,
-  );
+  static final PlateSpec private = _registration('kz.private', _Layout.letters, 3);
 
-  static final PlateSpec nonPrivate = _registration(
-    'kz.non_private',
-    _Layout.nonPrivateLetters,
-    2,
-  );
+  static final PlateSpec nonPrivate = _registration('kz.non_private', _Layout.nonPrivateLetters, 2);
 
   /// `D 001 618`, white on orange-red. The mission code is refused for Israel
   /// (`007`) by [KazakhstanMissions.restriction].
   static final PlateSpec diplomatic = _spec(
     'kz.diplomatic',
     const <_Register>[
-      _Register(
-        'class',
-        KazakhstanAlphabets.letters,
-        _Layout.diplomaticClass,
-        1,
-      ),
+      _Register('class', KazakhstanAlphabets.letters, _Layout.diplomaticClass, 1),
       _Register('mission', KazakhstanAlphabets.digits, _Layout.mission, 3),
       _Register('number', KazakhstanAlphabets.digits, _Layout.missionNumber, 3),
     ],
     restrictions: const <PlateRestriction>[KazakhstanMissions.restriction],
   );
 
-  static List<PlateSpec> get all => <PlateSpec>[
-    private,
-    nonPrivate,
-    diplomatic,
-  ];
+  static List<PlateSpec> get all => <PlateSpec>[private, nonPrivate, diplomatic];
 }

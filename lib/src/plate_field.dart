@@ -27,8 +27,6 @@ PlateSlot plateField({
     length: count,
     minLength: minLength,
     color: color,
-    spacing: count == 1 || minLength != null
-        ? 0
-        : math.max(0, step - 0.6 * 0.72 * height),
+    spacing: count == 1 || minLength != null ? 0 : math.max(0, step - 0.6 * 0.72 * height),
   );
 }

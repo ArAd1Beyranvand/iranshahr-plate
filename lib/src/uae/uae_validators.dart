@@ -19,14 +19,7 @@ abstract final class UaeValidators {
   static bool isSharjahCode(String code) =>
       code.isEmpty || const <String>{'1', '2', '3', '4'}.contains(code);
 
-  static const Set<String> ajmanLetters = <String>{
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'H',
-  };
+  static const Set<String> ajmanLetters = <String>{'A', 'B', 'C', 'D', 'E', 'H'};
   static const Set<String> fujairahLetters = <String>{
     'A',
     'B',

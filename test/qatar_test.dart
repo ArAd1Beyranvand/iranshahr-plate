@@ -32,10 +32,7 @@ void main() {
 
     test('the serial fills the room between the block and the edge', () {
       final box = QatarPlates.civilian.slots.single.box;
-      expect(
-        (box.left + box.left + box.width) / 2,
-        closeTo((209 + 500) / 2, 1),
-      );
+      expect((box.left + box.left + box.width) / 2, closeTo((209 + 500) / 2, 1));
     });
 
     test('the civilian plate shares the serrated hoist block', () {
@@ -50,18 +47,12 @@ void main() {
       final moto = QatarPlates.motorcycle;
       // Near-square, where the car plate is a long European rectangle.
       expect(moto.canvasWidth / moto.canvasHeight, lessThan(2));
-      expect(
-        QatarPlates.civilian.canvasWidth / QatarPlates.civilian.canvasHeight,
-        greaterThan(4),
-      );
+      expect(QatarPlates.civilian.canvasWidth / QatarPlates.civilian.canvasHeight, greaterThan(4));
       // No block, so nothing to serrate.
       expect(moto.noPanel, isTrue);
       expect(moto.panel.shape, isNull);
       // It names the country in both scripts and nothing else.
-      expect(
-        moto.labels.map((l) => l.text),
-        containsAll(<String>['قطر', 'QATAR']),
-      );
+      expect(moto.labels.map((l) => l.text), containsAll(<String>['قطر', 'QATAR']));
       expect(moto.slotCount, 1);
     });
 
@@ -144,9 +135,7 @@ void main() {
     expect(tester.takeException(), isNull);
     // The clip is in the tree, holding the block to the flag's shape.
     expect(
-      find.byWidgetPredicate(
-        (w) => w is ClipPath && w.clipper is QatarFlagEdgeClipper,
-      ),
+      find.byWidgetPredicate((w) => w is ClipPath && w.clipper is QatarFlagEdgeClipper),
       findsOneWidget,
     );
   });

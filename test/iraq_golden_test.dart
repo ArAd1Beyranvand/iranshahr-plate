@@ -43,9 +43,7 @@ void main() {
   }) async {
     // One field after another: each takes as many characters as it holds.
     var at = 0;
-    final values = <String?>[
-      for (final slot in spec.slots) value.substring(at, at += slot.length),
-    ];
+    final values = <String?>[for (final slot in spec.slots) value.substring(at, at += slot.length)];
     final controller = PlateController.fromValues(spec, values);
 
     await tester.pumpWidget(
@@ -57,11 +55,7 @@ void main() {
               height: 520 * spec.canvasHeight / spec.canvasWidth,
               child: PlateThemeScope(
                 theme: theme,
-                child: PlateView(
-                  controller: controller,
-                  theme: theme,
-                  country: country,
-                ),
+                child: PlateView(controller: controller, theme: theme, country: country),
               ),
             ),
           ),
@@ -70,10 +64,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await expectLater(
-      find.byType(PlateView),
-      matchesGoldenFile('goldens/$name.png'),
-    );
+    await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/$name.png'));
 
     await tester.pumpWidget(const SizedBox.shrink());
     controller.dispose();
@@ -87,56 +78,14 @@ void main() {
 
   final cases = <(String, PlateSpec, PlateTheme, PlateCountry, String)>[
     // 520x110, rest of Iraq: one spec, each of the five permanent bands.
-    (
-      'iq_large_private',
-      IraqPlates.large,
-      IraqThemes.large,
-      IraqCountry.private,
-      rest,
-    ),
-    (
-      'iq_large_hire',
-      IraqPlates.large,
-      IraqThemes.large,
-      IraqCountry.hire,
-      rest,
-    ),
-    (
-      'iq_large_government',
-      IraqPlates.large,
-      IraqThemes.large,
-      IraqCountry.government,
-      rest,
-    ),
-    (
-      'iq_large_trade',
-      IraqPlates.large,
-      IraqThemes.large,
-      IraqCountry.trade,
-      rest,
-    ),
-    (
-      'iq_large_agricultural',
-      IraqPlates.large,
-      IraqThemes.large,
-      IraqCountry.agricultural,
-      rest,
-    ),
+    ('iq_large_private', IraqPlates.large, IraqThemes.large, IraqCountry.private, rest),
+    ('iq_large_hire', IraqPlates.large, IraqThemes.large, IraqCountry.hire, rest),
+    ('iq_large_government', IraqPlates.large, IraqThemes.large, IraqCountry.government, rest),
+    ('iq_large_trade', IraqPlates.large, IraqThemes.large, IraqCountry.trade, rest),
+    ('iq_large_agricultural', IraqPlates.large, IraqThemes.large, IraqCountry.agricultural, rest),
     // 520x110, Kurdistan Region.
-    (
-      'iq_large_kr_private',
-      IraqPlates.largeKurdistan,
-      IraqThemes.large,
-      IraqCountry.private,
-      kurd,
-    ),
-    (
-      'iq_large_kr_hire',
-      IraqPlates.largeKurdistan,
-      IraqThemes.large,
-      IraqCountry.hire,
-      kurd,
-    ),
+    ('iq_large_kr_private', IraqPlates.largeKurdistan, IraqThemes.large, IraqCountry.private, kurd),
+    ('iq_large_kr_hire', IraqPlates.largeKurdistan, IraqThemes.large, IraqCountry.hire, kurd),
     (
       'iq_large_kr_government',
       IraqPlates.largeKurdistan,
@@ -144,13 +93,7 @@ void main() {
       IraqCountry.government,
       kurd,
     ),
-    (
-      'iq_large_kr_trade',
-      IraqPlates.largeKurdistan,
-      IraqThemes.large,
-      IraqCountry.trade,
-      kurd,
-    ),
+    ('iq_large_kr_trade', IraqPlates.largeKurdistan, IraqThemes.large, IraqCountry.trade, kurd),
     (
       'iq_large_kr_agricultural',
       IraqPlates.largeKurdistan,
@@ -159,55 +102,13 @@ void main() {
       kurd,
     ),
     // 335x155, both regions.
-    (
-      'iq_small_private',
-      IraqPlates.small,
-      IraqThemes.small,
-      IraqCountry.private,
-      rest,
-    ),
-    (
-      'iq_small_hire',
-      IraqPlates.small,
-      IraqThemes.small,
-      IraqCountry.hire,
-      rest,
-    ),
-    (
-      'iq_small_government',
-      IraqPlates.small,
-      IraqThemes.small,
-      IraqCountry.government,
-      rest,
-    ),
-    (
-      'iq_small_trade',
-      IraqPlates.small,
-      IraqThemes.small,
-      IraqCountry.trade,
-      rest,
-    ),
-    (
-      'iq_small_agricultural',
-      IraqPlates.small,
-      IraqThemes.small,
-      IraqCountry.agricultural,
-      rest,
-    ),
-    (
-      'iq_small_kr_private',
-      IraqPlates.smallKurdistan,
-      IraqThemes.small,
-      IraqCountry.private,
-      kurd,
-    ),
-    (
-      'iq_small_kr_hire',
-      IraqPlates.smallKurdistan,
-      IraqThemes.small,
-      IraqCountry.hire,
-      kurd,
-    ),
+    ('iq_small_private', IraqPlates.small, IraqThemes.small, IraqCountry.private, rest),
+    ('iq_small_hire', IraqPlates.small, IraqThemes.small, IraqCountry.hire, rest),
+    ('iq_small_government', IraqPlates.small, IraqThemes.small, IraqCountry.government, rest),
+    ('iq_small_trade', IraqPlates.small, IraqThemes.small, IraqCountry.trade, rest),
+    ('iq_small_agricultural', IraqPlates.small, IraqThemes.small, IraqCountry.agricultural, rest),
+    ('iq_small_kr_private', IraqPlates.smallKurdistan, IraqThemes.small, IraqCountry.private, kurd),
+    ('iq_small_kr_hire', IraqPlates.smallKurdistan, IraqThemes.small, IraqCountry.hire, kurd),
     (
       'iq_small_kr_government',
       IraqPlates.smallKurdistan,
@@ -215,13 +116,7 @@ void main() {
       IraqCountry.government,
       kurd,
     ),
-    (
-      'iq_small_kr_trade',
-      IraqPlates.smallKurdistan,
-      IraqThemes.small,
-      IraqCountry.trade,
-      kurd,
-    ),
+    ('iq_small_kr_trade', IraqPlates.smallKurdistan, IraqThemes.small, IraqCountry.trade, kurd),
     (
       'iq_small_kr_agricultural',
       IraqPlates.smallKurdistan,

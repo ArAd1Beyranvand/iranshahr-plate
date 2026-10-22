@@ -12,9 +12,6 @@ abstract final class KazakhstanCountry {
     panelColor: KazakhstanColors.flagBlue,
     panelTextColor: KazakhstanColors.black,
     flagAspectRatio: 2,
-    flag: SvgPlateAsset(
-      'assets/icons/kazakhstan_flag.svg',
-      package: 'iranshahr_plate',
-    ),
+    flag: SvgPlateAsset('assets/icons/kazakhstan_flag.svg', package: 'iranshahr_plate'),
   );
 }

@@ -19,7 +19,12 @@ abstract final class KuwaitCountry {
     PlateRectShape(0, 0, 600, 300, Color(0xFF007A3D)),
     PlateRectShape(0, 100, 600, 200, Color(0xFFFFFFFF)),
     PlateRectShape(0, 200, 600, 100, Color(0xFFCE1126)),
-    PlatePolygonShape(<Offset>[Offset(0, 0), Offset(150, 100), Offset(150, 200), Offset(0, 300)], Color(0xFF000000)),
+    PlatePolygonShape(<Offset>[
+      Offset(0, 0),
+      Offset(150, 100),
+      Offset(150, 200),
+      Offset(0, 300),
+    ], Color(0xFF000000)),
   ]);
 
   /// Official ratio of the flag of Kuwait is 1:2 — width over height, which is

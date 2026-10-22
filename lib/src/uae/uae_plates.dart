@@ -72,60 +72,40 @@ abstract final class UaePlates {
     Color? color,
   }) {
     final cy = (y0 + y1) / 2;
-    final double height = math.min(
-      (y1 - y0) / _latinInk,
-      2 * math.min(cy, canvasH - cy),
-    );
+    final double height = math.min((y1 - y0) / _latinInk, 2 * math.min(cy, canvasH - cy));
     final w = width ?? pitch * 0.96;
     return PlateSlot(
       alphabet: alphabet,
-      box: PlateBox(
-        firstCx - w / 2,
-        cy - height / 2,
-        w + (count - 1) * pitch,
-        height,
-      ),
+      box: PlateBox(firstCx - w / 2, cy - height / 2, w + (count - 1) * pitch, height),
       length: count,
       minLength: minLength,
-      spacing: count == 1 || minLength != null
-          ? 0
-          : math.max(0, pitch - 0.6 * 0.72 * height),
+      spacing: count == 1 || minLength != null ? 0 : math.max(0, pitch - 0.6 * 0.72 * height),
       color: color,
     );
   }
 
-  static PlateSlot _letter(
-    double cx,
-    double y0,
-    double y1,
-    double canvasH, {
-    double width = 48,
-  }) => _cells(
-    alphabet: UaeAlphabets.letters,
-    count: 1,
-    firstCx: cx,
-    pitch: width,
-    y0: y0,
-    y1: y1,
-    canvasH: canvasH,
-  );
+  static PlateSlot _letter(double cx, double y0, double y1, double canvasH, {double width = 48}) =>
+      _cells(
+        alphabet: UaeAlphabets.letters,
+        count: 1,
+        firstCx: cx,
+        pitch: width,
+        y0: y0,
+        y1: y1,
+        canvasH: canvasH,
+      );
 
-  static PlateSlot _serial(
-    double firstCx,
-    double pitch,
-    double y0,
-    double y1,
-    double canvasH,
-  ) => _cells(
-    alphabet: UaeAlphabets.digits,
-    count: 5,
-    minLength: 1,
-    firstCx: firstCx,
-    pitch: pitch,
-    y0: y0,
-    y1: y1,
-    canvasH: canvasH,
-  );
+  static PlateSlot _serial(double firstCx, double pitch, double y0, double y1, double canvasH) =>
+      _cells(
+        alphabet: UaeAlphabets.digits,
+        count: 5,
+        minLength: 1,
+        firstCx: firstCx,
+        pitch: pitch,
+        y0: y0,
+        y1: y1,
+        canvasH: canvasH,
+      );
 
   static const PlatePanel _noPanel = PlatePanel(
     box: PlateBox(0, 0, 0, 0),
@@ -173,10 +153,7 @@ abstract final class UaePlates {
     id: 'ae.abudhabi.long',
     long: true,
     background: const PlateSection.columns(<PlatePart>[
-      PlatePart(
-        PlateSection.fill(PlateFill.color(UaeColors.abuDhabiRed)),
-        end: 107.2,
-      ),
+      PlatePart(PlateSection.fill(PlateFill.color(UaeColors.abuDhabiRed)), end: 107.2),
       PlatePart(PlateSection.plain),
     ]),
     code: _cells(
@@ -205,11 +182,7 @@ abstract final class UaePlates {
     id: 'ae.abudhabi.short',
     long: false,
     background: const PlateSection.rows(<PlatePart>[
-      PlatePart(
-        PlateSection.fill(PlateFill.color(UaeColors.abuDhabiRed)),
-        end: 61.5,
-        divider: 2.8,
-      ),
+      PlatePart(PlateSection.fill(PlateFill.color(UaeColors.abuDhabiRed)), end: 61.5, divider: 2.8),
       PlatePart(PlateSection.plain),
     ]),
     code: _cells(

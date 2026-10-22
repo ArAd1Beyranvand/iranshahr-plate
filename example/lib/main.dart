@@ -29,10 +29,7 @@ class PlatesScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Text(
-            'Bahrain Plates',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
+          const Text('Bahrain Plates', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
           SizedBox(
             height: 120,

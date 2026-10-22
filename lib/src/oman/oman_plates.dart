@@ -125,10 +125,7 @@ abstract final class OmanPlates {
       country: OmanCountry.oman,
       canvasWidth: _Layout.width,
       canvasHeight: _Layout.height,
-      panel: const PlatePanel(
-        box: PlateBox(0, 0, 0, 0),
-        padding: EdgeInsets.zero,
-      ),
+      panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
       noPanel: true,
       background: PlateSection.columns(<PlatePart>[
         PlatePart(PlateSection.plain, end: p.dividerA, divider: p.thickness),
@@ -150,24 +147,14 @@ abstract final class OmanPlates {
         for (var i = 0; i < letters; i++)
           PlateSlot(
             alphabet: OmanAlphabets.letters,
-            box: PlateBox(
-              cellLeft(i),
-              _Layout.latinTop,
-              p.letterCell,
-              _Layout.latinHeight,
-            ),
+            box: PlateBox(cellLeft(i), _Layout.latinTop, p.letterCell, _Layout.latinHeight),
           ),
       ],
       mirrors: <PlateMirror>[
         for (var i = 0; i < letters; i++)
           PlateMirror(
             source: letters - i,
-            box: PlateBox(
-              cellLeft(i),
-              _Layout.arabicTop,
-              p.letterCell,
-              _Layout.arabicHeight,
-            ),
+            box: PlateBox(cellLeft(i), _Layout.arabicTop, p.letterCell, _Layout.arabicHeight),
             glyphHeight: _Layout.arabicGlyph,
             alphabet: OmanAlphabets.lettersArabic,
             editable: true,
@@ -187,9 +174,7 @@ abstract final class OmanPlates {
       ],
       textGroups: <PlateTextGroup>[
         const PlateTextGroup(<int>[0], key: 'number'),
-        PlateTextGroup(<int>[
-          for (var i = 0; i < letters; i++) 1 + i,
-        ], key: 'letters'),
+        PlateTextGroup(<int>[for (var i = 0; i < letters; i++) 1 + i], key: 'letters'),
       ],
     );
   }

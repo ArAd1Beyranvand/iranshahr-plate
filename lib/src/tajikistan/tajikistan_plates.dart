@@ -141,10 +141,7 @@ abstract final class TajikistanPlates {
         height: 70,
         pitch: 46,
       ),
-      const PlateSlot(
-        alphabet: TajikistanAlphabets.letters,
-        box: PlateBox(20, 88, 46, 68),
-      ),
+      const PlateSlot(alphabet: TajikistanAlphabets.letters, box: PlateBox(20, 88, 46, 68)),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
@@ -236,9 +233,7 @@ abstract final class TajikistanPlates {
         pitch: 50,
       ),
     ],
-    labels: const [
-      PlateLabel(text: 'TT', box: PlateBox(288, 18, 96, 74), glyphHeight: 74),
-    ],
+    labels: const [PlateLabel(text: 'TT', box: PlateBox(288, 18, 96, 74), glyphHeight: 74)],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
       PlateTextGroup([1], key: 'region'),
@@ -263,10 +258,7 @@ abstract final class TajikistanPlates {
         height: 80,
         pitch: 50,
       ),
-      const PlateSlot(
-        alphabet: TajikistanAlphabets.letters,
-        box: PlateBox(300, 15, 50, 80),
-      ),
+      const PlateSlot(alphabet: TajikistanAlphabets.letters, box: PlateBox(300, 15, 50, 80)),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
@@ -302,10 +294,7 @@ abstract final class TajikistanPlates {
         height: 80,
         pitch: 60,
       ),
-      const PlateSlot(
-        alphabet: TajikistanAlphabets.letters,
-        box: PlateBox(250, 15, 56, 80),
-      ),
+      const PlateSlot(alphabet: TajikistanAlphabets.letters, box: PlateBox(250, 15, 56, 80)),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -347,10 +336,7 @@ abstract final class TajikistanPlates {
         alphabet: TajikistanAlphabets.diplomaticClass,
         box: PlateBox(240, 15, 150, 80),
       ),
-      const PlateSlot(
-        alphabet: PlateAlphabet.latinDigits,
-        box: PlateBox(420, 15, 54, 80),
-      ),
+      const PlateSlot(alphabet: PlateAlphabet.latinDigits, box: PlateBox(420, 15, 54, 80)),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
@@ -399,9 +385,7 @@ abstract final class TajikistanPlates {
         pitch: 54,
       ),
     ],
-    labels: const [
-      PlateLabel(text: 'RT', box: PlateBox(395, 74, 84, 22), glyphHeight: 20),
-    ],
+    labels: const [PlateLabel(text: 'RT', box: PlateBox(395, 74, 84, 22), glyphHeight: 20)],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
       PlateTextGroup([1], key: 'letters'),
@@ -426,27 +410,11 @@ abstract final class TajikistanPlates {
   /// [TajikistanPlateValidator] configured for their lengths; the foreign and
   /// diplomatic plates, which break that shape, get their own.
   static PlateValidator validatorFor(PlateSpec spec) => switch (spec.id) {
-    'tj.motorcycle' => const TajikistanPlateValidator(
-      serialLength: 3,
-      letterCount: 1,
-    ),
-    'tj.trailer' => const TajikistanPlateValidator(
-      serialLength: 4,
-      letterCount: 2,
-      gate: 'serial',
-    ),
-    'tj.publicTransport' => const TajikistanPlateValidator(
-      serialLength: 4,
-      letterCount: 0,
-    ),
-    'tj.police' => const TajikistanPlateValidator(
-      serialLength: 4,
-      letterCount: 1,
-    ),
-    'tj.governmental' => const TajikistanPlateValidator(
-      serialLength: 3,
-      letterCount: 2,
-    ),
+    'tj.motorcycle' => const TajikistanPlateValidator(serialLength: 3, letterCount: 1),
+    'tj.trailer' => const TajikistanPlateValidator(serialLength: 4, letterCount: 2, gate: 'serial'),
+    'tj.publicTransport' => const TajikistanPlateValidator(serialLength: 4, letterCount: 0),
+    'tj.police' => const TajikistanPlateValidator(serialLength: 4, letterCount: 1),
+    'tj.governmental' => const TajikistanPlateValidator(serialLength: 3, letterCount: 2),
     'tj.foreign' => const TajikistanForeignPlateValidator(),
     'tj.diplomatic' => const TajikistanDiplomaticPlateValidator(),
     _ => const TajikistanPlateValidator(),

@@ -1,18 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-/// The reserved letter-and-tail combinations that make a public number what it
-/// is.
-///
-/// A public vehicle's plate reads `### LL ##`: three digits assigned in
-/// increasing order, and then a pair of letters and a pair of digits that are
-/// *not* a serial at all. They name the institution the vehicle belongs to, and
-/// the list of which pairs name which is the whole content of the article's
-/// "Special combinations" section.
-///
-/// So the number `001 NN 01` is a Security Council car and `001 NN 02` is not a
-/// plate. That is a rule no shape check can express — it is a membership test
-/// against a table — which is why the table is data here and
-/// `ArmeniaPublicPlateValidator` is four lines long.
+/// A reserved letter pair and tail that names an institution on a public
+/// number (`### LL ##`). Membership in the table, not shape, makes the number
+/// valid: `001 NN 01` is a Security Council car, `001 NN 02` is not a plate.
 @immutable
 class ArmeniaSpecialCombination {
   const ArmeniaSpecialCombination({
@@ -22,40 +12,22 @@ class ArmeniaSpecialCombination {
     required this.tails,
   });
 
-  /// The body the number belongs to, in English, e.g. `Security Council`. For
-  /// a picker's label, a log, and the text of an invalid verdict.
+  /// The body the number belongs to, in English.
   final String institution;
 
-  /// The pair as Armenian reads it, e.g. `ՕՏ` for the Constitutional Court.
-  ///
-  /// Always present, including for the pairs that are plain Latin: `FF` is
-  /// `FF` in both scripts, and recording it twice keeps this field from being
-  /// the one that is sometimes missing.
+  /// The pair as Armenian reads it, e.g. `ՕՏ`. Recorded even where it equals
+  /// [letters], so the field is never missing.
   final String armenianLetters;
 
-  /// The pair as the plate's letter register stores it, or null when the
-  /// combination cannot be written in that register at all.
-  ///
-  /// Null on exactly one row: the Police's `ՈՍ`. `Ո` reads `o` and was used on
-  /// plates because it looks like a lowercase Latin `n` — a resemblance the
-  /// authorities decided in 2010 was too weak, and the letter fell out of use
-  /// without ever getting a Latin key. It has none here either, so a `ՈՍ`
-  /// number cannot be typed on `ArmeniaAlphabets.letters` and [lookup] will
-  /// never return this row. It is listed because it is on the road, not because
-  /// it can be entered.
+  /// The pair as the letter register stores it, or null when it cannot be
+  /// written there: the Police's `ՈՍ`, whose `Ո` has no Latin key. A null row is
+  /// listed because it is on the road, but [lookup] never returns it.
   final String? letters;
 
-  /// Every two-digit tail this combination is issued with, or null when any
-  /// pair of digits is legal.
-  ///
-  /// Null on the Police's `II ##`, which the article gives with the digits left
-  /// open. Everywhere else the set is small and closed — often a single `01`.
+  /// The two-digit tails issued, or null when any digits are legal.
   final Set<String>? tails;
 
-  /// Whether this combination covers the number `<something> [letters] [tail]`.
-  ///
-  /// Case-insensitive on the letters; a null [letters] matches nothing, since
-  /// the register cannot hold it.
+  /// Case-insensitive on the letters; a null [letters] matches nothing.
   bool matches(String letters, String tail) {
     final mine = this.letters;
     if (mine == null || mine != letters.toUpperCase()) return false;
@@ -63,29 +35,17 @@ class ArmeniaSpecialCombination {
   }
 }
 
-/// The table of reserved combinations, and the lookup over it.
-///
-/// `final`, not `const`: the ranged rows — the National Assembly's `01` to
-/// `11`, the banks' `01` to `33`, the Police's `01` to `14` — are built by
-/// [_tails], and a `const` initialiser cannot run a loop. Initialised lazily,
-/// once per isolate.
+/// The table of reserved combinations. `final`, not `const`: the ranged rows
+/// are built by [_tails], which a `const` initialiser cannot run.
 abstract final class ArmeniaSpecialPlates {
-  /// `{'01', '02', ... }` from [from] to [to] inclusive, zero-padded to the two
-  /// digits a tail is printed in.
+  /// [from] to [to] inclusive, zero-padded to two digits.
   static Set<String> _tails(int from, int to) => <String>{
     for (var n = from; n <= to; n++) n.toString().padLeft(2, '0'),
   };
 
-  /// Every combination the article lists, in its order.
-  ///
-  /// One entry per *combination*, not per institution: the Government holds
-  /// nine of them and gets nine rows. Folding them into one row with a list of
-  /// pairs would make every other row carry a list of one, and would lose the
-  /// fact that `SS 03` and `SS 60` are the Government's while `SS 01` is the
-  /// Court of Cassation's and `SS 02` the National Security Service's — three
-  /// bodies sharing one pair of letters, told apart by two digits.
-  static final List<ArmeniaSpecialCombination>
-  all = List<ArmeniaSpecialCombination>.unmodifiable(
+  /// One row per combination, not per institution: `SS` is shared by three
+  /// bodies told apart by their tails.
+  static final List<ArmeniaSpecialCombination> all = List<ArmeniaSpecialCombination>.unmodifiable(
     <ArmeniaSpecialCombination>[
       const ArmeniaSpecialCombination(
         institution: 'Constitutional Court',
@@ -141,9 +101,6 @@ abstract final class ArmeniaSpecialPlates {
         letters: 'GG',
         tails: <String>{'01'},
       ),
-      // The two Police rows. The first cannot be typed — see
-      // [ArmeniaSpecialCombination.letters] — and the second leaves its digits
-      // open, which is what a null tail set means.
       ArmeniaSpecialCombination(
         institution: 'Police',
         armenianLetters: 'ՈՍ',
@@ -177,16 +134,7 @@ abstract final class ArmeniaSpecialPlates {
     ],
   );
 
-  /// The combination that covers `<serial> [letters] [tail]`, or null when no
-  /// institution is issued that pair.
-  ///
-  /// The first match wins, and no two rows overlap — `SS` is shared by three
-  /// bodies but never over the same tail, which is what makes the table a
-  /// lookup rather than a list of candidates.
-  static ArmeniaSpecialCombination? lookup(String letters, String tail) {
-    for (final combination in all) {
-      if (combination.matches(letters, tail)) return combination;
-    }
-    return null;
-  }
+  /// No two rows overlap, so the first match is the only one.
+  static ArmeniaSpecialCombination? lookup(String letters, String tail) =>
+      all.where((c) => c.matches(letters, tail)).firstOrNull;
 }

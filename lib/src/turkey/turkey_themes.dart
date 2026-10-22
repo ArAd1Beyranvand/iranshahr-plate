@@ -36,29 +36,15 @@ abstract final class TurkeyThemes {
     borderWidthRatio: borderWidthRatio,
     plateRadiusRatio: plateRadiusRatio,
     activeColor: ink,
-    inactiveColor: dark
-        ? TurkeyColors.inactiveOnDark
-        : TurkeyColors.inactiveOnLight,
+    inactiveColor: dark ? TurkeyColors.inactiveOnDark : TurkeyColors.inactiveOnLight,
   );
 
-  static PlateTheme _plain({
-    required Color field,
-    required Color ink,
-    required Color frame,
-  }) => _theme(
-    field: field,
-    ink: ink,
-    frame: frame,
-    borderWidthRatio: _plainFrame,
-    dark: true,
-  );
+  static PlateTheme _plain({required Color field, required Color ink, required Color frame}) =>
+      _theme(field: field, ink: ink, frame: frame, borderWidthRatio: _plainFrame, dark: true);
 
   /// Black on white: private and commercial vehicles, foreign and Syrian
   /// residents, taxis, the sample plate and motorcycles.
-  static final PlateTheme civilian = _theme(
-    field: TurkeyColors.white,
-    ink: TurkeyColors.black,
-  );
+  static final PlateTheme civilian = _theme(field: TurkeyColors.white, ink: TurkeyColors.black);
 
   /// Blue on white: members of international organisations.
   static final PlateTheme internationalOrganization = _theme(

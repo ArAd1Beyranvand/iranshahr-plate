@@ -38,22 +38,20 @@ class ArmeniaPlateValidator extends GatedPlateValidator {
     return validateSerial(entry.group('serial'), length: 3);
   }
 
-  /// Quiet about a code not yet two digits, so the plate does not flash red at the
-  /// first keystroke.
+  /// Quiet until the code is two digits.
   static PlateValidation validateRegion(String region) {
     if (region.length < 2) return const PlateValidation.valid();
     if (!isDigitsOfLength(region, 2)) {
       return const PlateValidation.invalid('A region code is two digits.');
     }
     if (!ArmeniaRegions.isIssued(region)) {
-      return PlateValidation.invalid(
-        '"$region" is not a region code Armenia issues.',
-      );
+      return PlateValidation.invalid('"$region" is not a region code Armenia issues.');
     }
     return const PlateValidation.valid();
   }
 
-  /// [count] letters, none reserved to the state, none added after [issuedYear]. Static and taking a count because the trailer runs the same rules over one letter.
+  /// [count] letters, none reserved to the state, none added after [issuedYear].
+  /// The trailer shares it over one letter.
   static PlateValidation validateLetters(
     String letters, {
     required int count,
@@ -70,23 +68,18 @@ class ArmeniaPlateValidator extends GatedPlateValidator {
           '"$letter" is issued to the Police and the Prosecutor\'s office only.',
         );
       }
-      if (issuedYear != null &&
-          !ArmeniaAlphabets.inUseOn(letter, issuedYear, month: issuedMonth)) {
-        return PlateValidation.invalid(
-          '"$letter" was not being issued in $issuedYear.',
-        );
+      if (issuedYear != null && !ArmeniaAlphabets.inUseOn(letter, issuedYear, month: issuedMonth)) {
+        return PlateValidation.invalid('"$letter" was not being issued in $issuedYear.');
       }
     }
-    // Checked last: an in-progress block is short before it is wrong, and
-    // reporting the length first would flag every plate halfway through its
-    // letters.
+    // Last, so a block still being typed is not flagged for its length.
     if (value.length > count) {
       return PlateValidation.invalid('The letter block is $count letter(s).');
     }
     return const PlateValidation.valid();
   }
 
-  /// A run of digits of a known length; quiet while short. Leading zeros are legal.
+  /// Quiet while short; leading zeros are legal.
   static PlateValidation validateSerial(String serial, {required int length}) {
     if (serial.isNotEmpty && !isDigits(serial)) {
       return const PlateValidation.invalid('The serial must be digits.');
@@ -98,10 +91,9 @@ class ArmeniaPlateValidator extends GatedPlateValidator {
   }
 }
 
-/// Validates a state number, `NNN LL NN`. The `LL NN` tail is a reserved
-/// combination naming an institution, judged against `ArmeniaSpecialPlates`; the
-/// pair must be on the list. So `G` and `I`, rejected by [ArmeniaPlateValidator],
-/// are required here, doubled and only over the tails the table gives them.
+/// Validates a state number, `NNN LL NN`, whose `LL NN` tail must be a
+/// combination in `ArmeniaSpecialPlates`. So the `G` and `I` that
+/// [ArmeniaPlateValidator] rejects are required here.
 class ArmeniaPublicPlateValidator extends GatedPlateValidator {
   const ArmeniaPublicPlateValidator();
 
@@ -110,16 +102,12 @@ class ArmeniaPublicPlateValidator extends GatedPlateValidator {
 
   @override
   PlateValidation judge(PlateEntry entry) {
-    final serial = ArmeniaPlateValidator.validateSerial(
-      entry.group('serial'),
-      length: 3,
-    );
+    final serial = ArmeniaPlateValidator.validateSerial(entry.group('serial'), length: 3);
     if (!serial.isValid) return serial;
 
     final letters = entry.group('letters').toUpperCase();
     final tail = entry.group('tail');
-    // Quiet until both halves are there: a combination is a pair of letters and
-    // a pair of digits, and three quarters of one matches nothing.
+    // Quiet until both halves are complete.
     if (letters.length < 2 || tail.length < 2) {
       return const PlateValidation.valid();
     }
@@ -135,7 +123,7 @@ class ArmeniaPublicPlateValidator extends GatedPlateValidator {
   }
 }
 
-/// Validates a trailer number, `NNN L` over `NN`: [ArmeniaPlateValidator]'s letter rules over one letter.
+/// Validates a trailer number, `NNN L` over `NN`.
 class ArmeniaTrailerPlateValidator extends GatedPlateValidator {
   const ArmeniaTrailerPlateValidator();
 
@@ -144,16 +132,10 @@ class ArmeniaTrailerPlateValidator extends GatedPlateValidator {
 
   @override
   PlateValidation judge(PlateEntry entry) {
-    final serial = ArmeniaPlateValidator.validateSerial(
-      entry.group('serial'),
-      length: 3,
-    );
+    final serial = ArmeniaPlateValidator.validateSerial(entry.group('serial'), length: 3);
     if (!serial.isValid) return serial;
 
-    final letters = ArmeniaPlateValidator.validateLetters(
-      entry.group('letters'),
-      count: 1,
-    );
+    final letters = ArmeniaPlateValidator.validateLetters(entry.group('letters'), count: 1);
     if (!letters.isValid) return letters;
 
     final tail = entry.group('tail');
@@ -167,7 +149,7 @@ class ArmeniaTrailerPlateValidator extends GatedPlateValidator {
   }
 }
 
-/// Validates a bus number, `NNNN L`; the spec's alphabet already restricts the class letter.
+/// Validates a bus number, `NNNN L`.
 class ArmeniaBusPlateValidator extends GatedPlateValidator {
   const ArmeniaBusPlateValidator();
 
@@ -180,20 +162,15 @@ class ArmeniaBusPlateValidator extends GatedPlateValidator {
     if (!isDigitsOfLength(serial, 4)) {
       return const PlateValidation.invalid('A bus number is four digits.');
     }
-    if (!ArmeniaAlphabets.busClass.characters.contains(
-      entry.group('class').toUpperCase(),
-    )) {
-      return const PlateValidation.invalid(
-        'A bus is "S" (city) or "L" (long-range).',
-      );
+    if (!ArmeniaAlphabets.busClass.characters.contains(entry.group('class').toUpperCase())) {
+      return const PlateValidation.invalid('A bus is "S" (city) or "L" (long-range).');
     }
     return const PlateValidation.valid();
   }
 }
 
 /// Validates a diplomatic number, `NN L NNN`. The leading pair is the mission's
-/// country code, not a region, and no country list is shipped; the class letter
-/// is `D` or `T`.
+/// country code, which is not checked; the class letter is `D` or `T`.
 class ArmeniaDiplomaticPlateValidator extends GatedPlateValidator {
   const ArmeniaDiplomaticPlateValidator();
 
@@ -206,21 +183,17 @@ class ArmeniaDiplomaticPlateValidator extends GatedPlateValidator {
     if (mission.length == 2 && !isDigitsOfLength(mission, 2)) {
       return const PlateValidation.invalid('A mission code is two digits.');
     }
-    if (!ArmeniaAlphabets.diplomaticClass.characters.contains(
-      entry.group('class').toUpperCase(),
-    )) {
+    if (!ArmeniaAlphabets.diplomaticClass.characters.contains(entry.group('class').toUpperCase())) {
       return const PlateValidation.invalid(
         'A diplomatic plate is "D" (diplomat) or "T" (technician).',
       );
     }
-    return ArmeniaPlateValidator.validateSerial(
-      entry.group('serial'),
-      length: 3,
-    );
+    return ArmeniaPlateValidator.validateSerial(entry.group('serial'), length: 3);
   }
 }
 
-/// Validates a Ministry of Defence number, `ՊՆ NNNN Մ`; the class is `Մ` or `Տ`, stored as `M` and `T`.
+/// Validates a Ministry of Defence number, `ՊՆ NNNN Մ`; the class `Մ` or `Տ` is
+/// stored as `M` and `T`.
 class ArmeniaMilitaryPlateValidator extends GatedPlateValidator {
   const ArmeniaMilitaryPlateValidator();
 
@@ -232,9 +205,7 @@ class ArmeniaMilitaryPlateValidator extends GatedPlateValidator {
     if (!isDigitsOfLength(entry.group('serial'), 4)) {
       return const PlateValidation.invalid('A military number is four digits.');
     }
-    if (!ArmeniaAlphabets.militaryClass.characters.contains(
-      entry.group('class').toUpperCase(),
-    )) {
+    if (!ArmeniaAlphabets.militaryClass.characters.contains(entry.group('class').toUpperCase())) {
       return const PlateValidation.invalid(
         'A military plate is "Մ" (passenger) or "Տ" (transport).',
       );
@@ -243,8 +214,7 @@ class ArmeniaMilitaryPlateValidator extends GatedPlateValidator {
   }
 }
 
-/// Validates the UN plate, whose every character but the serial is printed. A
-/// class rather than a null from [ArmeniaPlates.validatorFor].
+/// Validates the UN plate, whose only typed field is the serial.
 class ArmeniaSerialPlateValidator extends GatedPlateValidator {
   const ArmeniaSerialPlateValidator({required this.length});
 
@@ -255,8 +225,5 @@ class ArmeniaSerialPlateValidator extends GatedPlateValidator {
 
   @override
   PlateValidation judge(PlateEntry entry) =>
-      ArmeniaPlateValidator.validateSerial(
-        entry.group('serial'),
-        length: length,
-      );
+      ArmeniaPlateValidator.validateSerial(entry.group('serial'), length: length);
 }

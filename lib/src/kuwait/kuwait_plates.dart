@@ -224,16 +224,8 @@ abstract final class KuwaitPlates {
       ),
     ],
     labels: const <PlateLabel>[
-      PlateLabel(
-        text: 'دولة الكويت',
-        box: PlateBox(14, 12, 138, 38),
-        glyphHeight: 30,
-      ),
-      PlateLabel(
-        text: 'KUWAIT',
-        box: PlateBox(14, 56, 138, 42),
-        glyphHeight: 38,
-      ),
+      PlateLabel(text: 'دولة الكويت', box: PlateBox(14, 12, 138, 38), glyphHeight: 30),
+      PlateLabel(text: 'KUWAIT', box: PlateBox(14, 56, 138, 42), glyphHeight: 38),
       PlateLabel(text: '-', box: PlateBox(266, 14, 20, 82), glyphHeight: 70),
     ],
     textGroups: const <PlateTextGroup>[
@@ -272,16 +264,8 @@ abstract final class KuwaitPlates {
     background: _bandBackground,
     labels: <PlateLabel>[
       _kuwaitLabel(null),
-      const PlateLabel(
-        text: 'POLICE',
-        box: PlateBox(48, 10, 132, 40),
-        glyphHeight: 40,
-      ),
-      const PlateLabel(
-        text: 'شرطة',
-        box: PlateBox(218, 8, 96, 44),
-        glyphHeight: 44,
-      ),
+      const PlateLabel(text: 'POLICE', box: PlateBox(48, 10, 132, 40), glyphHeight: 40),
+      const PlateLabel(text: 'شرطة', box: PlateBox(218, 8, 96, 44), glyphHeight: 44),
     ],
     textGroups: const <PlateTextGroup>[
       PlateTextGroup([0], key: 'serial'),
@@ -332,28 +316,15 @@ abstract final class KuwaitPlates {
     ],
     labels: <PlateLabel>[
       _kuwaitLabel(null),
-      const PlateLabel(
-        text: 'هيئة دبلوماسية',
-        box: PlateBox(50, 8, 274, 38),
-        glyphHeight: 36,
-      ),
+      const PlateLabel(text: 'هيئة دبلوماسية', box: PlateBox(50, 8, 274, 38), glyphHeight: 36),
       const PlateLabel(
         text: '-',
-        box: PlateBox(
-          55 + 3 * _diplomaticPitch,
-          _diplomaticSerialTop,
-          34,
-          _diplomaticSerialHeight,
-        ),
+        box: PlateBox(55 + 3 * _diplomaticPitch, _diplomaticSerialTop, 34, _diplomaticSerialHeight),
         glyphHeight: _diplomaticSerialHeight,
       ),
       // The capsule is only 30 units tall but the reference fills it edge to
       // edge, so the glyph is sized past its own box and centred in it.
-      const PlateLabel(
-        text: 'C.D',
-        box: _diplomaticCapsuleBox,
-        glyphHeight: 36,
-      ),
+      const PlateLabel(text: 'C.D', box: _diplomaticCapsuleBox, glyphHeight: 36),
     ],
     textGroups: const <PlateTextGroup>[
       PlateTextGroup([0], key: 'class'),
@@ -373,21 +344,19 @@ abstract final class KuwaitPlates {
   /// The rule, 4 units wide at x 42, and right of it the red band: a row of
   /// the face from the rule out under the frame, so it meets both with no
   /// field between.
-  static const PlateSection _diplomaticBackground = PlateSection.columns(
-    <PlatePart>[
-      PlatePart(PlateSection.plain, end: 44, divider: 4),
-      PlatePart(
-        PlateSection.rows(<PlatePart>[
-          PlatePart(PlateSection.plain, end: _diplomaticBandTop),
-          PlatePart(
-            PlateSection.fill(PlateFill.color(KuwaitColors.diplomaticBand)),
-            end: _diplomaticBandTop + _diplomaticBandHeight,
-          ),
-          PlatePart(PlateSection.plain),
-        ]),
-      ),
-    ],
-  );
+  static const PlateSection _diplomaticBackground = PlateSection.columns(<PlatePart>[
+    PlatePart(PlateSection.plain, end: 44, divider: 4),
+    PlatePart(
+      PlateSection.rows(<PlatePart>[
+        PlatePart(PlateSection.plain, end: _diplomaticBandTop),
+        PlatePart(
+          PlateSection.fill(PlateFill.color(KuwaitColors.diplomaticBand)),
+          end: _diplomaticBandTop + _diplomaticBandHeight,
+        ),
+        PlatePart(PlateSection.plain),
+      ]),
+    ),
+  ]);
 
   static const PlateBox _diplomaticCapsuleBox = PlateBox(
     150,
@@ -487,24 +456,13 @@ abstract final class KuwaitPlates {
         top: 52,
         height: 42,
       ),
-      const PlateSlot(
-        alphabet: PlateAlphabet.latinDigits,
-        box: PlateBox(58, 106, 26, 34),
-      ),
+      const PlateSlot(alphabet: PlateAlphabet.latinDigits, box: PlateBox(58, 106, 26, 34)),
     ],
     background: _squareBackground,
     labels: <PlateLabel>[
       _squareKuwaitLabel,
-      const PlateLabel(
-        text: 'دولة الكويت',
-        box: PlateBox(44, 10, 104, 32),
-        glyphHeight: 24,
-      ),
-      const PlateLabel(
-        text: 'دراجة',
-        box: PlateBox(96, 106, 52, 34),
-        glyphHeight: 24,
-      ),
+      const PlateLabel(text: 'دولة الكويت', box: PlateBox(44, 10, 104, 32), glyphHeight: 24),
+      const PlateLabel(text: 'دراجة', box: PlateBox(96, 106, 52, 34), glyphHeight: 24),
     ],
     textGroups: const <PlateTextGroup>[
       PlateTextGroup([0], key: 'serial'),
@@ -533,31 +491,18 @@ abstract final class KuwaitPlates {
     background: _squareBackground,
     labels: <PlateLabel>[
       _squareKuwaitLabel,
-      const PlateLabel(
-        text: 'شرطة',
-        box: PlateBox(52, 10, 96, 26),
-        glyphHeight: 26,
-      ),
-      const PlateLabel(
-        text: 'POLICE',
-        box: PlateBox(44, 114, 104, 26),
-        glyphHeight: 24,
-      ),
+      const PlateLabel(text: 'شرطة', box: PlateBox(52, 10, 96, 26), glyphHeight: 26),
+      const PlateLabel(text: 'POLICE', box: PlateBox(44, 114, 104, 26), glyphHeight: 24),
     ],
     textGroups: const <PlateTextGroup>[
       PlateTextGroup([0], key: 'serial'),
     ],
   );
 
-  static const PlateSection _squareBackground =
-      PlateSection.columns(<PlatePart>[
-        PlatePart(
-          PlateSection.plain,
-          end: _Layout.squareRuleLeft + 1,
-          divider: 2,
-        ),
-        PlatePart(PlateSection.plain),
-      ]);
+  static const PlateSection _squareBackground = PlateSection.columns(<PlatePart>[
+    PlatePart(PlateSection.plain, end: _Layout.squareRuleLeft + 1, divider: 2),
+    PlatePart(PlateSection.plain),
+  ]);
 
   static const PlateLabel _squareKuwaitLabel = PlateLabel(
     text: 'K\nU\nW\nA\nI\nT',

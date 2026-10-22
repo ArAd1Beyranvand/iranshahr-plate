@@ -33,34 +33,14 @@ abstract final class _Layout {
   // Trailer `AG 0123 TR` (Pelak_tereyli-TM original): ink y 19.2–82.4.
   static const double trailerTop = 19.2, trailerBottom = 82.4;
   static const _Run trailerSeries = _Run(104.1, 55, trailerTop, trailerBottom);
-  static const _Run trailerNumber = _Run(
-    228.3,
-    44.57,
-    trailerTop,
-    trailerBottom,
-  );
-  static const _Run trailerLetters = _Run(
-    428.05,
-    51.8,
-    trailerTop,
-    trailerBottom,
-  );
+  static const _Run trailerNumber = _Run(228.3, 44.57, trailerTop, trailerBottom);
+  static const _Run trailerLetters = _Run(428.05, 51.8, trailerTop, trailerBottom);
 
   // Classic `N 29 38 LB` (License_plate_of_Turkmenistan): ink y 14.8–96.2.
   static const double classicTop = 14.8, classicBottom = 96.2;
   static const _Run classicSeries = _Run(119.75, 40, classicTop, classicBottom);
-  static const _Run classicFirst = _Run(
-    180.5,
-    50.15,
-    classicTop,
-    classicBottom,
-  );
-  static const _Run classicSecond = _Run(
-    302.7,
-    53.95,
-    classicTop,
-    classicBottom,
-  );
+  static const _Run classicFirst = _Run(180.5, 50.15, classicTop, classicBottom);
+  static const _Run classicSecond = _Run(302.7, 53.95, classicTop, classicBottom);
   static const _Run classicRegion = _Run(419, 41.8, classicTop, classicBottom);
 
   // Foreign `1 H 01234` (Pelak_khareji-TM): ink y 16.3–96.2.
@@ -142,12 +122,7 @@ PlateSlot _field(PlateAlphabet alphabet, _Run run, int count) {
   final double height = wanted < fit ? wanted : fit;
   return PlateSlot(
     alphabet: alphabet,
-    box: PlateBox(
-      run.firstCx - run.pitch / 2,
-      centre - height / 2,
-      run.pitch * count,
-      height,
-    ),
+    box: PlateBox(run.firstCx - run.pitch / 2, centre - height / 2, run.pitch * count, height),
     length: count,
     spacing: count == 1 ? 0 : max(0, run.pitch - 0.6 * 0.72 * height),
   );
@@ -200,10 +175,7 @@ PlateSpec _spec(String id, _Badge badge, List<_Register> registers) {
     country: TurkmenistanCountry.turkmenistan,
     canvasWidth: _Layout.width,
     canvasHeight: _Layout.height,
-    panel: const PlatePanel(
-      box: PlateBox(0, 0, 0, 0),
-      padding: EdgeInsets.zero,
-    ),
+    panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
     noPanel: true,
     slots: slots,
     labels: <PlateLabel>[badge.label],
@@ -261,13 +233,12 @@ final _Badge _greenBadge = _Badge(const <PlateDecal>[
 /// no text for the trailer, military or ceremony plates; their registers
 /// follow the pictures. The ceremony word is typed, not fixed.
 abstract final class TurkmenistanPlates {
-  static final PlateSpec classic =
-      _spec('tm.classic', _classicBadge, <_Register>[
-        _letters('series', _Layout.classicSeries, 1),
-        _digits('first', _Layout.classicFirst, 2),
-        _digits('second', _Layout.classicSecond, 2),
-        _letters('region', _Layout.classicRegion, 2),
-      ]);
+  static final PlateSpec classic = _spec('tm.classic', _classicBadge, <_Register>[
+    _letters('series', _Layout.classicSeries, 1),
+    _digits('first', _Layout.classicFirst, 2),
+    _digits('second', _Layout.classicSecond, 2),
+    _letters('region', _Layout.classicRegion, 2),
+  ]);
 
   static final PlateSpec private = _spec('tm.private', _whiteBadge, <_Register>[
     _letters('series', _Layout.privateSeries, 2),
@@ -281,49 +252,43 @@ abstract final class TurkmenistanPlates {
     _letters('letters', _Layout.trailerLetters, 2),
   ]);
 
-  static final PlateSpec foreign =
-      _spec('tm.foreign', _yellowBadge, <_Register>[
-        _digits('class', _Layout.foreignClass, 1),
-        _letters('letter', _Layout.foreignLetter, 1),
-        _digits('number', _Layout.foreignNumber, 5),
-      ]);
+  static final PlateSpec foreign = _spec('tm.foreign', _yellowBadge, <_Register>[
+    _digits('class', _Layout.foreignClass, 1),
+    _letters('letter', _Layout.foreignLetter, 1),
+    _digits('number', _Layout.foreignNumber, 5),
+  ]);
 
-  static final PlateSpec foreignTrailer =
-      _spec('tm.foreign_trailer', _yellowBadge, <_Register>[
-        _digits('class', _Layout.foreignTrailerClass, 1),
-        _letters('letters', _Layout.foreignTrailerLetters, 2),
-        _digits('number', _Layout.foreignTrailerNumber, 4),
-      ]);
+  static final PlateSpec foreignTrailer = _spec('tm.foreign_trailer', _yellowBadge, <_Register>[
+    _digits('class', _Layout.foreignTrailerClass, 1),
+    _letters('letters', _Layout.foreignTrailerLetters, 2),
+    _digits('number', _Layout.foreignTrailerNumber, 4),
+  ]);
 
   static final PlateSpec export = _spec('tm.export', _yellowBadge, <_Register>[
     _letters('letters', _Layout.exportLetters, 3),
     _digits('number', _Layout.exportNumber, 4),
   ]);
 
-  static final PlateSpec diplomatic =
-      _spec('tm.diplomatic', _blueBadge, <_Register>[
-        _digits('embassy', _Layout.diplomaticEmbassy, 2),
-        _letters('letters', _Layout.diplomaticLetters, 2),
-        _digits('number', _Layout.diplomaticNumber, 3),
-      ]);
+  static final PlateSpec diplomatic = _spec('tm.diplomatic', _blueBadge, <_Register>[
+    _digits('embassy', _Layout.diplomaticEmbassy, 2),
+    _letters('letters', _Layout.diplomaticLetters, 2),
+    _digits('number', _Layout.diplomaticNumber, 3),
+  ]);
 
-  static final PlateSpec government =
-      _spec('tm.government', _greenBadge, <_Register>[
-        _digits('number', _Layout.governmentNumber, 4),
-        _letters('letters', _Layout.governmentLetters, 3),
-      ]);
+  static final PlateSpec government = _spec('tm.government', _greenBadge, <_Register>[
+    _digits('number', _Layout.governmentNumber, 4),
+    _letters('letters', _Layout.governmentLetters, 3),
+  ]);
 
-  static final PlateSpec military =
-      _spec('tm.military', _greenBadge, <_Register>[
-        _digits('number', _Layout.militaryNumber, 4),
-        _letters('letters', _Layout.militaryLetters, 2),
-      ]);
+  static final PlateSpec military = _spec('tm.military', _greenBadge, <_Register>[
+    _digits('number', _Layout.militaryNumber, 4),
+    _letters('letters', _Layout.militaryLetters, 2),
+  ]);
 
-  static final PlateSpec ceremony =
-      _spec('tm.ceremony', _greenBadge, <_Register>[
-        _letters('letters', _Layout.ceremonyLetters, 6),
-        _digits('number', _Layout.ceremonyNumber, 1),
-      ]);
+  static final PlateSpec ceremony = _spec('tm.ceremony', _greenBadge, <_Register>[
+    _letters('letters', _Layout.ceremonyLetters, 6),
+    _digits('number', _Layout.ceremonyNumber, 1),
+  ]);
 
   static List<PlateSpec> get all => <PlateSpec>[
     classic,

@@ -8,10 +8,7 @@ import 'turkmenistan_colors.dart';
 /// 4.75 in at 1 unit down). The frame takes the ink colour on every plate.
 abstract final class TurkmenistanThemes {
   /// Black on white: private and trailer.
-  static final PlateTheme private = _theme(
-    TurkmenistanColors.white,
-    TurkmenistanColors.black,
-  );
+  static final PlateTheme private = _theme(TurkmenistanColors.white, TurkmenistanColors.black);
 
   /// Dark slate on off-white: the 1994 series.
   static final PlateTheme classic = _theme(
@@ -20,10 +17,7 @@ abstract final class TurkmenistanThemes {
   );
 
   /// Black on yellow: foreign nationals, foreign trailers and export.
-  static final PlateTheme foreign = _theme(
-    TurkmenistanColors.yellow,
-    TurkmenistanColors.black,
-  );
+  static final PlateTheme foreign = _theme(TurkmenistanColors.yellow, TurkmenistanColors.black);
 
   /// White on blue: diplomatic.
   static final PlateTheme diplomatic = _theme(
@@ -32,10 +26,7 @@ abstract final class TurkmenistanThemes {
   );
 
   /// White on green: government, military and ceremony.
-  static final PlateTheme government = _theme(
-    TurkmenistanColors.green,
-    TurkmenistanColors.white,
-  );
+  static final PlateTheme government = _theme(TurkmenistanColors.green, TurkmenistanColors.white);
 }
 
 PlateTheme _theme(Color field, Color ink) => PlateTheme.monochrome(

@@ -43,12 +43,7 @@ abstract final class _Layout {
   static const double largeCodeCell = 49.3;
 
   /// Class letter: ink 187.7..228.6, centre 208.15.
-  static const PlateBox largeLetter = PlateBox(
-    184.15,
-    largeRowTop,
-    48,
-    largeRowHeight,
-  );
+  static const PlateBox largeLetter = PlateBox(184.15, largeRowTop, 48, largeRowHeight);
 
   /// Serial: ink centres 284.2..477.5, so a 48.3 pitch from a 260.05 left.
   static const double largeSerialLeft = 260.05;
@@ -99,12 +94,7 @@ abstract final class _Layout {
 
   /// The class letter is the one cell off the grid: its ink centres on 235.65,
   /// not on column 3's 233.1.
-  static const PlateBox smallLetter = PlateBox(
-    211.65,
-    smallTopRowTop,
-    48,
-    smallRowHeight,
-  );
+  static const PlateBox smallLetter = PlateBox(211.65, smallTopRowTop, 48, smallRowHeight);
 
   /// "IRQ" at a 22.0 cap; Kurdistan does not move it here, only adds "KR" below.
   static const PlateBox smallStack = PlateBox(4.2, 4.5, 32.5, 110);
@@ -136,105 +126,83 @@ abstract final class _Layout {
 /// and is not reproduced.
 abstract final class IraqPlates {
   /// The 520x110 template. [kurdistan] adds "KR" beneath "IRQ" and retightens the stack.
-  static PlateSpec _large({required String id, required bool kurdistan}) =>
-      PlateSpec(
-        id: id,
-        country: IraqCountry.private,
-        canvasWidth: _Layout.largeWidth,
-        canvasHeight: _Layout.largeHeight,
-        panel: const PlatePanel(
-          box: _Layout.largeBand,
-          flagScale: 0,
-          padding: EdgeInsets.zero,
-        ),
-        slots: <PlateSlot>[
-          plateField(
-            alphabet: IraqAlphabets.digits,
-            count: 2,
-            left: _Layout.largeCodeLeft,
-            top: _Layout.largeRowTop,
-            width: _Layout.largeCodeCell,
-            height: _Layout.largeRowHeight,
-          ),
-          const PlateSlot(
-            alphabet: IraqAlphabets.letters,
-            box: _Layout.largeLetter,
-          ),
-          plateField(
-            alphabet: IraqAlphabets.digits,
-            count: 5,
-            left: _Layout.largeSerialLeft,
-            top: _Layout.largeRowTop,
-            width: _Layout.largeSerialCell,
-            height: _Layout.largeRowHeight,
-          ),
-        ],
-        background: _largeBackground,
-        labels: <PlateLabel>[
-          PlateLabel(
-            text: 'I\nR\nQ',
-            box: kurdistan ? _Layout.largeStackKr : _Layout.largeBand,
-            glyphHeight: _Layout.largeStackGlyph,
-            lineHeight: kurdistan
-                ? _Layout.largeStackLineHeightKr
-                : _Layout.largeStackLineHeight,
-          ),
-          if (kurdistan)
-            const PlateLabel(
-              text: 'KR',
-              box: _Layout.largeKrBox,
-              glyphHeight: _Layout.largeKrGlyph,
-            ),
-        ],
-        textGroups: const <PlateTextGroup>[
-          PlateTextGroup(<int>[0], key: 'governorate'),
-          PlateTextGroup(<int>[1], key: 'letter'),
-          PlateTextGroup(<int>[2], key: 'serial'),
-        ],
-      );
+  static PlateSpec _large({required String id, required bool kurdistan}) => PlateSpec(
+    id: id,
+    country: IraqCountry.private,
+    canvasWidth: _Layout.largeWidth,
+    canvasHeight: _Layout.largeHeight,
+    panel: const PlatePanel(box: _Layout.largeBand, flagScale: 0, padding: EdgeInsets.zero),
+    slots: <PlateSlot>[
+      plateField(
+        alphabet: IraqAlphabets.digits,
+        count: 2,
+        left: _Layout.largeCodeLeft,
+        top: _Layout.largeRowTop,
+        width: _Layout.largeCodeCell,
+        height: _Layout.largeRowHeight,
+      ),
+      const PlateSlot(alphabet: IraqAlphabets.letters, box: _Layout.largeLetter),
+      plateField(
+        alphabet: IraqAlphabets.digits,
+        count: 5,
+        left: _Layout.largeSerialLeft,
+        top: _Layout.largeRowTop,
+        width: _Layout.largeSerialCell,
+        height: _Layout.largeRowHeight,
+      ),
+    ],
+    background: _largeBackground,
+    labels: <PlateLabel>[
+      PlateLabel(
+        text: 'I\nR\nQ',
+        box: kurdistan ? _Layout.largeStackKr : _Layout.largeBand,
+        glyphHeight: _Layout.largeStackGlyph,
+        lineHeight: kurdistan ? _Layout.largeStackLineHeightKr : _Layout.largeStackLineHeight,
+      ),
+      if (kurdistan)
+        const PlateLabel(text: 'KR', box: _Layout.largeKrBox, glyphHeight: _Layout.largeKrGlyph),
+    ],
+    textGroups: const <PlateTextGroup>[
+      PlateTextGroup(<int>[0], key: 'governorate'),
+      PlateTextGroup(<int>[1], key: 'letter'),
+      PlateTextGroup(<int>[2], key: 'serial'),
+    ],
+  );
 
   /// The 335x155 template: code and letter over the serial.
-  static PlateSpec _small({required String id, required bool kurdistan}) =>
-      PlateSpec(
-        id: id,
-        country: IraqCountry.private,
-        canvasWidth: _Layout.smallWidth,
-        canvasHeight: _Layout.smallHeight,
-        panel: const PlatePanel(
-          box: _Layout.smallBand,
-          flagScale: 0,
-          padding: EdgeInsets.zero,
-        ),
-        slots: <PlateSlot>[
-          plateField(
-            alphabet: IraqAlphabets.digits,
-            count: 2,
-            left: _Layout.smallGridLeft,
-            top: _Layout.smallTopRowTop,
-            width: _Layout.smallGridCell,
-            height: _Layout.smallRowHeight,
-          ),
-          const PlateSlot(
-            alphabet: IraqAlphabets.letters,
-            box: _Layout.smallLetter,
-          ),
-          plateField(
-            alphabet: IraqAlphabets.digits,
-            count: 5,
-            left: _Layout.smallGridLeft,
-            top: _Layout.smallBottomRowTop,
-            width: _Layout.smallGridCell,
-            height: _Layout.smallRowHeight,
-          ),
-        ],
-        background: _smallBackground,
-        labels: <PlateLabel>[_smallStack, if (kurdistan) _smallKr],
-        textGroups: const <PlateTextGroup>[
-          PlateTextGroup(<int>[0], key: 'governorate'),
-          PlateTextGroup(<int>[1], key: 'letter'),
-          PlateTextGroup(<int>[2], key: 'serial'),
-        ],
-      );
+  static PlateSpec _small({required String id, required bool kurdistan}) => PlateSpec(
+    id: id,
+    country: IraqCountry.private,
+    canvasWidth: _Layout.smallWidth,
+    canvasHeight: _Layout.smallHeight,
+    panel: const PlatePanel(box: _Layout.smallBand, flagScale: 0, padding: EdgeInsets.zero),
+    slots: <PlateSlot>[
+      plateField(
+        alphabet: IraqAlphabets.digits,
+        count: 2,
+        left: _Layout.smallGridLeft,
+        top: _Layout.smallTopRowTop,
+        width: _Layout.smallGridCell,
+        height: _Layout.smallRowHeight,
+      ),
+      const PlateSlot(alphabet: IraqAlphabets.letters, box: _Layout.smallLetter),
+      plateField(
+        alphabet: IraqAlphabets.digits,
+        count: 5,
+        left: _Layout.smallGridLeft,
+        top: _Layout.smallBottomRowTop,
+        width: _Layout.smallGridCell,
+        height: _Layout.smallRowHeight,
+      ),
+    ],
+    background: _smallBackground,
+    labels: <PlateLabel>[_smallStack, if (kurdistan) _smallKr],
+    textGroups: const <PlateTextGroup>[
+      PlateTextGroup(<int>[0], key: 'governorate'),
+      PlateTextGroup(<int>[1], key: 'letter'),
+      PlateTextGroup(<int>[2], key: 'serial'),
+    ],
+  );
 
   static const PlateSection _largeBackground = PlateSection.columns(<PlatePart>[
     PlatePart(
@@ -271,19 +239,13 @@ abstract final class IraqPlates {
   static final PlateSpec large = _large(id: 'iq.large', kurdistan: false);
 
   /// 520x110, Kurdistan Region (governorates 21-24): "IRQ" over "KR".
-  static final PlateSpec largeKurdistan = _large(
-    id: 'iq.large.kr',
-    kurdistan: true,
-  );
+  static final PlateSpec largeKurdistan = _large(id: 'iq.large.kr', kurdistan: true);
 
   /// 335x155, outside the Kurdistan Region.
   static final PlateSpec small = _small(id: 'iq.small', kurdistan: false);
 
   /// 335x155, Kurdistan Region.
-  static final PlateSpec smallKurdistan = _small(
-    id: 'iq.small.kr',
-    kurdistan: true,
-  );
+  static final PlateSpec smallKurdistan = _small(id: 'iq.small.kr', kurdistan: true);
 
   /// 335x155 temporary, red on white. Its own spec because the top row is a
   /// governorate code, a dash and the two-digit expiry year on five evenly pitched
@@ -294,11 +256,7 @@ abstract final class IraqPlates {
     country: IraqCountry.temporary,
     canvasWidth: _Layout.smallWidth,
     canvasHeight: _Layout.smallHeight,
-    panel: const PlatePanel(
-      box: _Layout.smallBand,
-      flagScale: 0,
-      padding: EdgeInsets.zero,
-    ),
+    panel: const PlatePanel(box: _Layout.smallBand, flagScale: 0, padding: EdgeInsets.zero),
     slots: <PlateSlot>[
       plateField(
         alphabet: IraqAlphabets.digits,

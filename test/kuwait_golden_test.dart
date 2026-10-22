@@ -63,11 +63,7 @@ void main() {
               height: 520 * spec.canvasHeight / spec.canvasWidth,
               child: PlateThemeScope(
                 theme: theme,
-                child: PlateView(
-                  controller: controller,
-                  theme: theme,
-                  country: country,
-                ),
+                child: PlateView(controller: controller, theme: theme, country: country),
               ),
             ),
           ),
@@ -76,10 +72,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await expectLater(
-      find.byType(PlateView),
-      matchesGoldenFile('goldens/$name.png'),
-    );
+    await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/$name.png'));
 
     await tester.pumpWidget(const SizedBox.shrink());
     controller.dispose();
@@ -100,13 +93,7 @@ void main() {
       KuwaitCountry.transport,
       '9323456',
     ),
-    (
-      'kw_police',
-      KuwaitPlates.police,
-      KuwaitThemes.police,
-      KuwaitCountry.police,
-      '23456',
-    ),
+    ('kw_police', KuwaitPlates.police, KuwaitThemes.police, KuwaitCountry.police, '23456'),
     (
       'kw_policemotorcycle',
       KuwaitPlates.policeMotorcycle,
@@ -135,13 +122,7 @@ void main() {
       KuwaitCountry.nationalGuard,
       '23456',
     ),
-    (
-      'kw_army',
-      KuwaitPlates.army,
-      KuwaitThemes.army,
-      KuwaitCountry.army,
-      '23456',
-    ),
+    ('kw_army', KuwaitPlates.army, KuwaitThemes.army, KuwaitCountry.army, '23456'),
     (
       'kw_commercial',
       KuwaitPlates.commercial,
@@ -163,27 +144,9 @@ void main() {
       KuwaitCountry.firefighting,
       '23456',
     ),
-    (
-      'kw_export',
-      KuwaitPlates.exportPlate,
-      KuwaitThemes.export,
-      KuwaitCountry.export,
-      '23456',
-    ),
-    (
-      'kw_customs',
-      KuwaitPlates.customs,
-      KuwaitThemes.customs,
-      KuwaitCountry.customs,
-      '23456',
-    ),
-    (
-      'kw_emiri',
-      KuwaitPlates.emiri,
-      KuwaitThemes.emiri,
-      KuwaitCountry.emiri,
-      '23456',
-    ),
+    ('kw_export', KuwaitPlates.exportPlate, KuwaitThemes.export, KuwaitCountry.export, '23456'),
+    ('kw_customs', KuwaitPlates.customs, KuwaitThemes.customs, KuwaitCountry.customs, '23456'),
+    ('kw_emiri', KuwaitPlates.emiri, KuwaitThemes.emiri, KuwaitCountry.emiri, '23456'),
     (
       'kw_emiriguard',
       KuwaitPlates.emiriGuard,

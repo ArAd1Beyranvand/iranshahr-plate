@@ -28,15 +28,9 @@ class TurkeyPlateValidator extends PlateValidator {
 
   /// The four category validators the article fixes letters for.
   static const TurkeyPlateValidator general = TurkeyPlateValidator();
-  static const TurkeyPlateValidator diplomatic = TurkeyPlateValidator(
-    prefix: 'CD',
-  );
-  static const TurkeyPlateValidator consulate = TurkeyPlateValidator(
-    prefix: 'CC',
-  );
-  static const TurkeyPlateValidator temporaryCustoms = TurkeyPlateValidator(
-    prefix: 'GMR',
-  );
+  static const TurkeyPlateValidator diplomatic = TurkeyPlateValidator(prefix: 'CD');
+  static const TurkeyPlateValidator consulate = TurkeyPlateValidator(prefix: 'CC');
+  static const TurkeyPlateValidator temporaryCustoms = TurkeyPlateValidator(prefix: 'GMR');
   static const TurkeyPlateValidator gendarmerie = TurkeyPlateValidator(
     prefix: 'J',
     limitSix: false,
@@ -45,9 +39,7 @@ class TurkeyPlateValidator extends PlateValidator {
     prefix: 'SGH',
     limitSix: false,
   );
-  static const TurkeyPlateValidator police = TurkeyPlateValidator(
-    limitSix: false,
-  );
+  static const TurkeyPlateValidator police = TurkeyPlateValidator(limitSix: false);
 
   /// Whether [code] is one of the 81 province codes, `01` to `81`.
   static bool isProvince(String code) {
@@ -58,8 +50,7 @@ class TurkeyPlateValidator extends PlateValidator {
 
   /// Whether every character of [letters] is a plate letter.
   static bool isLetters(String letters) =>
-      letters.isNotEmpty &&
-      letters.split('').every(TurkeyAlphabets.letters.characters.contains);
+      letters.isNotEmpty && letters.split('').every(TurkeyAlphabets.letters.characters.contains);
 
   @override
   PlateValidation validate(PlateEntry entry) {
@@ -72,9 +63,7 @@ class TurkeyPlateValidator extends PlateValidator {
     final hasLetters = entry.spec.indicesOfGroup('letters').isNotEmpty;
     if (hasLetters && letters.isNotEmpty) {
       if (!isLetters(letters)) {
-        return const PlateValidation.invalid(
-          'Letters exclude Ç Ş İ Ö Ü Ğ Q W X',
-        );
+        return const PlateValidation.invalid('Letters exclude Ç Ş İ Ö Ü Ğ Q W X');
       }
       if (!letters.startsWith(prefix) && !prefix.startsWith(letters)) {
         return PlateValidation.invalid('This plate class reads $prefix');
@@ -83,12 +72,8 @@ class TurkeyPlateValidator extends PlateValidator {
     if (serial.isNotEmpty && !isDigits(serial)) {
       return const PlateValidation.invalid('Serial must be figures');
     }
-    if (limitSix &&
-        hasLetters &&
-        letters.length + serial.length > maxLettersAndDigits) {
-      return const PlateValidation.invalid(
-        'Letters and figures number at most six',
-      );
+    if (limitSix && hasLetters && letters.length + serial.length > maxLettersAndDigits) {
+      return const PlateValidation.invalid('Letters and figures number at most six');
     }
     return const PlateValidation.valid();
   }

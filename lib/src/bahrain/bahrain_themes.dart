@@ -2,36 +2,13 @@ import 'package:plate_core/plate_core.dart';
 
 import 'bahrain_colors.dart';
 
-/// The `PlateTheme`s a Bahraini plate is printed in.
-///
-/// Colour never lives on a [PlateSpec] — a spec is geometry — so the host
-/// passes one:
-///
-/// ```dart
-/// PlateCanvas(
-///   spec: BahrainPlates.diplomatic,
-///   country: BahrainCountry.diplomatic,
-///   theme: BahrainThemes.diplomatic,
-///   ...
-/// )
-/// ```
-///
-/// None of these is a [PlateTheme.monochrome]. That constructor makes the
-/// divider colour the ink, and on a Bahraini plate it is not: the vertical
-/// security band down the right is grey on every class of plate, including the
-/// two whose numbers are printed near black and the three printed in blue. The
-/// band is the one thing all five designs share, so it is the one colour none
-/// of these themes is free to derive from its ink.
+/// None is a [PlateTheme.monochrome]: the grey security band is on every plate,
+/// so the divider colour cannot derive from the ink.
 abstract final class BahrainThemes {
-  /// Frame thickness as a fraction of plate height. Bahraini frames are thin
-  /// next to an Iranian one. // CALIBRATE
-  static const double _borderWidthRatio = 0.03;
+  static const double _borderWidthRatio = 0.03; // CALIBRATE
+  static const double _plateRadiusRatio = 0.14; // CALIBRATE
 
-  /// Noticeably rounded — the reference photographs show a soft, generous
-  /// corner, closer to a credit card than a squared-off plate. // CALIBRATE
-  static const double _plateRadiusRatio = 0.14;
-
-  /// Civilian plates in every size: blue on white, grey band.
+  /// Blue on white, in every size.
   static const PlateTheme civilian = PlateTheme(
     plateBackground: BahrainColors.field,
     plateBorder: BahrainColors.blue,
@@ -43,8 +20,7 @@ abstract final class BahrainThemes {
     inactiveColor: BahrainColors.inactiveOnLight,
   );
 
-  /// Diplomatic corps: a near-black serial on white under the green band, in a
-  /// frame the same green.
+  /// Near-black on white, in a green frame.
   static const PlateTheme diplomatic = PlateTheme(
     plateBackground: BahrainColors.field,
     plateBorder: BahrainColors.diplomaticGreen,
@@ -56,8 +32,7 @@ abstract final class BahrainThemes {
     inactiveColor: BahrainColors.inactiveOnLight,
   );
 
-  /// Police: the same near-black serial, framed in the dark blue the band's
-  /// wording is printed in.
+  /// Near-black on white, in the dark blue of the band's wording.
   static const PlateTheme police = PlateTheme(
     plateBackground: BahrainColors.field,
     plateBorder: BahrainColors.onPoliceBlue,

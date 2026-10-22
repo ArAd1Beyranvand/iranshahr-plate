@@ -38,8 +38,7 @@ abstract final class IraqValidators {
   };
 
   /// Whether [code] is one of the nineteen governorate codes, 11 to 29.
-  static bool isGovernorate(String code) =>
-      IraqGovernorates.byCode.containsKey(code);
+  static bool isGovernorate(String code) => IraqGovernorates.byCode.containsKey(code);
 
   /// Whether [letter] is a single Latin capital.
   static bool isClassLetter(String letter) =>
@@ -50,8 +49,7 @@ abstract final class IraqValidators {
       serial.length == serialLength && serial.codeUnits.every(_isDigit);
 
   /// Whether [year] is the two-digit expiry a temporary plate carries.
-  static bool isExpiryYear(String year) =>
-      year.length == 2 && year.codeUnits.every(_isDigit);
+  static bool isExpiryYear(String year) => year.length == 2 && year.codeUnits.every(_isDigit);
 
   /// The letter the Kurdistan Region's transition rules assign to an existing
   /// registration [number], or null if [number] is not one they cover.
@@ -77,9 +75,7 @@ abstract final class IraqValidators {
     if (number.endsWith('00000') && number[0] != '0') {
       return ('M', number.substring(0, serialLength));
     }
-    final letter = String.fromCharCode(
-      'B'.codeUnitAt(0) + (number.codeUnitAt(0) - _zero),
-    );
+    final letter = String.fromCharCode('B'.codeUnitAt(0) + (number.codeUnitAt(0) - _zero));
     return (letter, number.substring(1));
   }
 

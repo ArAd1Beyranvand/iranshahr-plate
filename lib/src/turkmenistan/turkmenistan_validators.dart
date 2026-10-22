@@ -4,12 +4,7 @@ import 'package:plate_core/plate_core.dart';
 /// One register of a Turkmen serial: [length] digits or Latin capitals, and
 /// when [allowed] is set, one of those values.
 final class TurkmenistanPart {
-  const TurkmenistanPart(
-    this.group,
-    this.length, {
-    this.digits = false,
-    this.allowed,
-  });
+  const TurkmenistanPart(this.group, this.length, {this.digits = false, this.allowed});
 
   final String group;
   final int length;

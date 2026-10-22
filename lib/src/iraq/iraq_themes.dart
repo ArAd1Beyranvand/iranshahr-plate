@@ -40,18 +40,12 @@ abstract final class IraqThemes {
 
   /// 520x110: a 4.3 mm frame and an 8.0 mm corner radius, measured off the
   /// reference artwork.
-  static final PlateTheme large = _theme(
-    borderWidthRatio: 4.3 / 110,
-    plateRadiusRatio: 8.0 / 110,
-  );
+  static final PlateTheme large = _theme(borderWidthRatio: 4.3 / 110, plateRadiusRatio: 8.0 / 110);
 
   /// 335x155: a 3.7 mm frame and a 6.5 mm corner radius, same source. Both
   /// are close to [large] in millimetres and so far from it as a ratio — the
   /// frame is drawn at a constant physical width on a much shorter plate.
-  static final PlateTheme small = _theme(
-    borderWidthRatio: 3.7 / 155,
-    plateRadiusRatio: 6.5 / 155,
-  );
+  static final PlateTheme small = _theme(borderWidthRatio: 3.7 / 155, plateRadiusRatio: 6.5 / 155);
 
   /// 335x155 temporary: [small]'s geometry printed in red rather than black.
   /// The whole monochrome set changes — a red plate has a red rim and a red

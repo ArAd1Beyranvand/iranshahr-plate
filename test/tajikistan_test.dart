@@ -9,9 +9,7 @@ import 'package:iranshahr_plate/iranshahr_plate.dart';
 /// they *do* decide.
 void main() {
   PlateValidation judge(PlateSpec spec, List<String?> values) =>
-      TajikistanPlates.validatorFor(
-        spec,
-      ).validate(PlateEntry(spec: spec, values: values));
+      TajikistanPlates.validatorFor(spec).validate(PlateEntry(spec: spec, values: values));
 
   group('the specs', () {
     test('every design is internally consistent', () {
@@ -40,24 +38,15 @@ void main() {
       expect(TajikistanPlates.car.noPanel, isFalse);
     });
 
-    test(
-      'the flag classes each take the country block matching their field',
-      () {
-        expect(TajikistanPlates.car.country, TajikistanCountry.civilian);
-        expect(
-          TajikistanPlates.publicTransport.country,
-          TajikistanCountry.transport,
-        );
-        expect(TajikistanPlates.police.country, TajikistanCountry.police);
-      },
-    );
+    test('the flag classes each take the country block matching their field', () {
+      expect(TajikistanPlates.car.country, TajikistanCountry.civilian);
+      expect(TajikistanPlates.publicTransport.country, TajikistanCountry.transport);
+      expect(TajikistanPlates.police.country, TajikistanCountry.police);
+    });
 
     test('public transport prints its fixed TT and has no letter slots', () {
       expect(TajikistanPlates.publicTransport.labels.single.text, 'TT');
-      expect(
-        TajikistanPlates.publicTransport.slots.map((s) => s.length),
-        [4, 2],
-      );
+      expect(TajikistanPlates.publicTransport.slots.map((s) => s.length), [4, 2]);
     });
 
     test('the governmental plate boxes off its region with a divider', () {
@@ -78,10 +67,7 @@ void main() {
     test('the capital and the republican districts hold two codes each', () {
       expect(TajikistanRegions.regionFor('01'), TajikistanRegion.dushanbe);
       expect(TajikistanRegions.regionFor('05'), TajikistanRegion.dushanbe);
-      expect(
-        TajikistanRegions.regionFor('04'),
-        TajikistanRegion.gornoBadakhshan,
-      );
+      expect(TajikistanRegions.regionFor('04'), TajikistanRegion.gornoBadakhshan);
     });
   });
 
@@ -91,35 +77,20 @@ void main() {
     });
 
     test('a region code Tajikistan does not issue is rejected', () {
-      expect(
-        judge(TajikistanPlates.car, ['9999', 'MK', '09']).isValid,
-        isFalse,
-      );
+      expect(judge(TajikistanPlates.car, ['9999', 'MK', '09']).isValid, isFalse);
     });
 
     test('a letter outside the register is rejected', () {
-      expect(
-        judge(TajikistanPlates.car, ['9999', 'QT', '02']).isValid,
-        isFalse,
-      );
+      expect(judge(TajikistanPlates.car, ['9999', 'QT', '02']).isValid, isFalse);
     });
 
     test('the diplomatic class must be one of the five codes', () {
-      expect(
-        judge(TajikistanPlates.diplomatic, ['091', 'CMD', '1']).isValid,
-        isTrue,
-      );
-      expect(
-        judge(TajikistanPlates.diplomatic, ['091', 'D', '1']).isValid,
-        isTrue,
-      );
+      expect(judge(TajikistanPlates.diplomatic, ['091', 'CMD', '1']).isValid, isTrue);
+      expect(judge(TajikistanPlates.diplomatic, ['091', 'D', '1']).isValid, isTrue);
     });
 
     test('the foreign plate takes no region and any three-digit halves', () {
-      expect(
-        judge(TajikistanPlates.foreign, ['200', 'P', '005']).isValid,
-        isTrue,
-      );
+      expect(judge(TajikistanPlates.foreign, ['200', 'P', '005']).isValid, isTrue);
     });
   });
 }

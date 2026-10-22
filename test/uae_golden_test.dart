@@ -44,10 +44,7 @@ void main() {
     required String name,
   }) async {
     final int codeLength = spec.slots.first.length;
-    final values = <String?>[
-      digits.substring(0, codeLength),
-      digits.substring(codeLength),
-    ];
+    final values = <String?>[digits.substring(0, codeLength), digits.substring(codeLength)];
     final controller = PlateController.fromValues(spec, values);
 
     await tester.pumpWidget(
@@ -59,11 +56,7 @@ void main() {
               height: 520 * spec.canvasHeight / spec.canvasWidth,
               child: PlateThemeScope(
                 theme: theme,
-                child: PlateView(
-                  controller: controller,
-                  theme: theme,
-                  country: country,
-                ),
+                child: PlateView(controller: controller, theme: theme, country: country),
               ),
             ),
           ),
@@ -72,79 +65,22 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await expectLater(
-      find.byType(PlateView),
-      matchesGoldenFile('goldens/$name.png'),
-    );
+    await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/$name.png'));
 
     await tester.pumpWidget(const SizedBox.shrink());
     controller.dispose();
   }
 
   final cases = <(String, PlateSpec, PlateTheme, PlateCountry, String)>[
-    (
-      'ae_abudhabi_long',
-      UaePlates.abuDhabiLong,
-      UaeThemes.long,
-      UaeCountry.uae,
-      '1223456',
-    ),
-    (
-      'ae_abudhabi_short',
-      UaePlates.abuDhabiShort,
-      UaeThemes.short,
-      UaeCountry.uae,
-      '1223456',
-    ),
-    (
-      'ae_ajman_long',
-      UaePlates.ajmanLong,
-      UaeThemes.long,
-      UaeCountry.uae,
-      'A23456',
-    ),
-    (
-      'ae_ajman_short',
-      UaePlates.ajmanShort,
-      UaeThemes.short,
-      UaeCountry.uae,
-      'A23456',
-    ),
-    (
-      'ae_dubai_long',
-      UaePlates.dubaiLong,
-      UaeThemes.long,
-      UaeCountry.uae,
-      'A23456',
-    ),
-    (
-      'ae_dubai_short',
-      UaePlates.dubaiShort,
-      UaeThemes.short,
-      UaeCountry.uae,
-      'A23456',
-    ),
-    (
-      'ae_fujairah_long',
-      UaePlates.fujairahLong,
-      UaeThemes.long,
-      UaeCountry.uae,
-      'A23456',
-    ),
-    (
-      'ae_fujairah_short',
-      UaePlates.fujairahShort,
-      UaeThemes.short,
-      UaeCountry.uae,
-      'A23456',
-    ),
-    (
-      'ae_rasalkhaimah_long',
-      UaePlates.rasAlKhaimahLong,
-      UaeThemes.long,
-      UaeCountry.uae,
-      'A23456',
-    ),
+    ('ae_abudhabi_long', UaePlates.abuDhabiLong, UaeThemes.long, UaeCountry.uae, '1223456'),
+    ('ae_abudhabi_short', UaePlates.abuDhabiShort, UaeThemes.short, UaeCountry.uae, '1223456'),
+    ('ae_ajman_long', UaePlates.ajmanLong, UaeThemes.long, UaeCountry.uae, 'A23456'),
+    ('ae_ajman_short', UaePlates.ajmanShort, UaeThemes.short, UaeCountry.uae, 'A23456'),
+    ('ae_dubai_long', UaePlates.dubaiLong, UaeThemes.long, UaeCountry.uae, 'A23456'),
+    ('ae_dubai_short', UaePlates.dubaiShort, UaeThemes.short, UaeCountry.uae, 'A23456'),
+    ('ae_fujairah_long', UaePlates.fujairahLong, UaeThemes.long, UaeCountry.uae, 'A23456'),
+    ('ae_fujairah_short', UaePlates.fujairahShort, UaeThemes.short, UaeCountry.uae, 'A23456'),
+    ('ae_rasalkhaimah_long', UaePlates.rasAlKhaimahLong, UaeThemes.long, UaeCountry.uae, 'A23456'),
     (
       'ae_rasalkhaimah_short',
       UaePlates.rasAlKhaimahShort,
@@ -152,34 +88,10 @@ void main() {
       UaeCountry.uae,
       'A23456',
     ),
-    (
-      'ae_sharjah_long',
-      UaePlates.sharjahLong,
-      UaeThemes.long,
-      UaeCountry.uae,
-      '123456',
-    ),
-    (
-      'ae_sharjah_short',
-      UaePlates.sharjahShort,
-      UaeThemes.short,
-      UaeCountry.uae,
-      '123456',
-    ),
-    (
-      'ae_ummalquwain_long',
-      UaePlates.ummAlQuwainLong,
-      UaeThemes.long,
-      UaeCountry.uae,
-      'A23456',
-    ),
-    (
-      'ae_ummalquwain_short',
-      UaePlates.ummAlQuwainShort,
-      UaeThemes.short,
-      UaeCountry.uae,
-      'A23456',
-    ),
+    ('ae_sharjah_long', UaePlates.sharjahLong, UaeThemes.long, UaeCountry.uae, '123456'),
+    ('ae_sharjah_short', UaePlates.sharjahShort, UaeThemes.short, UaeCountry.uae, '123456'),
+    ('ae_ummalquwain_long', UaePlates.ummAlQuwainLong, UaeThemes.long, UaeCountry.uae, 'A23456'),
+    ('ae_ummalquwain_short', UaePlates.ummAlQuwainShort, UaeThemes.short, UaeCountry.uae, 'A23456'),
   ];
 
   for (final (name, spec, theme, country, digits) in cases) {

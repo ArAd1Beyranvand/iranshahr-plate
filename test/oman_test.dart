@@ -45,21 +45,14 @@ void main() {
               child: SizedBox(
                 width: 520,
                 height: 520 * spec.canvasHeight / spec.canvasWidth,
-                child: PlateView(
-                  controller: controller,
-                  theme: theme,
-                  country: OmanCountry.oman,
-                ),
+                child: PlateView(controller: controller, theme: theme, country: OmanCountry.oman),
               ),
             ),
           ),
         ),
       );
       await tester.pumpAndSettle();
-      await expectLater(
-        find.byType(PlateView),
-        matchesGoldenFile('goldens/om_$name.png'),
-      );
+      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/om_$name.png'));
       await tester.pumpWidget(const SizedBox.shrink());
       controller.dispose();
     });

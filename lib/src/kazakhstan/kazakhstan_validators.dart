@@ -18,8 +18,7 @@ class KazakhstanValidator extends GatedPlateValidator {
   String get gateGroup => 'region';
 
   static const String reasonNumber = 'The number is three digits.';
-  static const String reasonLetters =
-      'The serial has the wrong number of letters.';
+  static const String reasonLetters = 'The serial has the wrong number of letters.';
   static const String reasonRegion = 'The region code is 01 to 20.';
 
   @override
