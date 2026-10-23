@@ -44,3 +44,4 @@ app.*.map.json
 # Publish check outputs
 publish_issues.txt
 all_publish_warnings.txt
+build/
