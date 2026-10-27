@@ -4,19 +4,18 @@ import 'package:plate_core/plate_core.dart';
 import '../plate_field.dart';
 import 'tajikistan_alphabets.dart';
 import 'tajikistan_country.dart';
+import 'tajikistan_themes.dart';
 import 'tajikistan_validators.dart';
 
 /// European plates: a country block at the hoist end, then Latin groups with no
 /// divider; the private number is `NNNN LL NN` (serial, letters, region).
 ///
-/// The private, transport and police plates carry the flag over `TJ`; the field
-/// behind it changes, so each takes the matching [PlateCountry] (`TajikistanCountry`).
-/// The foreign, diplomatic and governmental plates print no flag and declare
+/// [car] is also the transport plate: `TT` turns it amber, see
+/// `TajikistanThemes.byLetters`. The foreign, diplomatic and governmental plates print no flag and declare
 /// [PlateSpec.noPanel]. The trailer and motorcycle break the number across two
 /// rows, and are their own specs because the boxes are the spec.
 ///
-/// Colour is never here: [publicTransport] in `TajikistanThemes.transport` is not
-/// a different class. `final`, not `const`: the digit runs are built by
+/// `final`, not `const`: the digit runs are built by
 /// [plateRegister]. Every coordinate is sampled by eye from the Wikipedia
 /// drawings and is a calibration target.
 abstract final class TajikistanPlates {
@@ -29,7 +28,7 @@ abstract final class TajikistanPlates {
     captionScale: 1.6,
   );
 
-  /// Private plate, e.g. `9999 MK 02`. Letters come from [TajikistanAlphabets.letters];
+  /// Private `9999 MK 02` and transport `9006 TT 05`. Letters come from [TajikistanAlphabets.letters];
   /// the article's `WT` drawing is illustrative, `W` not being issued.
   static final PlateSpec car = PlateSpec(
     id: 'tj.car',
@@ -66,11 +65,27 @@ abstract final class TajikistanPlates {
         pitch: 50,
       ),
     ],
+    resolveTheme: TajikistanThemes.byLetters,
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
       PlateTextGroup([1], key: 'letters'),
       PlateTextGroup([2], key: 'region'),
     ],
+  );
+
+  /// White on blue, e.g. `0245 M 01`: [car] with one letter, so its own spec.
+  static final PlateSpec police = PlateSpec(
+    id: 'tj.police',
+    country: TajikistanCountry.civilian,
+    canvasWidth: 520,
+    canvasHeight: 110,
+    panel: _euPanel,
+    slots: [
+      car.slots[0],
+      const PlateSlot(alphabet: TajikistanAlphabets.letters, box: PlateBox(300, 15, 50, 80)),
+      car.slots[2],
+    ],
+    textGroups: car.textGroups,
   );
 
   /// Two-row [car] (340×190): the flag block and serial share the head row.
@@ -141,7 +156,10 @@ abstract final class TajikistanPlates {
         height: 70,
         pitch: 46,
       ),
-      const PlateSlot(alphabet: TajikistanAlphabets.letters, box: PlateBox(20, 88, 46, 68)),
+      const PlateSlot(
+        alphabet: TajikistanAlphabets.letters,
+        box: PlateBox(20, 88, 46, 68),
+      ),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
@@ -206,76 +224,6 @@ abstract final class TajikistanPlates {
     ],
   );
 
-  /// Black on amber, e.g. `9006 TT 05`. `TT` is a [PlateLabel], not a slot.
-  static final PlateSpec publicTransport = PlateSpec(
-    id: 'tj.publicTransport',
-    country: TajikistanCountry.transport,
-    canvasWidth: 520,
-    canvasHeight: 110,
-    panel: _euPanel,
-    slots: [
-      plateField(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 4,
-        left: 72,
-        top: 15,
-        width: 46,
-        height: 80,
-        pitch: 50,
-      ),
-      plateField(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 410,
-        top: 15,
-        width: 46,
-        height: 80,
-        pitch: 50,
-      ),
-    ],
-    labels: const [PlateLabel(text: 'TT', box: PlateBox(288, 18, 96, 74), glyphHeight: 74)],
-    textGroups: const [
-      PlateTextGroup([0], key: 'serial'),
-      PlateTextGroup([1], key: 'region'),
-    ],
-  );
-
-  /// White on blue, e.g. `0245 M 01`. Takes `TajikistanCountry.police` because the
-  /// `TJ` is reversed out white here.
-  static final PlateSpec police = PlateSpec(
-    id: 'tj.police',
-    country: TajikistanCountry.police,
-    canvasWidth: 520,
-    canvasHeight: 110,
-    panel: _euPanel,
-    slots: [
-      plateField(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 4,
-        left: 72,
-        top: 15,
-        width: 46,
-        height: 80,
-        pitch: 50,
-      ),
-      const PlateSlot(alphabet: TajikistanAlphabets.letters, box: PlateBox(300, 15, 50, 80)),
-      plateField(
-        alphabet: PlateAlphabet.latinDigits,
-        count: 2,
-        left: 410,
-        top: 15,
-        width: 46,
-        height: 80,
-        pitch: 50,
-      ),
-    ],
-    textGroups: const [
-      PlateTextGroup([0], key: 'serial'),
-      PlateTextGroup([1], key: 'letters'),
-      PlateTextGroup([2], key: 'region'),
-    ],
-  );
-
   /// Black on yellow, e.g. `200 P 005`. No region code, so no flag block.
   static final PlateSpec foreign = PlateSpec(
     id: 'tj.foreign',
@@ -294,7 +242,10 @@ abstract final class TajikistanPlates {
         height: 80,
         pitch: 60,
       ),
-      const PlateSlot(alphabet: TajikistanAlphabets.letters, box: PlateBox(250, 15, 56, 80)),
+      const PlateSlot(
+        alphabet: TajikistanAlphabets.letters,
+        box: PlateBox(250, 15, 56, 80),
+      ),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -336,7 +287,10 @@ abstract final class TajikistanPlates {
         alphabet: TajikistanAlphabets.diplomaticClass,
         box: PlateBox(240, 15, 150, 80),
       ),
-      const PlateSlot(alphabet: PlateAlphabet.latinDigits, box: PlateBox(420, 15, 54, 80)),
+      const PlateSlot(
+        alphabet: PlateAlphabet.latinDigits,
+        box: PlateBox(420, 15, 54, 80),
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
@@ -385,7 +339,9 @@ abstract final class TajikistanPlates {
         pitch: 54,
       ),
     ],
-    labels: const [PlateLabel(text: 'RT', box: PlateBox(395, 74, 84, 22), glyphHeight: 20)],
+    labels: const [
+      PlateLabel(text: 'RT', box: PlateBox(395, 74, 84, 22), glyphHeight: 20),
+    ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
       PlateTextGroup([1], key: 'letters'),
@@ -397,10 +353,9 @@ abstract final class TajikistanPlates {
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
     car,
     carTwoRow,
+    police,
     motorcycle,
     trailer,
-    publicTransport,
-    police,
     foreign,
     diplomatic,
     governmental,
@@ -410,11 +365,20 @@ abstract final class TajikistanPlates {
   /// [TajikistanPlateValidator] configured for their lengths; the foreign and
   /// diplomatic plates, which break that shape, get their own.
   static PlateValidator validatorFor(PlateSpec spec) => switch (spec.id) {
-    'tj.motorcycle' => const TajikistanPlateValidator(serialLength: 3, letterCount: 1),
-    'tj.trailer' => const TajikistanPlateValidator(serialLength: 4, letterCount: 2, gate: 'serial'),
-    'tj.publicTransport' => const TajikistanPlateValidator(serialLength: 4, letterCount: 0),
-    'tj.police' => const TajikistanPlateValidator(serialLength: 4, letterCount: 1),
-    'tj.governmental' => const TajikistanPlateValidator(serialLength: 3, letterCount: 2),
+    'tj.motorcycle' => const TajikistanPlateValidator(
+      serialLength: 3,
+      letterCount: 1,
+    ),
+    'tj.trailer' => const TajikistanPlateValidator(
+      serialLength: 4,
+      letterCount: 2,
+      gate: 'serial',
+    ),
+    'tj.governmental' => const TajikistanPlateValidator(
+      serialLength: 3,
+      letterCount: 2,
+    ),
+    'tj.police' => const TajikistanPlateValidator(letterCount: 1),
     'tj.foreign' => const TajikistanForeignPlateValidator(),
     'tj.diplomatic' => const TajikistanDiplomaticPlateValidator(),
     _ => const TajikistanPlateValidator(),

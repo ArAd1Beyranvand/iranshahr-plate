@@ -87,7 +87,7 @@ Ten plate specs in five colour themes, on a German-style face: the flag over
 `AM`, a silver identifier band, and `NN LL NNN` told apart by gaps alone — no
 hyphen and no divider.
 
-- **`car` / `carTwoRow` / `motorcycle`** — the private number, in its three sizes
+- **`car` / `carTwoRow` / `motorcycle`** — the private number, in its three sizes; letters `TT` turn `car` amber (public transport)
 - **`public`** — the state number, `NNN LL NN`, with the groups the other way round
 - **`trailer`** — a pre-2014 two-row design, one letter instead of two
 - **`bus`** — black on yellow, `NNNN L`: `S` for a city bus, `L` for a coach
@@ -131,12 +131,11 @@ PlateCanvas(spec: ArmeniaPlates.military, theme: ArmeniaThemes.military, ...)
 
 ## Tajikistan
 
-Nine plate specs in six colour themes, on a German-style face: the flag over
+Eight plate specs in six colour themes, on a German-style face: the flag over
 `TJ`, and `NNNN LL NN` told apart by gaps alone — no hyphen and no divider.
 
-- **`car` / `carTwoRow` / `motorcycle`** — the private number, in its three sizes
+- **`car` / `carTwoRow` / `motorcycle`** — the private number, in its three sizes; letters `TT` turn `car` amber (public transport)
 - **`trailer`** — a two-row design that leads with its region, `NN LL` over `NNNN`
-- **`publicTransport`** — black on amber, the fixed `TT` printed between serial and region
 - **`police`** — white on blue, `NNNN L NN`
 - **`foreign`** — black on yellow, `NNN L NNN`, and no flag block
 - **`diplomatic`** — white on red; the class is `CD`, `CMD`, `D`, `T` or `S`
@@ -147,8 +146,7 @@ shapes: the eleven letters whose Cyrillic and Latin forms coincide — `А В Е
 М Н О Р С Т Х` — plus the four plain-Latin additions of 2014, `D J Z Y`. They
 are stored and rendered in Latin, so there is nothing to transliterate.
 
-The flag block sits on three differently coloured fields, so it is three
-`PlateCountry` values — one per ink — and the region is the two-digit group of
+The flag block is transparent and its `TJ` takes the theme's ink, and the region is the two-digit group of
 the number itself, never a panel, so `TajikistanRegions` is a lookup:
 
 ```dart

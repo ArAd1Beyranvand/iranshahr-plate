@@ -43,9 +43,11 @@ void main() {
     required PlateCountry country,
     required String digits,
     required String name,
+    String? caption,
   }) async {
     var at = 0;
     final values = <String?>[
+      if (caption != null) ...[digits, caption] else
       for (final slot in spec.slots)
         if (at < digits.length)
           digits.substring(at, at = math.min(at + slot.length, digits.length))
@@ -102,13 +104,6 @@ void main() {
       '2345',
     ),
     (
-      'kw_government',
-      KuwaitPlates.government,
-      KuwaitThemes.government,
-      KuwaitCountry.government,
-      '23456',
-    ),
-    (
       'kw_diplomatic',
       KuwaitPlates.diplomatic,
       KuwaitThemes.diplomatic,
@@ -122,38 +117,6 @@ void main() {
       KuwaitCountry.nationalGuard,
       '23456',
     ),
-    ('kw_army', KuwaitPlates.army, KuwaitThemes.army, KuwaitCountry.army, '23456'),
-    (
-      'kw_commercial',
-      KuwaitPlates.commercial,
-      KuwaitThemes.commercial,
-      KuwaitCountry.commercial,
-      '23456',
-    ),
-    (
-      'kw_construction',
-      KuwaitPlates.construction,
-      KuwaitThemes.construction,
-      KuwaitCountry.construction,
-      '23456',
-    ),
-    (
-      'kw_firefighting',
-      KuwaitPlates.firefighting,
-      KuwaitThemes.firefighting,
-      KuwaitCountry.firefighting,
-      '23456',
-    ),
-    ('kw_export', KuwaitPlates.exportPlate, KuwaitThemes.export, KuwaitCountry.export, '23456'),
-    ('kw_customs', KuwaitPlates.customs, KuwaitThemes.customs, KuwaitCountry.customs, '23456'),
-    ('kw_emiri', KuwaitPlates.emiri, KuwaitThemes.emiri, KuwaitCountry.emiri, '23456'),
-    (
-      'kw_emiriguard',
-      KuwaitPlates.emiriGuard,
-      KuwaitThemes.emiriGuard,
-      KuwaitCountry.emiriGuard,
-      '23456',
-    ),
     (
       'kw_motorcycle',
       KuwaitPlates.motorcycle,
@@ -162,6 +125,31 @@ void main() {
       '10234',
     ),
   ];
+
+  const captioned = <String>[
+    'government',
+    'army',
+    'commercial',
+    'construction',
+    'firefighting',
+    'export',
+    'customs',
+    'emiri',
+    'emiriguard',
+  ];
+  for (var i = 0; i < captioned.length; i++) {
+    testWidgets('kw_${captioned[i]}', (tester) async {
+      await renderGolden(
+        tester,
+        spec: KuwaitPlates.standard,
+        theme: KuwaitThemes.government,
+        country: KuwaitCountry.government,
+        digits: '23456',
+        caption: KuwaitThemes.captions.characters[i],
+        name: 'kw_${captioned[i]}',
+      );
+    });
+  }
 
   for (final (name, spec, theme, country, digits) in cases) {
     testWidgets(name, (tester) async {

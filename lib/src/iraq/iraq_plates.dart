@@ -120,14 +120,16 @@ abstract final class _Layout {
 /// The article's "Colour" column names the band down the left edge, not the
 /// field: all six classes are black on white, so the class is the band colour
 /// (the country's) and needs no spec. What needs a spec is the canvas (two
-/// sizes) and the region (Kurdistan adds "KR" under "IRQ").
+/// sizes); the region is read from the governorate code (Kurdistan's 21-24
+/// add "KR" under "IRQ").
 ///
 /// The security hologram between the code and the letter is a physical sticker
 /// and is not reproduced.
 abstract final class IraqPlates {
-  /// The 520x110 template. [kurdistan] adds "KR" beneath "IRQ" and retightens the stack.
-  static PlateSpec _large({required String id, required bool kurdistan}) => PlateSpec(
-    id: id,
+  /// 520x110. Values are `[governorate, letter, serial]`; a Kurdistan code
+  /// (21-24) adds "KR" beneath "IRQ" and retightens the stack.
+  static final PlateSpec large = PlateSpec(
+    id: 'iq.large',
     country: IraqCountry.private,
     canvasWidth: _Layout.largeWidth,
     canvasHeight: _Layout.largeHeight,
@@ -152,26 +154,47 @@ abstract final class IraqPlates {
       ),
     ],
     background: _largeBackground,
-    labels: <PlateLabel>[
+    labels: const <PlateLabel>[
       PlateLabel(
         text: 'I\nR\nQ',
-        box: kurdistan ? _Layout.largeStackKr : _Layout.largeBand,
+        box: _Layout.largeBand,
         glyphHeight: _Layout.largeStackGlyph,
-        lineHeight: kurdistan ? _Layout.largeStackLineHeightKr : _Layout.largeStackLineHeight,
+        lineHeight: _Layout.largeStackLineHeight,
+        resolve: _outsideKurdistan,
       ),
-      if (kurdistan)
-        const PlateLabel(text: 'KR', box: _Layout.largeKrBox, glyphHeight: _Layout.largeKrGlyph),
+      PlateLabel(
+        text: 'I\nR\nQ',
+        box: _Layout.largeStackKr,
+        glyphHeight: _Layout.largeStackGlyph,
+        lineHeight: _Layout.largeStackLineHeightKr,
+        resolve: _inKurdistan,
+      ),
+      PlateLabel(
+        text: 'KR',
+        box: _Layout.largeKrBox,
+        glyphHeight: _Layout.largeKrGlyph,
+        resolve: _inKurdistan,
+      ),
     ],
-    textGroups: const <PlateTextGroup>[
+    textGroups: _groups,
+  );
+
+  /// Blank a label unless the typed governorate is (or is not) in Kurdistan.
+  static String? _inKurdistan(String Function(String key) group) =>
+      IraqGovernorates.isKurdistan(group('governorate')) ? null : '';
+  static String? _outsideKurdistan(String Function(String key) group) =>
+      IraqGovernorates.isKurdistan(group('governorate')) ? '' : null;
+
+  static const List<PlateTextGroup> _groups = <PlateTextGroup>[
       PlateTextGroup(<int>[0], key: 'governorate'),
       PlateTextGroup(<int>[1], key: 'letter'),
       PlateTextGroup(<int>[2], key: 'serial'),
-    ],
-  );
+  ];
 
-  /// The 335x155 template: code and letter over the serial.
-  static PlateSpec _small({required String id, required bool kurdistan}) => PlateSpec(
-    id: id,
+  /// 335x155: code and letter over the serial. Kurdistan codes add "KR" below
+  /// "IRQ" without moving it.
+  static final PlateSpec small = PlateSpec(
+    id: 'iq.small',
     country: IraqCountry.private,
     canvasWidth: _Layout.smallWidth,
     canvasHeight: _Layout.smallHeight,
@@ -196,12 +219,8 @@ abstract final class IraqPlates {
       ),
     ],
     background: _smallBackground,
-    labels: <PlateLabel>[_smallStack, if (kurdistan) _smallKr],
-    textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0], key: 'governorate'),
-      PlateTextGroup(<int>[1], key: 'letter'),
-      PlateTextGroup(<int>[2], key: 'serial'),
-    ],
+    labels: const <PlateLabel>[_smallStack, _smallKr],
+    textGroups: _groups,
   );
 
   static const PlateSection _largeBackground = PlateSection.columns(<PlatePart>[
@@ -233,24 +252,12 @@ abstract final class IraqPlates {
     text: 'KR',
     box: _Layout.smallKrBox,
     glyphHeight: _Layout.smallKrGlyph,
+    resolve: _inKurdistan,
   );
-
-  /// 520x110, outside the Kurdistan Region: "IRQ" alone in the band.
-  static final PlateSpec large = _large(id: 'iq.large', kurdistan: false);
-
-  /// 520x110, Kurdistan Region (governorates 21-24): "IRQ" over "KR".
-  static final PlateSpec largeKurdistan = _large(id: 'iq.large.kr', kurdistan: true);
-
-  /// 335x155, outside the Kurdistan Region.
-  static final PlateSpec small = _small(id: 'iq.small', kurdistan: false);
-
-  /// 335x155, Kurdistan Region.
-  static final PlateSpec smallKurdistan = _small(id: 'iq.small.kr', kurdistan: true);
 
   /// 335x155 temporary, red on white. Its own spec because the top row is a
   /// governorate code, a dash and the two-digit expiry year on five evenly pitched
-  /// cells, not a code and a class letter. Documented only for the Kurdistan
-  /// Region, so it carries "KR".
+  /// cells, not a code and a class letter.
   static final PlateSpec smallTemporary = PlateSpec(
     id: 'iq.small.temporary',
     country: IraqCountry.temporary,
@@ -309,9 +316,7 @@ abstract final class IraqPlates {
 
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[
     large,
-    largeKurdistan,
     small,
-    smallKurdistan,
     smallTemporary,
   ]);
 }

@@ -81,4 +81,21 @@ abstract final class TajikistanThemes {
     borderWidthRatio: _borderWidthRatio,
     plateRadiusRatio: _plateRadiusRatio,
   );
+
+  /// [PlateSpec.resolveTheme] for `TajikistanPlates.car`: `TT` prints on
+  /// [transport], anything else on [civilian].
+  static PlateTheme byLetters(
+    PlateTheme base,
+    String Function(String key) group,
+  ) {
+    final t = group('letters') == 'TT' ? transport : civilian;
+    return base.copyWith(
+      plateBackground: t.plateBackground,
+      plateBorder: t.plateBorder,
+      ink: t.ink,
+      dividerColor: t.dividerColor,
+      activeColor: t.activeColor,
+      inactiveColor: t.inactiveColor,
+    );
+  }
 }

@@ -8,8 +8,8 @@ import 'afghanistan_colors.dart';
 /// register. All are monochrome; the temporary plate's red wording is carried
 /// by its labels (see `AfghanistanColors.temporaryRed`).
 ///
-/// The province block's ink is not themed here: pick it with
-/// `AfghanistanProvince.country(ink:)` to match the field.
+/// The emblem's ink is not themed here: the spec picks it with
+/// `AfghanistanPanelInk`.
 abstract final class AfghanistanThemes {
   static const double _borderWidthRatio = 0.035; // CALIBRATE
 
@@ -59,4 +59,25 @@ abstract final class AfghanistanThemes {
     borderWidthRatio: _borderWidthRatio,
     plateRadiusRatio: _plateRadiusRatio,
   );
+
+  /// [PlateSpec.resolveTheme] for plates with a class register: taxi and bus
+  /// (`ت`, `ب`) print on [transport], every other class on [civilian], keeping
+  /// [base]'s rim and corner.
+  static PlateTheme byClass(
+    PlateTheme base,
+    String Function(String key) group,
+  ) {
+    final t = switch (group('class')) {
+      'T' || 'B' => transport,
+      _ => civilian,
+    };
+    return base.copyWith(
+      plateBackground: t.plateBackground,
+      plateBorder: t.plateBorder,
+      ink: t.ink,
+      dividerColor: t.dividerColor,
+      activeColor: t.activeColor,
+      inactiveColor: t.inactiveColor,
+    );
+  }
 }

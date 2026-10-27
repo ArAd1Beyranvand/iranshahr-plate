@@ -157,4 +157,43 @@ abstract final class KuwaitThemes {
     frame: KuwaitColors.darkInk,
     darkField: true,
   );
+
+  /// Theme for each caption `KuwaitPlates.standard` can print.
+  static final Map<String, PlateTheme> _byCaption = <String, PlateTheme>{
+    'دولة الكويت - حكومة': government,
+    'الجيش الكويتي': army,
+    'دولة الكويت-تجاري': commercial,
+    'دولة الكويت-إنشاءات': construction,
+    'FIRE-الإطفاء العام': firefighting,
+    'دولة الكويت - تصدير': export,
+    'دولة الكويت - جمرك مؤقت': customs,
+    'دولة الكويت - الديوان الأميري': emiri,
+    'الحرس الأميري': emiriGuard,
+  };
+
+  /// The caption slot's alphabet: one chosen value per caption.
+  static final PlateAlphabet captions = PlateAlphabet(
+    id: 'kw.caption',
+    characters: _byCaption.keys.toList(),
+    input: AlphabetInput.chosen,
+    isNumeric: false,
+    direction: TextDirection.rtl,
+  );
+
+  /// [PlateSpec.resolveTheme] for `KuwaitPlates.standard`: the caption's
+  /// livery, [government] while none is chosen.
+  static PlateTheme byCaption(
+    PlateTheme base,
+    String Function(String key) group,
+  ) {
+    final t = _byCaption[group('caption')] ?? government;
+    return base.copyWith(
+      plateBackground: t.plateBackground,
+      plateBorder: t.plateBorder,
+      ink: t.ink,
+      dividerColor: t.dividerColor,
+      activeColor: t.activeColor,
+      inactiveColor: t.inactiveColor,
+    );
+  }
 }

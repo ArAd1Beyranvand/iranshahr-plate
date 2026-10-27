@@ -1,14 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 
-import 'afghanistan_colors.dart';
-
-/// The thirty-four provinces and the block each prints at the hoist end of its
-/// plates (name, emblem, Latin code).
-///
-/// The block is a [PlateCountry], not part of a [PlateSpec]: geometry is the
-/// same in Herat as in Kabul. Names and codes follow the Wikipedia table,
-/// including `هملند` for Helmand as the source spells it.
+/// The thirty-four provinces whose name and Latin code frame the emblem at the
+/// hoist end of a plate. Names and codes follow the Wikipedia table, including
+/// `هملند` for Helmand as the source spells it.
 enum AfghanistanProvince {
   badakhshan('Badakhshan', 'بدخشان', 'BDN'),
   badghis('Badghis', 'بادغیس', 'BDS'),
@@ -61,56 +56,58 @@ enum AfghanistanProvince {
   static AfghanistanProvince? fromCode(String code) =>
       values.where((p) => p.code == code.toUpperCase()).firstOrNull;
 
-  /// This province's block, for `PlateCanvas.country`.
-  ///
-  /// [ink] picks the emblem asset and the wording colour: dark for a white,
-  /// yellow or blue field, light for red or black. It is a parameter because
-  /// nothing hands a [PlateCountry] the theme.
-  ///
-  /// [showCode] false drops the bottom line; the temporary plate prints `موقت`
-  /// in red there as a label, since the block has one ink for both lines.
-  ///
-  /// [PlateCountry] equality is over [PlateCountry.code], so the ids
-  /// (`af.hrt`, `af.hrt.light`, `af.hrt.bare`) make equal blocks compare equal.
-  PlateCountry country({AfghanistanPanelInk ink = AfghanistanPanelInk.dark, bool showCode = true}) {
-    return PlateCountry(
-      code:
-          'af.${code.toLowerCase()}${ink == AfghanistanPanelInk.light ? '.light' : ''}${showCode ? '' : '.bare'}',
-      headingLines: <String>[localName],
-      captionLines: showCode ? <String>[code] : const <String>[],
-      // Transparent by design: the block is printed straight onto five
-      // different fields, so naming any one colour would patch the others.
-      panelColor: const Color(0x00000000),
-      panelTextColor: ink.ink,
-      flagAspectRatio: _emblemAspectRatio,
-      flag: ink.emblem,
-    );
-  }
+  /// The block's top line, a slot: stored as [code], printed as [localName].
+  /// Chosen, since a name is not on a keyboard.
+  static final PlateAlphabet names = PlateAlphabet(
+    id: 'af.province',
+    characters: <String>[for (final p in values) p.code],
+    input: AlphabetInput.chosen,
+    isNumeric: false,
+    direction: TextDirection.rtl,
+    glyphs: <String, String>{for (final p in values) p.code: p.localName},
+  );
 
-  /// The emblem SVG's 200×128 viewBox.
-  static const double _emblemAspectRatio = 200 / 128;
+  /// The block's bottom line, a mirror of [names] printing the code itself.
+  static final PlateAlphabet codes = PlateAlphabet(
+    id: 'af.provinceCode',
+    characters: <String>[for (final p in values) p.code],
+    input: AlphabetInput.chosen,
+    isNumeric: false,
+  );
 }
 
-/// The emblem asset a block draws and the ink of its wording. The emblem is
+/// The emblem a block draws between the province name and code. The emblem is
 /// line art that must change colour with the field, but flags are never
 /// recoloured, so it ships as two assets.
 enum AfghanistanPanelInk {
   /// Black line art, for white, yellow and blue fields.
   dark(
-    AfghanistanColors.ink,
+    'af',
     SvgPlateAsset('assets/emblems/Darul_Aman_dark.svg', package: _package),
   ),
 
   /// White line art, for the diplomatic red and governmental black fields.
   light(
-    AfghanistanColors.onDiplomaticRed,
+    'af.light',
     SvgPlateAsset('assets/emblems/Darul_Aman_light.svg', package: _package),
   );
 
-  const AfghanistanPanelInk(this.ink, this.emblem);
+  const AfghanistanPanelInk(this._code, this._emblem);
 
   static const String _package = 'iranshahr_plate';
 
-  final Color ink;
-  final PlateAsset emblem;
+  final String _code;
+  final PlateAsset _emblem;
+
+  /// The emblem alone: the name and code around it are slots, so the province
+  /// is part of the plate's value rather than of the rendered country.
+  PlateCountry get country => PlateCountry(
+    code: _code,
+    captionLines: const <String>[],
+    // Transparent: the block is printed straight onto five different fields.
+    panelColor: const Color(0x00000000),
+    panelTextColor: const Color(0x00000000),
+    flagAspectRatio: 200 / 128, // the SVG's viewBox
+    flag: _emblem,
+  );
 }

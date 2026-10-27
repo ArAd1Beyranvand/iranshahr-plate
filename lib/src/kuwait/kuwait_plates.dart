@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../plate_field.dart';
 import 'kuwait_colors.dart';
 import 'kuwait_country.dart';
+import 'kuwait_themes.dart';
 
 /// Where the ink sits, in plate coordinates. Almost every category prints on one
 /// template, measured off the Commons reference artwork by normalising each
@@ -365,12 +366,40 @@ abstract final class KuwaitPlates {
     _diplomaticBandHeight,
   );
 
-  static final PlateSpec government = _standard(
-    id: 'kw.government',
-    country: KuwaitCountry.government,
-    caption: 'دولة الكويت - حكومة',
-    captionGlyph: 38,
-  );
+  /// Government, army, commercial, construction, firefighting, export,
+  /// customs, Emiri and Emiri guard: one geometry, told apart by the caption,
+  /// which is a chosen slot whose value picks the livery
+  /// (`KuwaitThemes.byCaption`). Values are `[serial, caption]`.
+  static final PlateSpec standard = () {
+    final base = _standard(
+      id: 'kw.standard',
+      country: KuwaitCountry.government,
+      caption: '',
+      captionGlyph: 0,
+    );
+    return PlateSpec(
+      id: base.id,
+      country: base.country,
+      canvasWidth: base.canvasWidth,
+      canvasHeight: base.canvasHeight,
+      noPanel: true,
+      panel: _noPanel,
+      background: base.background,
+      slots: <PlateSlot>[
+        ...base.slots,
+        PlateSlot(
+          alphabet: KuwaitThemes.captions,
+          box: base.labels.last.box,
+        ),
+      ],
+      labels: <PlateLabel>[base.labels.first],
+      resolveTheme: KuwaitThemes.byCaption,
+      textGroups: const <PlateTextGroup>[
+        PlateTextGroup([0], key: 'serial'),
+        PlateTextGroup([1], key: 'caption'),
+      ],
+    );
+  }();
 
   /// National guard: yellow on teal. The one category whose artwork has no
   /// "KUWAIT" band, so the serial runs the full width of the plate.
@@ -380,62 +409,6 @@ abstract final class KuwaitPlates {
     caption: 'الحرس الوطني',
     captionGlyph: 42,
     band: false,
-  );
-
-  static final PlateSpec army = _standard(
-    id: 'kw.army',
-    country: KuwaitCountry.army,
-    caption: 'الجيش الكويتي',
-    captionGlyph: 42,
-  );
-
-  static final PlateSpec commercial = _standard(
-    id: 'kw.commercial',
-    country: KuwaitCountry.commercial,
-    caption: 'دولة الكويت-تجاري',
-    captionGlyph: 40,
-  );
-
-  static final PlateSpec construction = _standard(
-    id: 'kw.construction',
-    country: KuwaitCountry.construction,
-    caption: 'دولة الكويت-إنشاءات',
-    captionGlyph: 37,
-  );
-
-  static final PlateSpec firefighting = _standard(
-    id: 'kw.firefighting',
-    country: KuwaitCountry.firefighting,
-    caption: 'FIRE-الإطفاء العام',
-    captionGlyph: 37,
-  );
-
-  static final PlateSpec exportPlate = _standard(
-    id: 'kw.export',
-    country: KuwaitCountry.export,
-    caption: 'دولة الكويت - تصدير',
-    captionGlyph: 37,
-  );
-
-  static final PlateSpec customs = _standard(
-    id: 'kw.customs',
-    country: KuwaitCountry.customs,
-    caption: 'دولة الكويت - جمرك مؤقت',
-    captionGlyph: 32,
-  );
-
-  static final PlateSpec emiri = _standard(
-    id: 'kw.emiri',
-    country: KuwaitCountry.emiri,
-    caption: 'دولة الكويت - الديوان الأميري',
-    captionGlyph: 23,
-  );
-
-  static final PlateSpec emiriGuard = _standard(
-    id: 'kw.emiriguard',
-    country: KuwaitCountry.emiriGuard,
-    caption: 'الحرس الأميري',
-    captionGlyph: 42,
   );
 
   /// Motorcycle (155x155): "دولة الكويت" above the serial, the class digit and
@@ -516,17 +489,9 @@ abstract final class KuwaitPlates {
     transport,
     police,
     policeMotorcycle,
-    government,
+    standard,
     diplomatic,
     nationalGuard,
-    army,
-    commercial,
-    construction,
-    firefighting,
-    exportPlate,
-    customs,
-    emiri,
-    emiriGuard,
     motorcycle,
   ]);
 }
