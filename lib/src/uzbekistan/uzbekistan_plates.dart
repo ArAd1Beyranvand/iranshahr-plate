@@ -6,6 +6,7 @@ import 'package:plate_alphabet/plate_alphabet.dart';
 
 import 'uzbekistan_country.dart';
 import 'uzbekistan_missions.dart';
+import 'uzbekistan_themes.dart';
 
 /// Where the ink sits, in plate coordinates. Measured off the article's
 /// artwork (the flattened references for the passenger and trailer plates,
@@ -155,88 +156,64 @@ abstract final class UzbekistanPlates {
     ],
   );
 
-  /// `H`/`M`/`T` + six digits beside a two-digit region, split by a divider.
-  static PlateSpec _prefixed({
-    required String id,
-    required String prefix,
-    required double prefixCentre,
-    required double regionCentre,
-    required double dividerAt,
-    required double digitsLeft,
-    required bool regionFirst,
-  }) {
-    final region = _across(
-      UzbekistanAlphabets.digits,
-      2,
-      regionCentre - 34,
-      regionCentre + 34,
-      _Layout.rowTop,
-      _Layout.rowHeight,
-    );
-    final digits = _across(
-      UzbekistanAlphabets.digits,
-      6,
-      digitsLeft,
-      digitsLeft + 6 * _Layout.pitch,
-      _Layout.rowTop,
-      _Layout.rowHeight,
-    );
-    return PlateSpec(
-      id: id,
-      country: UzbekistanCountry.uzbekistan,
-      canvasWidth: _Layout.width,
-      canvasHeight: _Layout.height,
-      panel: _Layout.none,
-      noPanel: true,
-      background: _split(dividerAt),
-      slots: regionFirst ? [region, digits] : [digits, region],
-      labels: [_prefix(prefix, prefixCentre, 50)],
-      textGroups: regionFirst
-          ? [
-              const PlateTextGroup([0], key: 'region'),
-              PlateTextGroup([1], key: 'serial', prefix: '$prefix '),
-            ]
-          : [
-              PlateTextGroup([0], key: 'serial', prefix: prefix),
-              const PlateTextGroup([1], key: 'region', prefix: ' '),
-            ],
-    );
-  }
-
-  /// Foreign citizen, `01 H012345`, black on yellow. Region ink 28.6..93.1,
-  /// divider x 120.4, `H` centre 160.7, digits from 207.5.
-  static final PlateSpec foreignCitizen = _prefixed(
-    id: 'uz.foreign_citizen',
-    prefix: 'H',
-    prefixCentre: 160.7,
-    regionCentre: 60.9,
-    dividerAt: 120.4,
-    digitsLeft: 203.3,
-    regionFirst: true,
-  );
-
-  /// Foreign company, `10 M012345`, white on green. Region ink 20.8..84.8,
-  /// divider x 104.8, `M` centre 144.8, digits from 191.9.
-  static final PlateSpec foreignCompany = _prefixed(
-    id: 'uz.foreign_company',
-    prefix: 'M',
-    prefixCentre: 144.8,
-    regionCentre: 52.8,
-    dividerAt: 104.8,
-    digitsLeft: 187.5,
-    regionFirst: true,
+  /// Foreign citizen `01 H012345` (black on yellow) or foreign company
+  /// `10 M012345` (white on green); [UzbekistanThemes.byClass] reads the
+  /// colour off the letter. Region ink 28.6..93.1, divider x 120.4, letter
+  /// centre 160.7, digits from 207.5, off the citizen plate.
+  static final PlateSpec foreign = PlateSpec(
+    id: 'uz.foreign',
+    country: UzbekistanCountry.uzbekistan,
+    canvasWidth: _Layout.width,
+    canvasHeight: _Layout.height,
+    panel: _Layout.none,
+    noPanel: true,
+    background: _split(120.4),
+    slots: [
+      _across(UzbekistanAlphabets.digits, 2, 26.9, 94.9, _Layout.rowTop, _Layout.rowHeight),
+      _cell(UzbekistanAlphabets.foreignClass, 160.7, 64, _Layout.rowTop, _Layout.rowHeight),
+      _across(
+        UzbekistanAlphabets.digits,
+        6,
+        203.3,
+        203.3 + 6 * _Layout.pitch,
+        _Layout.rowTop,
+        _Layout.rowHeight,
+      ),
+    ],
+    textGroups: const [
+      PlateTextGroup([0], key: 'region'),
+      PlateTextGroup([1], key: 'class', prefix: ' '),
+      PlateTextGroup([2], key: 'serial'),
+    ],
+    resolveTheme: UzbekistanThemes.byClass,
   );
 
   /// Temporary and export, `T012345 01`; the region sits right of the divider.
   /// `T` centre 48.7, digits from 93.1, divider x 398.6, region ink 424.8..488.8.
-  static final PlateSpec temporary = _prefixed(
+  static final PlateSpec temporary = PlateSpec(
     id: 'uz.temporary',
-    prefix: 'T',
-    prefixCentre: 48.7,
-    regionCentre: 456.8,
-    dividerAt: 398.6,
-    digitsLeft: 88.7,
-    regionFirst: false,
+    country: UzbekistanCountry.uzbekistan,
+    canvasWidth: _Layout.width,
+    canvasHeight: _Layout.height,
+    panel: _Layout.none,
+    noPanel: true,
+    background: _split(398.6),
+    slots: [
+      _across(
+        UzbekistanAlphabets.digits,
+        6,
+        88.7,
+        88.7 + 6 * _Layout.pitch,
+        _Layout.rowTop,
+        _Layout.rowHeight,
+      ),
+      _across(UzbekistanAlphabets.digits, 2, 422.8, 490.8, _Layout.rowTop, _Layout.rowHeight),
+    ],
+    labels: [_prefix('T', 48.7, 50)],
+    textGroups: const [
+      PlateTextGroup([0], key: 'serial', prefix: 'T'),
+      PlateTextGroup([1], key: 'region', prefix: ' '),
+    ],
   );
 
   /// Mission code + serial, the shape the diplomatic plates share.

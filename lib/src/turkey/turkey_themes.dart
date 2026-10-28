@@ -30,8 +30,6 @@ abstract final class TurkeyThemes {
     plateBackground: field,
     plateBorder: frame,
     ink: ink,
-    // The one divider any design prints, the taxi plate's rule at the strip,
-    // is the frame's black.
     dividerColor: frame,
     borderWidthRatio: borderWidthRatio,
     plateRadiusRatio: plateRadiusRatio,
@@ -107,4 +105,25 @@ abstract final class TurkeyThemes {
     ink: TurkeyColors.gold,
     frame: TurkeyColors.gold,
   );
+
+  /// [PlateSpec.resolveTheme] for `TurkeyPlates.strip` and `plain`: the
+  /// letters that name a class set its colours (each exists on one shape
+  /// only), and `T` alone prints the taxi's black rule at the strip.
+  static PlateTheme byLetters(PlateTheme base, String Function(String key) group) {
+    final letters = group('letters');
+    final t = switch (letters) {
+      'CD' => diplomatic,
+      'GMR' => temporaryCustoms,
+      'CC' => consulate,
+      _ => base,
+    };
+    return base.copyWith(
+      plateBackground: t.plateBackground,
+      plateBorder: t.plateBorder,
+      ink: t.ink,
+      dividerColor: letters == 'T' ? TurkeyColors.black : const Color(0x00000000),
+      activeColor: t.activeColor,
+      inactiveColor: t.inactiveColor,
+    );
+  }
 }

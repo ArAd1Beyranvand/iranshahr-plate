@@ -83,7 +83,7 @@ PlateCanvas(
 
 ## Armenia
 
-Ten plate specs in five colour themes, on a German-style face: the flag over
+Nine plate specs in five colour themes, on a German-style face: the flag over
 `AM`, a silver identifier band, and `NN LL NNN` told apart by gaps alone — no
 hyphen and no divider.
 
@@ -91,7 +91,7 @@ hyphen and no divider.
 - **`public`** — the state number, `NNN LL NN`, with the groups the other way round
 - **`trailer`** — a pre-2014 two-row design, one letter instead of two
 - **`bus`** — black on yellow, `NNNN L`: `S` for a city bus, `L` for a coach
-- **`diplomatic` / `diplomaticArm`** — white on red; newer plates print `ARM` for `AM`
+- **`diplomatic`** — white on red; the country code is picked: `AM`, or `ARM` on newer plates
 - **`un`** — white on blue, three digits between two printed words
 - **`military`** — white on black, and the one Armenian plate with no Latin on it
 

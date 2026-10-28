@@ -22,9 +22,9 @@ void main() {
       }
     });
 
-    test('ten designs, each with its own id', () {
-      expect(ArmeniaPlates.all, hasLength(10));
-      expect(ArmeniaPlates.all.map((s) => s.id).toSet(), hasLength(10));
+    test('nine designs, each with its own id', () {
+      expect(ArmeniaPlates.all, hasLength(9));
+      expect(ArmeniaPlates.all.map((s) => s.id).toSet(), hasLength(9));
     });
 
     test('the private number is three fields: region, letters, serial', () {
@@ -52,10 +52,8 @@ void main() {
       expect(ArmeniaPlates.car.noPanel, isFalse);
     });
 
-    test('the two diplomatic specs differ only in the code they print', () {
-      expect(ArmeniaPlates.diplomatic.labels.single.text, 'AM');
-      expect(ArmeniaPlates.diplomaticArm.labels.single.text, 'ARM');
-      expect(ArmeniaPlates.diplomatic.slotCount, ArmeniaPlates.diplomaticArm.slotCount);
+    test('the diplomatic plate picks its country code', () {
+      expect(ArmeniaPlates.diplomatic.slots.last.alphabet.characters, ['AM', 'ARM']);
     });
 
     test('the military plate prints its ministry and renders its class in Armenian', () {
@@ -230,10 +228,6 @@ void main() {
         ArmeniaPlates.validatorFor(ArmeniaPlates.diplomatic),
         isA<ArmeniaDiplomaticPlateValidator>(),
       );
-      expect(
-        ArmeniaPlates.validatorFor(ArmeniaPlates.diplomaticArm),
-        isA<ArmeniaDiplomaticPlateValidator>(),
-      );
       expect(ArmeniaPlates.validatorFor(ArmeniaPlates.un), isA<ArmeniaSerialPlateValidator>());
       expect(
         ArmeniaPlates.validatorFor(ArmeniaPlates.military),
@@ -255,9 +249,9 @@ void main() {
     });
 
     test('a diplomatic plate is D or T', () {
-      expect(judge(ArmeniaPlates.diplomatic, ['04', 'D', '057']).isValid, isTrue);
-      expect(judge(ArmeniaPlates.diplomatic, ['04', 'T', '057']).isValid, isTrue);
-      expect(judge(ArmeniaPlates.diplomatic, ['04', null, '057']).isValid, isFalse);
+      expect(judge(ArmeniaPlates.diplomatic, ['04', 'D', '057', 'AM']).isValid, isTrue);
+      expect(judge(ArmeniaPlates.diplomatic, ['04', 'T', '057', 'AM']).isValid, isTrue);
+      expect(judge(ArmeniaPlates.diplomatic, ['04', null, '057', 'AM']).isValid, isFalse);
     });
 
     test('a military plate is four digits and a class', () {

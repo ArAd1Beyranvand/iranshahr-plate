@@ -29,38 +29,28 @@ void main() {
     await loader.load();
   });
 
+  // The folded classes render through the resolver: `CD`, `GMR`, `CC` recolour
+  // their base livery, `T` draws the taxi rule.
+  final strip = TurkeyThemes.civilian;
   final cases = <(String, PlateSpec, PlateTheme, String)>[
-    ('tr_private', TurkeyPlates.private, TurkeyThemes.civilian, '34 AB 1234'),
+    ('tr_private', TurkeyPlates.strip, strip, '34 AB 1234'),
     (
       'tr_international',
-      TurkeyPlates.internationalOrganization,
+      TurkeyPlates.strip,
       TurkeyThemes.internationalOrganization,
       '34 B 0426',
     ),
-    ('tr_diplomatic', TurkeyPlates.diplomatic, TurkeyThemes.diplomatic, '34 CD 012'),
-    (
-      'tr_temporary_customs',
-      TurkeyPlates.temporaryCustoms,
-      TurkeyThemes.temporaryCustoms,
-      '34 GMR 032',
-    ),
-    ('tr_foreign_resident', TurkeyPlates.foreignResident, TurkeyThemes.civilian, '34 MA 012'),
-    ('tr_syrian_resident', TurkeyPlates.syrianResident, TurkeyThemes.civilian, '34 SAB 012'),
-    ('tr_istanbul_taxi', TurkeyPlates.istanbulTaxi, TurkeyThemes.civilian, '34 TAB 12'),
-    ('tr_taxi', TurkeyPlates.taxi, TurkeyThemes.civilian, '06 T 0123'),
+    ('tr_diplomatic', TurkeyPlates.strip, strip, '34 CD 012'),
+    ('tr_temporary_customs', TurkeyPlates.strip, strip, '34 GMR 032'),
+    ('tr_istanbul_taxi', TurkeyPlates.strip, strip, '34 TAB 12'),
+    ('tr_taxi', TurkeyPlates.strip, strip, '06 T 0123'),
     ('tr_temporary', TurkeyPlates.temporary, TurkeyThemes.temporary, '34 G 1234'),
     ('tr_temporary_strip', TurkeyPlates.temporaryWithStrip, TurkeyThemes.temporary, '34 G 1234'),
-    ('tr_police', TurkeyPlates.police, TurkeyThemes.police, '16 A 01234'),
-    ('tr_gendarmerie', TurkeyPlates.gendarmerie, TurkeyThemes.police, '06 JAA 1234'),
-    ('tr_coast_guard', TurkeyPlates.coastGuard, TurkeyThemes.police, '34 SGH 1234'),
-    ('tr_consulate', TurkeyPlates.consulate, TurkeyThemes.consulate, '34 CC 0001'),
-    (
-      'tr_provincial',
-      TurkeyPlates.provincialGovernment,
-      TurkeyThemes.provincialGovernment,
-      '06 AA 012',
-    ),
-    ('tr_official', TurkeyPlates.official, TurkeyThemes.official, '34 AB 123'),
+    ('tr_police', TurkeyPlates.plain, TurkeyThemes.police, '16 A 01234'),
+    ('tr_gendarmerie', TurkeyPlates.plain, TurkeyThemes.police, '06 JAA 1234'),
+    ('tr_consulate', TurkeyPlates.plain, TurkeyThemes.police, '34 CC 0001'),
+    ('tr_provincial', TurkeyPlates.plain, TurkeyThemes.provincialGovernment, '06 AA 012'),
+    ('tr_official', TurkeyPlates.plain, TurkeyThemes.official, '34 AB 123'),
     ('tr_governor', TurkeyPlates.governor, TurkeyThemes.state, '34 0001'),
     ('tr_parliament', TurkeyPlates.parliament, TurkeyThemes.state, '0019'),
     ('tr_parliament_labelled', TurkeyPlates.parliamentLabelled, TurkeyThemes.state, '009'),
@@ -122,26 +112,22 @@ void main() {
 
     test('accepts the article examples', () {
       expect(
-        check(TurkeyPlateValidator.general, TurkeyPlates.private, '34 AB 1234').isValid,
+        check(TurkeyPlateValidator.general, TurkeyPlates.strip, '34 AB 1234').isValid,
         isTrue,
       );
       expect(
-        check(TurkeyPlateValidator.gendarmerie, TurkeyPlates.gendarmerie, '06 JAA 1234').isValid,
+        check(TurkeyPlateValidator.police, TurkeyPlates.plain, '06 JAA 1234').isValid,
         isTrue,
       );
     });
 
-    test('rejects province 82, excluded letters, wrong prefix, seven chars', () {
+    test('rejects province 82, excluded letters, seven chars', () {
       expect(
-        check(TurkeyPlateValidator.general, TurkeyPlates.private, '82 AB 1234').isValid,
+        check(TurkeyPlateValidator.general, TurkeyPlates.strip, '82 AB 1234').isValid,
         isFalse,
       );
       expect(
-        check(TurkeyPlateValidator.general, TurkeyPlates.private, '34 QB 1234').isValid,
-        isFalse,
-      );
-      expect(
-        check(TurkeyPlateValidator.diplomatic, TurkeyPlates.diplomatic, '34 CC 012').isValid,
+        check(TurkeyPlateValidator.general, TurkeyPlates.strip, '34 QB 1234').isValid,
         isFalse,
       );
       expect(

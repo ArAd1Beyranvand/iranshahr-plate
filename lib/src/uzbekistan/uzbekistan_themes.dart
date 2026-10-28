@@ -37,6 +37,19 @@ abstract final class UzbekistanThemes {
     UzbekistanColors.inactiveOnDark,
   );
 
+  /// Green for a foreign company's `M`, yellow otherwise.
+  static PlateTheme byClass(PlateTheme base, String Function(String key) group) {
+    final t = group('class') == 'M' ? foreignCompany : foreignCitizen;
+    return base.copyWith(
+      plateBackground: t.plateBackground,
+      plateBorder: t.plateBorder,
+      ink: t.ink,
+      dividerColor: t.dividerColor,
+      activeColor: t.activeColor,
+      inactiveColor: t.inactiveColor,
+    );
+  }
+
   /// Ambassadors, diplomats and staff share the green field.
   static final PlateTheme diplomatic = foreignCompany;
 

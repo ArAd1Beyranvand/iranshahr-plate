@@ -55,7 +55,6 @@ class _Panels {
     required this.digitPitch,
     required this.letterCentre,
     required this.letterPitch,
-    required this.letterCell,
     required this.nameCentre,
     required this.nameGlyph,
     required this.digitCentre,
@@ -66,9 +65,8 @@ class _Panels {
 
   final double digitsLeft, digitPitch;
 
-  /// Centre of the letters panel, the distance between two letters' centres,
-  /// and one letter cell's width.
-  final double letterCentre, letterPitch, letterCell;
+  /// Centre of the letters panel and the distance between two letters' centres.
+  final double letterCentre, letterPitch;
 
   final double nameCentre, nameGlyph;
 
@@ -90,7 +88,6 @@ class _Panels {
     digitPitch: 41.5,
     letterCentre: 280.1,
     letterPitch: 50,
-    letterCell: 50,
     nameCentre: 425,
     nameGlyph: 90,
     digitCentre: 59.5,
@@ -105,23 +102,17 @@ class _Panels {
 /// lists other classes (government, diplomatic, tractor, export, …) without
 /// artwork, so none is implemented.
 abstract final class OmanPlates {
-  /// `1234 AB`: a number of four or five digits and one or two letters. The
-  /// letters are picked from a list, so each is its own slot, and the plate
-  /// comes in two forms by letter count. The Arabic row above is an editable
-  /// mirror of each letter, and reads in the opposite order (`BM` prints `م`
-  /// over `B` and `ب` over `M`). Four digits with two letters, and five with
-  /// one, are the formats photographed or drawn; the others use the same rule.
-  /// A four-digit number sits centred in the box laid out for five.
-  static final PlateSpec oneLetter = _standard(1);
-  static final PlateSpec twoLetters = _standard(2);
-
-  static PlateSpec _standard(int letters) {
+  /// `1234 AB`: a number of four or five digits (a four-digit one sits centred
+  /// in the box laid out for five) and a letter code of one or two letters,
+  /// chosen whole from the sourced list so no unseen pair can be typed. The
+  /// Arabic row above is an editable mirror and reads in the opposite order.
+  /// Values are [number, letters].
+  static final PlateSpec standard = () {
     const p = _Panels.photo;
-    final first = p.letterCentre - (letters - 1) * p.letterPitch / 2;
-    double cellLeft(int i) => first + i * p.letterPitch - p.letterCell / 2;
-
+    // Two letter cells' width, centred on the panel; one letter sits centred in it.
+    final left = p.letterCentre - p.letterPitch, width = 2 * p.letterPitch;
     return PlateSpec(
-      id: 'om.letters$letters',
+      id: 'om.standard',
       country: OmanCountry.oman,
       canvasWidth: _Layout.width,
       canvasHeight: _Layout.height,
@@ -144,21 +135,19 @@ abstract final class OmanPlates {
           length: 5,
           minLength: 4,
         ),
-        for (var i = 0; i < letters; i++)
-          PlateSlot(
-            alphabet: OmanAlphabets.letters,
-            box: PlateBox(cellLeft(i), _Layout.latinTop, p.letterCell, _Layout.latinHeight),
-          ),
+        PlateSlot(
+          alphabet: OmanAlphabets.letters,
+          box: PlateBox(left, _Layout.latinTop, width, _Layout.latinHeight),
+        ),
       ],
       mirrors: <PlateMirror>[
-        for (var i = 0; i < letters; i++)
-          PlateMirror(
-            source: letters - i,
-            box: PlateBox(cellLeft(i), _Layout.arabicTop, p.letterCell, _Layout.arabicHeight),
-            glyphHeight: _Layout.arabicGlyph,
-            alphabet: OmanAlphabets.lettersArabic,
-            editable: true,
-          ),
+        PlateMirror(
+          source: 1,
+          box: PlateBox(left, _Layout.arabicTop, width, _Layout.arabicHeight),
+          glyphHeight: _Layout.arabicGlyph,
+          alphabet: OmanAlphabets.lettersArabic,
+          editable: true,
+        ),
       ],
       labels: <PlateLabel>[
         PlateLabel(
@@ -172,12 +161,12 @@ abstract final class OmanPlates {
           glyphHeight: p.nameGlyph,
         ),
       ],
-      textGroups: <PlateTextGroup>[
-        const PlateTextGroup(<int>[0], key: 'number'),
-        PlateTextGroup(<int>[for (var i = 0; i < letters; i++) 1 + i], key: 'letters'),
+      textGroups: const <PlateTextGroup>[
+        PlateTextGroup(<int>[0], key: 'number'),
+        PlateTextGroup(<int>[1], key: 'letters'),
       ],
     );
-  }
+  }();
 
-  static final List<PlateSpec> all = <PlateSpec>[oneLetter, twoLetters];
+  static final List<PlateSpec> all = <PlateSpec>[standard];
 }

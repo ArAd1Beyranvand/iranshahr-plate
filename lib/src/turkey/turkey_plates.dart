@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'turkey_alphabets.dart';
 import 'turkey_colors.dart';
 import 'turkey_country.dart';
+import 'turkey_themes.dart';
 
 /// Where the ink sits, in plate millimetres, measured off the Commons SVG artwork
 /// normalised to the article's 520x110 (drawn at 4.48:1 against 4.73:1, so x is
@@ -118,9 +119,9 @@ typedef _Run = (String key, PlateAlphabet alphabet, int count, int? minLength, d
 /// - [motorcycle]: two rows, the strip in one corner.
 ///
 /// Letters and figures are variable fields, never forks; colour lives on the
-/// [TurkeyThemes] a host passes. [taxi] adds a rule at the strip, the temporary
-/// plates a diagonal stripe, [sample] a caption band; parliament's print no
-/// province.
+/// [TurkeyThemes] a host passes, and [strip] and [plain] resolve the classes
+/// their letters name ([TurkeyThemes.byLetters]). The temporary plates add a
+/// diagonal stripe, [sample] a caption band; parliament's print no province.
 ///
 /// Not implemented: plates that print a seal (presidential, parliament's emblem),
 /// the stencilled military number, sizes with no artwork, and the pre-1996 series.
@@ -193,6 +194,7 @@ abstract final class TurkeyPlates {
     List<PlateLabel> labels = const <PlateLabel>[],
     double width = _Layout.width,
     double height = _Layout.height,
+    PlateThemeResolver? resolveTheme,
   }) => PlateSpec(
     id: id,
     country: TurkeyCountry.turkey,
@@ -204,22 +206,35 @@ abstract final class TurkeyPlates {
     slots: row.$1,
     textGroups: row.$2,
     labels: labels,
+    resolveTheme: resolveTheme,
   );
 
   static PlateSection _withStrip(PlateSection field, {double divider = 0}) => PlateSection.columns(
     <PlatePart>[PlatePart(_stripColumn, end: _Layout.stripEnd, divider: divider), PlatePart(field)],
   );
 
+  /// Private and commercial `99 X 9999` to `99 XXX 99`, members of
+  /// international organisations `99 B 9999` (blue ink), diplomats `99 CD 999`,
+  /// temporary customs `99 GMR 999`, foreign residents `99 MA 999`, Syrian
+  /// residents `99 SAA 999`, Istanbul taxis `34 TAA 99` and other taxis
+  /// `99 T 9999`, whose strip is closed by a black rule. Values are
+  /// [province, letters, serial].
   static final PlateSpec strip = _spec(
     id: 'tr.strip',
     row: _row(_standardRuns, centre: _Layout.stripCentre),
-    background: _withStrip(PlateSection.plain),
+    background: _withStrip(PlateSection.plain, divider: _Layout.taxiDivider),
     labels: const <PlateLabel>[_tr],
+    resolveTheme: TurkeyThemes.byLetters,
   );
 
+  /// The stripless plates, each in its own livery: police `99 A 99999`,
+  /// gendarmerie `99 JAA 9999` and coast guard `99 SGH 9999` (all
+  /// [TurkeyThemes.police]), consulates `99 CC 9999`, provincial governments
+  /// and official vehicles `99 AA 999`.
   static final PlateSpec plain = _spec(
     id: 'tr.plain',
     row: _row(_standardRuns, centre: _Layout.plainCentre),
+    resolveTheme: TurkeyThemes.byLetters,
   );
 
   static final PlateSpec motorcycle = () {
@@ -268,41 +283,6 @@ abstract final class TurkeyPlates {
     );
   }();
 
-  // -------------------------------------------------------------------------
-  // The named plates: one per category in the article's "Types" table, each a
-  // format of the builders above. Pair each with its TurkeyThemes livery.
-  // -------------------------------------------------------------------------
-
-  /// Private and commercial vehicles, `99 XX 9999` — the article's example.
-  /// Every format is [strip].
-  static final PlateSpec private = strip;
-
-  /// Members of international organisations, `99 B 9999`, blue on white.
-  static final PlateSpec internationalOrganization = strip;
-
-  /// Diplomatic corps, `99 CD 999`, green on white.
-  static final PlateSpec diplomatic = strip;
-
-  /// Temporary customs, `99 GMR 999`, red on green.
-  static final PlateSpec temporaryCustoms = strip;
-
-  /// Foreigners with a residence permit, `99 MA 999` to `99 MZ 999`.
-  static final PlateSpec foreignResident = strip;
-
-  /// Syrians with a residence permit, `99 SAA 999` to `99 SZZ 999`.
-  static final PlateSpec syrianResident = strip;
-
-  /// Istanbul taxis, `34 TAA 99` to `34 TKZ 99`.
-  static final PlateSpec istanbulTaxi = strip;
-
-  /// Taxis outside Istanbul, `99 T 9999`: the strip closed by a black rule.
-  static final PlateSpec taxi = _spec(
-    id: 'tr.taxi',
-    row: _row(_standardRuns, centre: _Layout.stripCentre),
-    background: _withStrip(PlateSection.plain, divider: _Layout.taxiDivider),
-    labels: const <PlateLabel>[_tr],
-  );
-
   static const PlateSection _temporaryField = PlateSection.fill(
     PlateFill.stripes(
       <PlateFill>[PlateFill.field, PlateFill.color(TurkeyColors.white), PlateFill.field],
@@ -327,25 +307,6 @@ abstract final class TurkeyPlates {
     background: _withStrip(_temporaryField),
     labels: const <PlateLabel>[_tr],
   );
-
-  /// Police, `99 A 99999` (also `99 AA 999` and `99 AAA 999`), white on blue.
-  static final PlateSpec police = plain;
-
-  /// Gendarmerie, `99 JAA 9999`; the article's format says three figures, its
-  /// artwork prints four.
-  static final PlateSpec gendarmerie = plain;
-
-  /// Coast guard, `99 SGH 9999`, likewise.
-  static final PlateSpec coastGuard = plain;
-
-  /// Consulates, `99 CC 9999`, white on green. The artwork prints `34 CC 001`.
-  static final PlateSpec consulate = plain;
-
-  /// Provincial governments and university rectors, `99 AA 999`, red.
-  static final PlateSpec provincialGovernment = plain;
-
-  /// Government and public administrations, `99 AA 999`, white on black.
-  static final PlateSpec official = plain;
 
   /// Province governors, `99 9999`, gold on red.
   static final PlateSpec governor = _spec(

@@ -23,12 +23,12 @@ void main() {
   });
 
   final cases = <(String, PlateSpec, PlateTheme, String)>[
-    ('private_4_1', OmanPlates.oneLetter, OmanThemes.private, '4517 A'),
-    ('private_4_2', OmanPlates.twoLetters, OmanThemes.private, '4517 B M'),
-    ('private_5_1', OmanPlates.oneLetter, OmanThemes.private, '91169 A'),
-    ('private_5_2', OmanPlates.twoLetters, OmanThemes.private, '91169 B M'),
-    ('taxi_4_2', OmanPlates.twoLetters, OmanThemes.taxi, '1255 K K'),
-    ('taxi_5_1', OmanPlates.oneLetter, OmanThemes.taxi, '91169 K'),
+    ('private_4_1', OmanPlates.standard, OmanThemes.private, '4517 A'),
+    ('private_4_2', OmanPlates.standard, OmanThemes.private, '4517 BM'),
+    ('private_5_1', OmanPlates.standard, OmanThemes.private, '91169 A'),
+    ('private_5_2', OmanPlates.standard, OmanThemes.private, '91169 BM'),
+    ('taxi_4_2', OmanPlates.standard, OmanThemes.taxi, '1255 KK'),
+    ('taxi_5_1', OmanPlates.standard, OmanThemes.taxi, '91169 K'),
   ];
 
   test('every spec has a golden', () {
@@ -62,11 +62,15 @@ void main() {
 
   test('a field at its minimum is valid, one below is flagged', () {
     const v = OmanPlateValidator();
-    final spec = OmanPlates.twoLetters;
-    expect(v.validate(e(spec, ['4517', 'B', 'M'])).isValid, isTrue);
-    expect(v.validate(e(spec, ['91169', 'A', 'B'])).isValid, isTrue);
-    expect(v.validate(e(spec, ['451', 'B', 'M'])).isValid, isFalse);
-    expect(v.validate(e(spec, ['4517', 'B', null])).isValid, isFalse);
+    final spec = OmanPlates.standard;
+    expect(v.validate(e(spec, ['4517', 'BM'])).isValid, isTrue);
+    expect(v.validate(e(spec, ['91169', 'A'])).isValid, isTrue);
+    expect(v.validate(e(spec, ['451', 'BM'])).isValid, isFalse);
+    expect(v.validate(e(spec, ['4517', null])).isValid, isFalse);
+  });
+
+  test('only the sourced letter codes are offered', () {
+    expect(OmanAlphabets.letters.characters, ['A', 'B', 'K', 'M', 'BM', 'KK']);
   });
 
   test('every spec passes debugValidateSpec', () {

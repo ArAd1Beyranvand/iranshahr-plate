@@ -279,18 +279,10 @@ abstract final class ArmeniaPlates {
     ],
   );
 
-  /// `04 D 057 AM`: mission code, class letter, serial and the country code as
-  /// fixed wording.
-  static final PlateSpec diplomatic = _diplomatic(id: 'am.diplomatic', countryCode: 'AM');
-
-  /// Prints `ARM` in place of [diplomatic]'s `AM`.
-  static final PlateSpec diplomaticArm = _diplomatic(id: 'am.diplomaticArm', countryCode: 'ARM');
-
-  /// A label lays out from the top of its box and a slot centres its glyph, so
-  /// the label top is 20 + 70/2 - 0.72*56/2 = 34.8 to sit on the digits' centre
-  /// line.
-  static PlateSpec _diplomatic({required String id, required String countryCode}) => PlateSpec(
-    id: id,
+  /// `04 D 057 AM`: mission code, class letter, serial and the country code,
+  /// `AM` or, on newer plates, `ARM`. Values are [mission, class, serial, code].
+  static final PlateSpec diplomatic = PlateSpec(
+    id: 'am.diplomatic',
     country: ArmeniaCountry.armenia,
     canvasWidth: 520,
     canvasHeight: 110,
@@ -317,12 +309,14 @@ abstract final class ArmeniaPlates {
         height: 70,
         pitch: 56,
       ),
+      // On the digits' centre line, 55, with the old label's 56 glyph.
+      const PlateSlot(alphabet: ArmeniaAlphabets.diplomaticCountry, box: PlateBox(400, 16, 104, 78)),
     ],
-    labels: [PlateLabel(text: countryCode, box: PlateBox(400, 34.8, 104, 56), glyphHeight: 56)],
     textGroups: const [
       PlateTextGroup([0], key: 'mission'),
       PlateTextGroup([1], key: 'class'),
       PlateTextGroup([2], key: 'serial'),
+      PlateTextGroup([3], key: 'code'),
     ],
   );
 
@@ -392,7 +386,6 @@ abstract final class ArmeniaPlates {
     trailer,
     bus,
     diplomatic,
-    diplomaticArm,
     un,
     military,
   ]);
@@ -403,7 +396,7 @@ abstract final class ArmeniaPlates {
     'am.public' => const ArmeniaPublicPlateValidator(),
     'am.trailer' => const ArmeniaTrailerPlateValidator(),
     'am.bus' => const ArmeniaBusPlateValidator(),
-    'am.diplomatic' || 'am.diplomaticArm' => const ArmeniaDiplomaticPlateValidator(),
+    'am.diplomatic' => const ArmeniaDiplomaticPlateValidator(),
     'am.un' => const ArmeniaSerialPlateValidator(length: 3),
     'am.military' => const ArmeniaMilitaryPlateValidator(),
     _ => const ArmeniaPlateValidator(),
