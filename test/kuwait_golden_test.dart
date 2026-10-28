@@ -47,12 +47,15 @@ void main() {
   }) async {
     var at = 0;
     final values = <String?>[
-      if (caption != null) ...[digits, caption] else
-      for (final slot in spec.slots)
-        if (at < digits.length)
-          digits.substring(at, at = math.min(at + slot.length, digits.length))
-        else
-          '0' * slot.length,
+      if (caption != null) ...[
+        digits,
+        caption,
+      ] else
+        for (final slot in spec.slots)
+          if (at < digits.length)
+            digits.substring(at, at = math.min(at + slot.length, digits.length))
+          else
+            '0' * slot.length,
     ];
     final controller = PlateController.fromValues(spec, values);
 
@@ -65,7 +68,11 @@ void main() {
               height: 520 * spec.canvasHeight / spec.canvasWidth,
               child: PlateThemeScope(
                 theme: theme,
-                child: PlateView(controller: controller, theme: theme, country: country),
+                child: PlateView(
+                  controller: controller,
+                  theme: theme,
+                  country: country,
+                ),
               ),
             ),
           ),
@@ -74,7 +81,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/$name.png'));
+    await expectLater(
+      find.byType(PlateView),
+      matchesGoldenFile('goldens/$name.png'),
+    );
 
     await tester.pumpWidget(const SizedBox.shrink());
     controller.dispose();
@@ -95,7 +105,13 @@ void main() {
       KuwaitCountry.transport,
       '9323456',
     ),
-    ('kw_police', KuwaitPlates.police, KuwaitThemes.police, KuwaitCountry.police, '23456'),
+    (
+      'kw_police',
+      KuwaitPlates.police,
+      KuwaitThemes.police,
+      KuwaitCountry.police,
+      '23456',
+    ),
     (
       'kw_policemotorcycle',
       KuwaitPlates.policeMotorcycle,

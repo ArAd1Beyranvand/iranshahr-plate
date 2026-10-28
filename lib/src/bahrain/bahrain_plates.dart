@@ -28,7 +28,10 @@ abstract final class BahrainPlates {
     canvasWidth: 520,
     canvasHeight: 110,
     // Zero padding makes the flag fill the box: 55 × 33 is the flag's 3:5.
-    panel: const PlatePanel(box: PlateBox(12, 38.5, 55, 33), padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(12, 38.5, 55, 33),
+      padding: EdgeInsets.zero,
+    ),
     slots: [
       plateField(
         alphabet: PlateAlphabet.latinDigits,
@@ -46,9 +49,17 @@ abstract final class BahrainPlates {
       PlatePart(PlateSection.plain),
     ]),
     labels: const [
-      PlateLabel(text: 'البحرين', box: PlateBox(408, 14, 98, 30), glyphHeight: 30),
+      PlateLabel(
+        text: 'البحرين',
+        box: PlateBox(408, 14, 98, 30),
+        glyphHeight: 30,
+      ),
       // Seven wide capitals need a smaller glyph to hold one line.
-      PlateLabel(text: 'BAHRAIN', box: PlateBox(408, 62, 98, 28), glyphHeight: 27),
+      PlateLabel(
+        text: 'BAHRAIN',
+        box: PlateBox(408, 62, 98, 28),
+        glyphHeight: 27,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
@@ -62,7 +73,10 @@ abstract final class BahrainPlates {
     country: BahrainCountry.civilian,
     canvasWidth: 300,
     canvasHeight: 150,
-    panel: const PlatePanel(box: PlateBox(108, 14, 45, 27), padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(108, 14, 45, 27),
+      padding: EdgeInsets.zero,
+    ),
     slots: [
       plateField(
         alphabet: PlateAlphabet.latinDigits,
@@ -80,8 +94,16 @@ abstract final class BahrainPlates {
       PlatePart(PlateSection.plain),
     ]),
     labels: const [
-      PlateLabel(text: 'BAHRAIN', box: PlateBox(12, 14, 88, 24), glyphHeight: 24),
-      PlateLabel(text: 'البحرين', box: PlateBox(163, 12, 108, 30), glyphHeight: 28),
+      PlateLabel(
+        text: 'BAHRAIN',
+        box: PlateBox(12, 14, 88, 24),
+        glyphHeight: 24,
+      ),
+      PlateLabel(
+        text: 'البحرين',
+        box: PlateBox(163, 12, 108, 30),
+        glyphHeight: 28,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
@@ -95,7 +117,10 @@ abstract final class BahrainPlates {
     country: BahrainCountry.civilian,
     canvasWidth: 260,
     canvasHeight: 120,
-    panel: const PlatePanel(box: PlateBox(106, 12, 35, 21), padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(106, 12, 35, 21),
+      padding: EdgeInsets.zero,
+    ),
     slots: [
       plateField(
         alphabet: PlateAlphabet.latinDigits,
@@ -116,7 +141,11 @@ abstract final class BahrainPlates {
       PlateLabel(text: 'BRN', box: PlateBox(10, 12, 54, 26), glyphHeight: 26),
       // An emoji glyph, so no asset is needed.
       PlateLabel(text: '🚲', box: PlateBox(68, 8, 32, 30), glyphHeight: 30),
-      PlateLabel(text: 'البحرين', box: PlateBox(148, 8, 92, 28), glyphHeight: 26),
+      PlateLabel(
+        text: 'البحرين',
+        box: PlateBox(148, 8, 92, 28),
+        glyphHeight: 26,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
@@ -144,7 +173,11 @@ abstract final class BahrainPlates {
     canvasWidth: 250,
     canvasHeight: 110,
     // A colour and nothing else: flagScale 0 says there is no flag.
-    panel: const PlatePanel(box: PlateBox(0, 0, 234, 54), flagScale: 0, padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(0, 0, 234, 54),
+      flagScale: 0,
+      padding: EdgeInsets.zero,
+    ),
     background: _headBand(54),
     slots: [
       plateField(
@@ -195,7 +228,11 @@ abstract final class BahrainPlates {
     country: BahrainCountry.police,
     canvasWidth: 250,
     canvasHeight: 110,
-    panel: const PlatePanel(box: PlateBox(0, 0, 234, 44), flagScale: 0, padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: PlateBox(0, 0, 234, 44),
+      flagScale: 0,
+      padding: EdgeInsets.zero,
+    ),
     background: _headBand(44),
     slots: [
       plateField(

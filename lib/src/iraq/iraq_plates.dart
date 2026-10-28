@@ -43,7 +43,12 @@ abstract final class _Layout {
   static const double largeCodeCell = 49.3;
 
   /// Class letter: ink 187.7..228.6, centre 208.15.
-  static const PlateBox largeLetter = PlateBox(184.15, largeRowTop, 48, largeRowHeight);
+  static const PlateBox largeLetter = PlateBox(
+    184.15,
+    largeRowTop,
+    48,
+    largeRowHeight,
+  );
 
   /// Serial: ink centres 284.2..477.5, so a 48.3 pitch from a 260.05 left.
   static const double largeSerialLeft = 260.05;
@@ -94,7 +99,12 @@ abstract final class _Layout {
 
   /// The class letter is the one cell off the grid: its ink centres on 235.65,
   /// not on column 3's 233.1.
-  static const PlateBox smallLetter = PlateBox(211.65, smallTopRowTop, 48, smallRowHeight);
+  static const PlateBox smallLetter = PlateBox(
+    211.65,
+    smallTopRowTop,
+    48,
+    smallRowHeight,
+  );
 
   /// "IRQ" at a 22.0 cap; Kurdistan does not move it here, only adds "KR" below.
   static const PlateBox smallStack = PlateBox(4.2, 4.5, 32.5, 110);
@@ -133,7 +143,11 @@ abstract final class IraqPlates {
     country: IraqCountry.private,
     canvasWidth: _Layout.largeWidth,
     canvasHeight: _Layout.largeHeight,
-    panel: const PlatePanel(box: _Layout.largeBand, flagScale: 0, padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: _Layout.largeBand,
+      flagScale: 0,
+      padding: EdgeInsets.zero,
+    ),
     slots: <PlateSlot>[
       plateField(
         alphabet: IraqAlphabets.digits,
@@ -143,7 +157,10 @@ abstract final class IraqPlates {
         width: _Layout.largeCodeCell,
         height: _Layout.largeRowHeight,
       ),
-      const PlateSlot(alphabet: IraqAlphabets.letters, box: _Layout.largeLetter),
+      const PlateSlot(
+        alphabet: IraqAlphabets.letters,
+        box: _Layout.largeLetter,
+      ),
       plateField(
         alphabet: IraqAlphabets.digits,
         count: 5,
@@ -186,9 +203,9 @@ abstract final class IraqPlates {
       IraqGovernorates.isKurdistan(group('governorate')) ? '' : null;
 
   static const List<PlateTextGroup> _groups = <PlateTextGroup>[
-      PlateTextGroup(<int>[0], key: 'governorate'),
-      PlateTextGroup(<int>[1], key: 'letter'),
-      PlateTextGroup(<int>[2], key: 'serial'),
+    PlateTextGroup(<int>[0], key: 'governorate'),
+    PlateTextGroup(<int>[1], key: 'letter'),
+    PlateTextGroup(<int>[2], key: 'serial'),
   ];
 
   /// 335x155: code and letter over the serial. Kurdistan codes add "KR" below
@@ -198,7 +215,11 @@ abstract final class IraqPlates {
     country: IraqCountry.private,
     canvasWidth: _Layout.smallWidth,
     canvasHeight: _Layout.smallHeight,
-    panel: const PlatePanel(box: _Layout.smallBand, flagScale: 0, padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: _Layout.smallBand,
+      flagScale: 0,
+      padding: EdgeInsets.zero,
+    ),
     slots: <PlateSlot>[
       plateField(
         alphabet: IraqAlphabets.digits,
@@ -208,7 +229,10 @@ abstract final class IraqPlates {
         width: _Layout.smallGridCell,
         height: _Layout.smallRowHeight,
       ),
-      const PlateSlot(alphabet: IraqAlphabets.letters, box: _Layout.smallLetter),
+      const PlateSlot(
+        alphabet: IraqAlphabets.letters,
+        box: _Layout.smallLetter,
+      ),
       plateField(
         alphabet: IraqAlphabets.digits,
         count: 5,
@@ -263,7 +287,11 @@ abstract final class IraqPlates {
     country: IraqCountry.temporary,
     canvasWidth: _Layout.smallWidth,
     canvasHeight: _Layout.smallHeight,
-    panel: const PlatePanel(box: _Layout.smallBand, flagScale: 0, padding: EdgeInsets.zero),
+    panel: const PlatePanel(
+      box: _Layout.smallBand,
+      flagScale: 0,
+      padding: EdgeInsets.zero,
+    ),
     slots: <PlateSlot>[
       plateField(
         alphabet: IraqAlphabets.digits,

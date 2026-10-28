@@ -116,7 +116,10 @@ abstract final class OmanPlates {
       country: OmanCountry.oman,
       canvasWidth: _Layout.width,
       canvasHeight: _Layout.height,
-      panel: const PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero),
+      panel: const PlatePanel(
+        box: PlateBox(0, 0, 0, 0),
+        padding: EdgeInsets.zero,
+      ),
       noPanel: true,
       background: PlateSection.columns(<PlatePart>[
         PlatePart(PlateSection.plain, end: p.dividerA, divider: p.thickness),

@@ -39,7 +39,9 @@ abstract final class KuwaitThemes {
     borderWidthRatio: _borderWidthRatio,
     plateRadiusRatio: _plateRadiusRatio,
     activeColor: ink,
-    inactiveColor: darkField ? KuwaitColors.inactiveOnDark : KuwaitColors.inactiveOnLight,
+    inactiveColor: darkField
+        ? KuwaitColors.inactiveOnDark
+        : KuwaitColors.inactiveOnLight,
   );
 
   /// Private vehicles: black on white, dark frame.

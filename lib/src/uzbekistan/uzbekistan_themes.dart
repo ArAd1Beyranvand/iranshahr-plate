@@ -6,13 +6,14 @@ import 'uzbekistan_colors.dart';
 /// One ink on one field, frame and dividers in the ink.
 abstract final class UzbekistanThemes {
   /// Frame ~3.5% of the height (4 of 110), corners ~8%, off the artwork.
-  static PlateTheme _mono(Color field, Color ink, Color inactive) => PlateTheme.monochrome(
-    field: field,
-    ink: ink,
-    inactive: inactive,
-    borderWidthRatio: 0.035,
-    plateRadiusRatio: 0.08,
-  );
+  static PlateTheme _mono(Color field, Color ink, Color inactive) =>
+      PlateTheme.monochrome(
+        field: field,
+        ink: ink,
+        inactive: inactive,
+        borderWidthRatio: 0.035,
+        plateRadiusRatio: 0.08,
+      );
 
   static final PlateTheme passenger = _mono(
     UzbekistanColors.white,
@@ -38,7 +39,10 @@ abstract final class UzbekistanThemes {
   );
 
   /// Green for a foreign company's `M`, yellow otherwise.
-  static PlateTheme byClass(PlateTheme base, String Function(String key) group) {
+  static PlateTheme byClass(
+    PlateTheme base,
+    String Function(String key) group,
+  ) {
     final t = group('class') == 'M' ? foreignCompany : foreignCitizen;
     return base.copyWith(
       plateBackground: t.plateBackground,

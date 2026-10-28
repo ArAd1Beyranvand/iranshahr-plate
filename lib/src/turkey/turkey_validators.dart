@@ -24,7 +24,9 @@ class TurkeyPlateValidator extends PlateValidator {
   static const int maxLettersAndDigits = 6;
 
   static const TurkeyPlateValidator general = TurkeyPlateValidator();
-  static const TurkeyPlateValidator police = TurkeyPlateValidator(limitSix: false);
+  static const TurkeyPlateValidator police = TurkeyPlateValidator(
+    limitSix: false,
+  );
 
   /// Whether [code] is one of the 81 province codes, `01` to `81`.
   static bool isProvince(String code) {
@@ -35,7 +37,8 @@ class TurkeyPlateValidator extends PlateValidator {
 
   /// Whether every character of [letters] is a plate letter.
   static bool isLetters(String letters) =>
-      letters.isNotEmpty && letters.split('').every(TurkeyAlphabets.letters.characters.contains);
+      letters.isNotEmpty &&
+      letters.split('').every(TurkeyAlphabets.letters.characters.contains);
 
   @override
   PlateValidation validate(PlateEntry entry) {
@@ -52,8 +55,12 @@ class TurkeyPlateValidator extends PlateValidator {
     if (serial.isNotEmpty && !isDigits(serial)) {
       return const PlateValidation.invalid('Serial must be figures');
     }
-    if (limitSix && hasLetters && letters.length + serial.length > maxLettersAndDigits) {
-      return const PlateValidation.invalid('Letters and figures number at most six');
+    if (limitSix &&
+        hasLetters &&
+        letters.length + serial.length > maxLettersAndDigits) {
+      return const PlateValidation.invalid(
+        'Letters and figures number at most six',
+      );
     }
     return const PlateValidation.valid();
   }

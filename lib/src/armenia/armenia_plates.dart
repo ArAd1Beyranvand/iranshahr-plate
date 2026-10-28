@@ -26,7 +26,9 @@ abstract final class ArmeniaPlates {
   );
 
   /// The 2014 design's silver strip: a rule, so it takes the divider colour.
-  static const PlateRule _identifierBand = PlateRule(box: PlateBox(66, 12, 10, 86));
+  static const PlateRule _identifierBand = PlateRule(
+    box: PlateBox(66, 12, 10, 86),
+  );
 
   /// `01 AD 234`.
   static final PlateSpec car = PlateSpec(
@@ -236,7 +238,10 @@ abstract final class ArmeniaPlates {
         pitch: 42,
       ),
       // Smaller than the digits, on their centre line.
-      const PlateSlot(alphabet: ArmeniaAlphabets.letters, box: PlateBox(166, 22, 30, 46)),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.letters,
+        box: PlateBox(166, 22, 30, 46),
+      ),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 2,
@@ -271,7 +276,10 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 70,
       ),
-      const PlateSlot(alphabet: ArmeniaAlphabets.busClass, box: PlateBox(400, 17, 64, 76)),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.busClass,
+        box: PlateBox(400, 17, 64, 76),
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
@@ -299,7 +307,10 @@ abstract final class ArmeniaPlates {
         pitch: 56,
       ),
       // Taller than the digits, as photographed.
-      const PlateSlot(alphabet: ArmeniaAlphabets.diplomaticClass, box: PlateBox(160, 17, 56, 76)),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.diplomaticClass,
+        box: PlateBox(160, 17, 56, 76),
+      ),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -310,7 +321,10 @@ abstract final class ArmeniaPlates {
         pitch: 56,
       ),
       // On the digits' centre line, 55, with the old label's 56 glyph.
-      const PlateSlot(alphabet: ArmeniaAlphabets.diplomaticCountry, box: PlateBox(400, 16, 104, 78)),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.diplomaticCountry,
+        box: PlateBox(400, 16, 104, 78),
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'mission'),
@@ -342,7 +356,11 @@ abstract final class ArmeniaPlates {
     ],
     labels: const [
       PlateLabel(text: 'UN', box: PlateBox(44, 27.6, 130, 76), glyphHeight: 76),
-      PlateLabel(text: 'AM', box: PlateBox(380, 34.8, 104, 56), glyphHeight: 56),
+      PlateLabel(
+        text: 'AM',
+        box: PlateBox(380, 34.8, 104, 56),
+        glyphHeight: 56,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
@@ -369,9 +387,14 @@ abstract final class ArmeniaPlates {
         height: 76,
         pitch: 58,
       ),
-      const PlateSlot(alphabet: ArmeniaAlphabets.militaryClass, box: PlateBox(410, 17, 54, 76)),
+      const PlateSlot(
+        alphabet: ArmeniaAlphabets.militaryClass,
+        box: PlateBox(410, 17, 54, 76),
+      ),
     ],
-    labels: const [PlateLabel(text: 'ՊՆ', box: PlateBox(40, 27.6, 112, 76), glyphHeight: 76)],
+    labels: const [
+      PlateLabel(text: 'ՊՆ', box: PlateBox(40, 27.6, 112, 76), glyphHeight: 76),
+    ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),
       PlateTextGroup([1], key: 'class'),

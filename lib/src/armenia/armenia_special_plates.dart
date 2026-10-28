@@ -45,94 +45,93 @@ abstract final class ArmeniaSpecialPlates {
 
   /// One row per combination, not per institution: `SS` is shared by three
   /// bodies told apart by their tails.
-  static final List<ArmeniaSpecialCombination> all = List<ArmeniaSpecialCombination>.unmodifiable(
-    <ArmeniaSpecialCombination>[
-      const ArmeniaSpecialCombination(
-        institution: 'Constitutional Court',
-        armenianLetters: 'ՕՏ',
-        letters: 'OS',
-        tails: <String>{'01'},
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'Presidential Administration',
-        armenianLetters: 'ՍՍ',
-        letters: 'UU',
-        tails: <String>{'01'},
-      ),
-      ArmeniaSpecialCombination(
-        institution: 'National Assembly',
-        armenianLetters: 'ՕՕ',
-        letters: 'OO',
-        tails: _tails(1, 11),
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'Government',
-        armenianLetters: 'FF',
-        letters: 'FF',
-        tails: <String>{'01'},
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'Government',
-        armenianLetters: 'LL',
-        letters: 'LL',
-        tails: <String>{'03', '50', '55', '60', '70'},
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'Government',
-        armenianLetters: 'ՏՏ',
-        letters: 'SS',
-        tails: <String>{'03', '60'},
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'Government',
-        armenianLetters: 'VV',
-        letters: 'VV',
-        tails: <String>{'01'},
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'Security Council',
-        armenianLetters: 'NN',
-        letters: 'NN',
-        tails: <String>{'01'},
-      ),
-      const ArmeniaSpecialCombination(
-        institution: "General Prosecutor's office",
-        armenianLetters: 'GG',
-        letters: 'GG',
-        tails: <String>{'01'},
-      ),
-      ArmeniaSpecialCombination(
-        institution: 'Police',
-        armenianLetters: 'ՈՍ',
-        letters: null,
-        tails: _tails(1, 14),
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'Police',
-        armenianLetters: 'II',
-        letters: 'II',
-        tails: null,
-      ),
-      ArmeniaSpecialCombination(
-        institution: 'Banks',
-        armenianLetters: 'ՏL',
-        letters: 'SL',
-        tails: _tails(1, 33),
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'Court of Cassation',
-        armenianLetters: 'ՏՏ',
-        letters: 'SS',
-        tails: <String>{'01'},
-      ),
-      const ArmeniaSpecialCombination(
-        institution: 'National Security Service',
-        armenianLetters: 'ՏՏ',
-        letters: 'SS',
-        tails: <String>{'02'},
-      ),
-    ],
-  );
+  static final List<ArmeniaSpecialCombination> all =
+      List<ArmeniaSpecialCombination>.unmodifiable(<ArmeniaSpecialCombination>[
+        const ArmeniaSpecialCombination(
+          institution: 'Constitutional Court',
+          armenianLetters: 'ՕՏ',
+          letters: 'OS',
+          tails: <String>{'01'},
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'Presidential Administration',
+          armenianLetters: 'ՍՍ',
+          letters: 'UU',
+          tails: <String>{'01'},
+        ),
+        ArmeniaSpecialCombination(
+          institution: 'National Assembly',
+          armenianLetters: 'ՕՕ',
+          letters: 'OO',
+          tails: _tails(1, 11),
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'Government',
+          armenianLetters: 'FF',
+          letters: 'FF',
+          tails: <String>{'01'},
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'Government',
+          armenianLetters: 'LL',
+          letters: 'LL',
+          tails: <String>{'03', '50', '55', '60', '70'},
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'Government',
+          armenianLetters: 'ՏՏ',
+          letters: 'SS',
+          tails: <String>{'03', '60'},
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'Government',
+          armenianLetters: 'VV',
+          letters: 'VV',
+          tails: <String>{'01'},
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'Security Council',
+          armenianLetters: 'NN',
+          letters: 'NN',
+          tails: <String>{'01'},
+        ),
+        const ArmeniaSpecialCombination(
+          institution: "General Prosecutor's office",
+          armenianLetters: 'GG',
+          letters: 'GG',
+          tails: <String>{'01'},
+        ),
+        ArmeniaSpecialCombination(
+          institution: 'Police',
+          armenianLetters: 'ՈՍ',
+          letters: null,
+          tails: _tails(1, 14),
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'Police',
+          armenianLetters: 'II',
+          letters: 'II',
+          tails: null,
+        ),
+        ArmeniaSpecialCombination(
+          institution: 'Banks',
+          armenianLetters: 'ՏL',
+          letters: 'SL',
+          tails: _tails(1, 33),
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'Court of Cassation',
+          armenianLetters: 'ՏՏ',
+          letters: 'SS',
+          tails: <String>{'01'},
+        ),
+        const ArmeniaSpecialCombination(
+          institution: 'National Security Service',
+          armenianLetters: 'ՏՏ',
+          letters: 'SS',
+          tails: <String>{'02'},
+        ),
+      ]);
 
   /// No two rows overlap, so the first match is the only one.
   static ArmeniaSpecialCombination? lookup(String letters, String tail) =>

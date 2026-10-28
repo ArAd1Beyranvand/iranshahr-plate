@@ -14,7 +14,14 @@ abstract final class AzerbaijanCountry {
     PlateRectShape(0, 100, 600, 200, Color(0xFFED2939)),
     PlateRectShape(0, 200, 600, 100, Color(0xFF509E2F)),
     PlateCrescentShape(262, 150, 45, 15, 36, Color(0xFFFFFFFF)),
-    PlateStarShape(322, 150, 30, Color(0xFFFFFFFF), points: 8, innerRatio: 0.4133),
+    PlateStarShape(
+      322,
+      150,
+      30,
+      Color(0xFFFFFFFF),
+      points: 8,
+      innerRatio: 0.4133,
+    ),
   ]);
 
   static const PlateCountry azerbaijan = PlateCountry(

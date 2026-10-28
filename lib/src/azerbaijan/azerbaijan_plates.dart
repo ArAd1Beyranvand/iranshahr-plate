@@ -94,7 +94,10 @@ abstract final class AzerbaijanPlates {
         height: 46,
         pitch: 42,
       ),
-      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(14, 82, 36, 54)),
+      const PlateSlot(
+        alphabet: PlateAlphabet.latinUppercase,
+        box: PlateBox(14, 82, 36, 54),
+      ),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -106,7 +109,9 @@ abstract final class AzerbaijanPlates {
       ),
     ],
     // 82 + 54/2 - 0.72*54/2 = 89.6. See car.
-    labels: const [PlateLabel(text: '-', box: PlateBox(52, 89.6, 18, 54), glyphHeight: 54)],
+    labels: const [
+      PlateLabel(text: '-', box: PlateBox(52, 89.6, 18, 54), glyphHeight: 54),
+    ],
     textGroups: const [
       PlateTextGroup([0], key: 'region'),
       PlateTextGroup([1], key: 'letters'),
@@ -133,7 +138,10 @@ abstract final class AzerbaijanPlates {
         height: 76,
         pitch: 54,
       ),
-      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(262, 17, 50, 76)),
+      const PlateSlot(
+        alphabet: PlateAlphabet.latinUppercase,
+        box: PlateBox(262, 17, 50, 76),
+      ),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,
@@ -160,7 +168,10 @@ abstract final class AzerbaijanPlates {
     canvasHeight: 110,
     panel: _euPanel,
     slots: [
-      const PlateSlot(alphabet: PlateAlphabet.latinUppercase, box: PlateBox(94, 17, 50, 76)),
+      const PlateSlot(
+        alphabet: PlateAlphabet.latinUppercase,
+        box: PlateBox(94, 17, 50, 76),
+      ),
       plateField(
         alphabet: PlateAlphabet.latinDigits,
         count: 3,

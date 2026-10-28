@@ -24,23 +24,63 @@ void main() {
   });
 
   /// category id -> (spec, theme, space-separated sample value)
-  final Map<String, (PlateSpec, PlateTheme, String)>
-  cases = <String, (PlateSpec, PlateTheme, String)>{
-    'passenger': (UzbekistanPlates.passenger, UzbekistanThemes.passenger, '01 A 123 BC'),
-    'foreign_citizen': (UzbekistanPlates.foreign, UzbekistanThemes.foreignCitizen, '01 H 012345'),
-    'foreign_company': (UzbekistanPlates.foreign, UzbekistanThemes.foreignCitizen, '10 M 012345'),
-    'temporary': (UzbekistanPlates.temporary, UzbekistanThemes.temporary, '012345 01'),
-    'ambassador': (UzbekistanPlates.ambassador, UzbekistanThemes.diplomatic, '012 345'),
-    'diplomat': (UzbekistanPlates.diplomat, UzbekistanThemes.diplomatic, 'D 012 345'),
-    'united_nations': (UzbekistanPlates.unitedNations, UzbekistanThemes.unitedNations, '0123'),
-    'trailer': (UzbekistanPlates.trailer, UzbekistanThemes.trailer, '0123 AB 01'),
-    'motorcycle': (UzbekistanPlates.motorcycle, UzbekistanThemes.motorcycle, '123 AB 01'),
-  };
+  final Map<String, (PlateSpec, PlateTheme, String)> cases =
+      <String, (PlateSpec, PlateTheme, String)>{
+        'passenger': (
+          UzbekistanPlates.passenger,
+          UzbekistanThemes.passenger,
+          '01 A 123 BC',
+        ),
+        'foreign_citizen': (
+          UzbekistanPlates.foreign,
+          UzbekistanThemes.foreignCitizen,
+          '01 H 012345',
+        ),
+        'foreign_company': (
+          UzbekistanPlates.foreign,
+          UzbekistanThemes.foreignCitizen,
+          '10 M 012345',
+        ),
+        'temporary': (
+          UzbekistanPlates.temporary,
+          UzbekistanThemes.temporary,
+          '012345 01',
+        ),
+        'ambassador': (
+          UzbekistanPlates.ambassador,
+          UzbekistanThemes.diplomatic,
+          '012 345',
+        ),
+        'diplomat': (
+          UzbekistanPlates.diplomat,
+          UzbekistanThemes.diplomatic,
+          'D 012 345',
+        ),
+        'united_nations': (
+          UzbekistanPlates.unitedNations,
+          UzbekistanThemes.unitedNations,
+          '0123',
+        ),
+        'trailer': (
+          UzbekistanPlates.trailer,
+          UzbekistanThemes.trailer,
+          '0123 AB 01',
+        ),
+        'motorcycle': (
+          UzbekistanPlates.motorcycle,
+          UzbekistanThemes.motorcycle,
+          '123 AB 01',
+        ),
+      };
 
-  for (final MapEntry<String, (PlateSpec, PlateTheme, String)> c in cases.entries) {
+  for (final MapEntry<String, (PlateSpec, PlateTheme, String)> c
+      in cases.entries) {
     testWidgets(c.key, (tester) async {
       final (PlateSpec spec, PlateTheme theme, String values) = c.value;
-      final PlateController controller = PlateController.fromValues(spec, values.split(' '));
+      final PlateController controller = PlateController.fromValues(
+        spec,
+        values.split(' '),
+      );
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -61,9 +101,14 @@ void main() {
           ),
         ),
       );
-      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 300)));
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+      );
       await tester.pumpAndSettle();
-      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/uz_${c.key}.png'));
+      await expectLater(
+        find.byType(PlateView),
+        matchesGoldenFile('goldens/uz_${c.key}.png'),
+      );
       await tester.pumpWidget(const SizedBox.shrink());
       controller.dispose();
     });

@@ -51,7 +51,10 @@ abstract final class _Layout {
     captionScale: 1.4,
   );
 
-  static const PlatePanel none = PlatePanel(box: PlateBox(0, 0, 0, 0), padding: EdgeInsets.zero);
+  static const PlatePanel none = PlatePanel(
+    box: PlateBox(0, 0, 0, 0),
+    padding: EdgeInsets.zero,
+  );
 
   /// Trailer canvas 280×152; ink rows: digits y 6.3..68, letters 80.5..141,
   /// region 83..129.6. Block corner at x 147, y 71.7; flag x 229.6..271.6.
@@ -97,8 +100,13 @@ abstract final class UzbekistanPlates {
     spacing: max(0, (right - left) / count - 0.6 * 0.72 * height),
   );
 
-  static PlateSlot _cell(PlateAlphabet a, double centre, double w, double top, double h) =>
-      PlateSlot(alphabet: a, box: PlateBox(centre - w / 2, top, w, h));
+  static PlateSlot _cell(
+    PlateAlphabet a,
+    double centre,
+    double w,
+    double top,
+    double h,
+  ) => PlateSlot(alphabet: a, box: PlateBox(centre - w / 2, top, w, h));
 
   static PlateLabel _prefix(String text, double centre, double w) => PlateLabel(
     text: text,
@@ -107,11 +115,13 @@ abstract final class UzbekistanPlates {
   );
 
   /// A divider with the region on one side, plain field either side.
-  static PlateSection _split(double at, {double rule = _Layout.borderlessDivider}) =>
-      PlateSection.columns([
-        PlatePart(PlateSection.plain, end: at, divider: rule),
-        const PlatePart(PlateSection.plain),
-      ]);
+  static PlateSection _split(
+    double at, {
+    double rule = _Layout.borderlessDivider,
+  }) => PlateSection.columns([
+    PlatePart(PlateSection.plain, end: at, divider: rule),
+    const PlatePart(PlateSection.plain),
+  ]);
 
   /// Passenger car, `01 A123BC`.
   static final PlateSpec passenger = PlateSpec(
@@ -130,7 +140,13 @@ abstract final class UzbekistanPlates {
         _Layout.passengerTop,
         _Layout.passengerHeight,
       ),
-      _cell(UzbekistanAlphabets.letters, 176.8, 44, _Layout.passengerTop, _Layout.passengerHeight),
+      _cell(
+        UzbekistanAlphabets.letters,
+        176.8,
+        44,
+        _Layout.passengerTop,
+        _Layout.passengerHeight,
+      ),
       _across(
         UzbekistanAlphabets.digits,
         3,
@@ -169,8 +185,21 @@ abstract final class UzbekistanPlates {
     noPanel: true,
     background: _split(120.4),
     slots: [
-      _across(UzbekistanAlphabets.digits, 2, 26.9, 94.9, _Layout.rowTop, _Layout.rowHeight),
-      _cell(UzbekistanAlphabets.foreignClass, 160.7, 64, _Layout.rowTop, _Layout.rowHeight),
+      _across(
+        UzbekistanAlphabets.digits,
+        2,
+        26.9,
+        94.9,
+        _Layout.rowTop,
+        _Layout.rowHeight,
+      ),
+      _cell(
+        UzbekistanAlphabets.foreignClass,
+        160.7,
+        64,
+        _Layout.rowTop,
+        _Layout.rowHeight,
+      ),
       _across(
         UzbekistanAlphabets.digits,
         6,
@@ -207,7 +236,14 @@ abstract final class UzbekistanPlates {
         _Layout.rowTop,
         _Layout.rowHeight,
       ),
-      _across(UzbekistanAlphabets.digits, 2, 422.8, 490.8, _Layout.rowTop, _Layout.rowHeight),
+      _across(
+        UzbekistanAlphabets.digits,
+        2,
+        422.8,
+        490.8,
+        _Layout.rowTop,
+        _Layout.rowHeight,
+      ),
     ],
     labels: [_prefix('T', 48.7, 50)],
     textGroups: const [
@@ -277,7 +313,13 @@ abstract final class UzbekistanPlates {
   static final PlateSpec diplomat = _diplomatic(
     id: 'uz.diplomat',
     status: [
-      _cell(UzbekistanAlphabets.diplomaticStatus, 105.9, 47, _Layout.rowTop, _Layout.rowHeight),
+      _cell(
+        UzbekistanAlphabets.diplomaticStatus,
+        105.9,
+        47,
+        _Layout.rowTop,
+        _Layout.rowHeight,
+      ),
     ],
     labels: const [],
     digitsLeft: 148.5,
@@ -293,7 +335,16 @@ abstract final class UzbekistanPlates {
     canvasHeight: _Layout.height,
     panel: _Layout.none,
     noPanel: true,
-    slots: [_across(UzbekistanAlphabets.digits, 4, 216, 405.2, _Layout.rowTop, _Layout.rowHeight)],
+    slots: [
+      _across(
+        UzbekistanAlphabets.digits,
+        4,
+        216,
+        405.2,
+        _Layout.rowTop,
+        _Layout.rowHeight,
+      ),
+    ],
     labels: [_prefix('UN', 148.5, 100)],
     textGroups: const [
       PlateTextGroup([0], key: 'serial', prefix: 'UN'),
@@ -316,7 +367,10 @@ abstract final class UzbekistanPlates {
     PlatePart(
       PlateSection.columns([
         PlatePart(PlateSection.plain, end: _Layout.trailerBlockEnd - _rule / 2),
-        PlatePart(PlateSection.fill(PlateFill.divider), end: _Layout.trailerBlockEnd + _rule / 2),
+        PlatePart(
+          PlateSection.fill(PlateFill.divider),
+          end: _Layout.trailerBlockEnd + _rule / 2,
+        ),
         PlatePart(PlateSection.plain),
       ]),
     ),
@@ -352,10 +406,18 @@ abstract final class UzbekistanPlates {
     canvasHeight: _Layout.motoHeight,
     panel: _Layout.motoPanel,
     background: PlateSection.columns([
-      const PlatePart(PlateSection.plain, end: _Layout.motoColumnEnd, divider: _Layout.motoRule),
+      const PlatePart(
+        PlateSection.plain,
+        end: _Layout.motoColumnEnd,
+        divider: _Layout.motoRule,
+      ),
       PlatePart(
         PlateSection.rows([
-          const PlatePart(PlateSection.plain, end: _Layout.motoRowEnd, divider: _Layout.motoRule),
+          const PlatePart(
+            PlateSection.plain,
+            end: _Layout.motoRowEnd,
+            divider: _Layout.motoRule,
+          ),
           const PlatePart(PlateSection.plain),
         ]),
       ),

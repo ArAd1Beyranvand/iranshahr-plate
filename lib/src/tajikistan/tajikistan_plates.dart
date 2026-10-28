@@ -82,7 +82,10 @@ abstract final class TajikistanPlates {
     panel: _euPanel,
     slots: [
       car.slots[0],
-      const PlateSlot(alphabet: TajikistanAlphabets.letters, box: PlateBox(300, 15, 50, 80)),
+      const PlateSlot(
+        alphabet: TajikistanAlphabets.letters,
+        box: PlateBox(300, 15, 50, 80),
+      ),
       car.slots[2],
     ],
     textGroups: car.textGroups,

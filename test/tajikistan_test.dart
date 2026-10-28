@@ -40,23 +40,20 @@ void main() {
       expect(TajikistanPlates.car.noPanel, isFalse);
     });
 
-    test(
-      'the car letters pick the livery: TT transport',
-      () {
-        PlateTheme themeFor(String letters) => TajikistanThemes.byLetters(
-          TajikistanThemes.civilian,
-          (key) => key == 'letters' ? letters : '',
-        );
-        expect(
-          themeFor('MK').plateBackground,
-          TajikistanThemes.civilian.plateBackground,
-        );
-        expect(
-          themeFor('TT').plateBackground,
-          TajikistanThemes.transport.plateBackground,
-        );
-      },
-    );
+    test('the car letters pick the livery: TT transport', () {
+      PlateTheme themeFor(String letters) => TajikistanThemes.byLetters(
+        TajikistanThemes.civilian,
+        (key) => key == 'letters' ? letters : '',
+      );
+      expect(
+        themeFor('MK').plateBackground,
+        TajikistanThemes.civilian.plateBackground,
+      );
+      expect(
+        themeFor('TT').plateBackground,
+        TajikistanThemes.transport.plateBackground,
+      );
+    });
 
     test('the governmental plate boxes off its region with a divider', () {
       expect(TajikistanPlates.governmental.rules, isNotEmpty);

@@ -43,7 +43,10 @@ abstract final class QatarPlates {
   );
 
   static const PlateSection _hoistBackground = PlateSection.columns([
-    PlatePart(PlateSection.fill(PlateFill.panel, shape: QatarFlagEdgeClipper()), end: 54),
+    PlatePart(
+      PlateSection.fill(PlateFill.panel, shape: QatarFlagEdgeClipper()),
+      end: 54,
+    ),
     PlatePart(PlateSection.plain),
   ]);
 
@@ -132,7 +135,11 @@ abstract final class QatarPlates {
       // draws it with a long kashida joining the letters, so it spans much more
       // of the width than the three glyphs alone would.
       PlateLabel(text: 'قطر', box: PlateBox(84, 10, 132, 44), glyphHeight: 40),
-      PlateLabel(text: 'QATAR', box: PlateBox(70, 168, 160, 40), glyphHeight: 36),
+      PlateLabel(
+        text: 'QATAR',
+        box: PlateBox(70, 168, 160, 40),
+        glyphHeight: 36,
+      ),
     ],
     textGroups: const [
       PlateTextGroup([0], key: 'serial'),

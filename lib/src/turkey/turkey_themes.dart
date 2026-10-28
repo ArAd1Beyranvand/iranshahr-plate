@@ -34,15 +34,29 @@ abstract final class TurkeyThemes {
     borderWidthRatio: borderWidthRatio,
     plateRadiusRatio: plateRadiusRatio,
     activeColor: ink,
-    inactiveColor: dark ? TurkeyColors.inactiveOnDark : TurkeyColors.inactiveOnLight,
+    inactiveColor: dark
+        ? TurkeyColors.inactiveOnDark
+        : TurkeyColors.inactiveOnLight,
   );
 
-  static PlateTheme _plain({required Color field, required Color ink, required Color frame}) =>
-      _theme(field: field, ink: ink, frame: frame, borderWidthRatio: _plainFrame, dark: true);
+  static PlateTheme _plain({
+    required Color field,
+    required Color ink,
+    required Color frame,
+  }) => _theme(
+    field: field,
+    ink: ink,
+    frame: frame,
+    borderWidthRatio: _plainFrame,
+    dark: true,
+  );
 
   /// Black on white: private and commercial vehicles, foreign and Syrian
   /// residents, taxis, the sample plate and motorcycles.
-  static final PlateTheme civilian = _theme(field: TurkeyColors.white, ink: TurkeyColors.black);
+  static final PlateTheme civilian = _theme(
+    field: TurkeyColors.white,
+    ink: TurkeyColors.black,
+  );
 
   /// Blue on white: members of international organisations.
   static final PlateTheme internationalOrganization = _theme(
@@ -109,7 +123,10 @@ abstract final class TurkeyThemes {
   /// [PlateSpec.resolveTheme] for `TurkeyPlates.strip` and `plain`: the
   /// letters that name a class set its colours (each exists on one shape
   /// only), and `T` alone prints the taxi's black rule at the strip.
-  static PlateTheme byLetters(PlateTheme base, String Function(String key) group) {
+  static PlateTheme byLetters(
+    PlateTheme base,
+    String Function(String key) group,
+  ) {
     final letters = group('letters');
     final t = switch (letters) {
       'CD' => diplomatic,
@@ -121,7 +138,9 @@ abstract final class TurkeyThemes {
       plateBackground: t.plateBackground,
       plateBorder: t.plateBorder,
       ink: t.ink,
-      dividerColor: letters == 'T' ? TurkeyColors.black : const Color(0x00000000),
+      dividerColor: letters == 'T'
+          ? TurkeyColors.black
+          : const Color(0x00000000),
       activeColor: t.activeColor,
       inactiveColor: t.inactiveColor,
     );

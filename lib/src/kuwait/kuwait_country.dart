@@ -99,5 +99,4 @@ abstract final class KuwaitCountry {
     flagAspectRatio: _flagAspectRatio,
     flag: _flag,
   );
-
 }

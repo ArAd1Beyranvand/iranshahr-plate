@@ -40,7 +40,14 @@ enum ArmeniaProvince {
   shirak('Shirak', 'Շիրակ', <String>['14', '45', '46', '47', '48', '49']),
 
   aragatsotn('Aragatsotn', 'Արագածոտն', <String>['15', '21', '22', '23', '24']),
-  gegharkunik('Gegharkunik', 'Գեղարքունիք', <String>['16', '31', '32', '33', '34', '35']),
+  gegharkunik('Gegharkunik', 'Գեղարքունիք', <String>[
+    '16',
+    '31',
+    '32',
+    '33',
+    '34',
+    '35',
+  ]),
   kotayk('Kotayk', 'Կոտայք', <String>['17', '42', '43']),
   vayotsDzor('Vayots Dzor', 'Վայոց ձոր', <String>['18', '56']),
   ararat('Ararat', 'Արարատ', <String>['25', '26']),
@@ -108,5 +115,6 @@ abstract final class ArmeniaRegions {
 
   /// Every `01`–`99` is allocated, so this is a membership test rather than a
   /// range check, to keep a future deallocation a change to the tables.
-  static bool isIssued(String code) => individualCodes.contains(code) || provinceFor(code) != null;
+  static bool isIssued(String code) =>
+      individualCodes.contains(code) || provinceFor(code) != null;
 }

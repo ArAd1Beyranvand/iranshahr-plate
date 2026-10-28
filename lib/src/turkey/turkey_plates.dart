@@ -108,7 +108,13 @@ abstract final class _Moto {
 
 /// One field of a row: its key, alphabet, longest and shortest length, and
 /// the pitch it is laid out at.
-typedef _Run = (String key, PlateAlphabet alphabet, int count, int? minLength, double pitch);
+typedef _Run = (
+  String key,
+  PlateAlphabet alphabet,
+  int count,
+  int? minLength,
+  double pitch,
+);
 
 /// The current plates (1996 onwards): `99 X 9999` to `99 XXX 999`.
 ///
@@ -171,7 +177,9 @@ abstract final class TurkeyPlates {
       final run = count * pitch;
       // A letter box is wider than its run so a scaled-down slot does not
       // shrink Roboto's M, the one letter wider than the pitch.
-      final width = identical(alphabet, TurkeyAlphabets.letters) ? run * letterBoxRatio : run;
+      final width = identical(alphabet, TurkeyAlphabets.letters)
+          ? run * letterBoxRatio
+          : run;
       groups.add(PlateTextGroup(<int>[firstIndex + slots.length], key: key));
       slots.add(
         PlateSlot(
@@ -209,9 +217,11 @@ abstract final class TurkeyPlates {
     resolveTheme: resolveTheme,
   );
 
-  static PlateSection _withStrip(PlateSection field, {double divider = 0}) => PlateSection.columns(
-    <PlatePart>[PlatePart(_stripColumn, end: _Layout.stripEnd, divider: divider), PlatePart(field)],
-  );
+  static PlateSection _withStrip(PlateSection field, {double divider = 0}) =>
+      PlateSection.columns(<PlatePart>[
+        PlatePart(_stripColumn, end: _Layout.stripEnd, divider: divider),
+        PlatePart(field),
+      ]);
 
   /// Private and commercial `99 X 9999` to `99 XXX 99`, members of
   /// international organisations `99 B 9999` (blue ink), diplomats `99 CD 999`,
@@ -285,7 +295,11 @@ abstract final class TurkeyPlates {
 
   static const PlateSection _temporaryField = PlateSection.fill(
     PlateFill.stripes(
-      <PlateFill>[PlateFill.field, PlateFill.color(TurkeyColors.white), PlateFill.field],
+      <PlateFill>[
+        PlateFill.field,
+        PlateFill.color(TurkeyColors.white),
+        PlateFill.field,
+      ],
       stops: <double>[_Layout.stripeTop, _Layout.stripeBottom],
       angle: _Layout.stripeAngle,
     ),
@@ -327,7 +341,15 @@ abstract final class TurkeyPlates {
         ('province', TurkeyAlphabets.digits, 2, null, _Layout.digitPitch),
       ], centre: _Layout.sampleProvinceCentre);
       final serial = _row(
-        <_Run>[('serial', TurkeyAlphabets.digits, 3, null, _Layout.sampleSerialPitch)],
+        <_Run>[
+          (
+            'serial',
+            TurkeyAlphabets.digits,
+            3,
+            null,
+            _Layout.sampleSerialPitch,
+          ),
+        ],
         centre: _Layout.sampleSerialCentre,
         firstIndex: 1,
       );
