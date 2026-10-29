@@ -83,6 +83,9 @@ enum AfghanistanPanelInk {
   /// Black line art, for white, yellow and blue fields.
   dark(
     'af',
+    // TODO(py): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
+    // TODO(ts): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
+    // TODO(kt): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
     SvgPlateAsset('assets/emblems/Darul_Aman_dark.svg', package: _package),
   ),
 

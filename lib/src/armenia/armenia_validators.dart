@@ -4,6 +4,9 @@ import 'armenia_alphabets.dart';
 import 'armenia_regions.dart';
 import 'armenia_special_plates.dart';
 
+// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// Validates a private registration, `NN LL NNN`: a region code `ArmeniaRegions`
 /// issues, letters that are neither `G` nor `I` (reserved to the state since 2015,
 /// see [ArmeniaAlphabets.stateVehiclesOnly]), and a three-digit serial.

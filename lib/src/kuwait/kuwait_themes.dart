@@ -182,6 +182,9 @@ abstract final class KuwaitThemes {
     direction: TextDirection.rtl,
   );
 
+  // TODO(py): [D4-table] lookup table: becomes a dict in the export, no code.
+  // TODO(ts): [D4-table] lookup table: becomes data in the export, no code.
+  // TODO(kt): [D4-table] lookup table: becomes a map in the export, no code.
   /// [PlateSpec.resolveTheme] for `KuwaitPlates.standard`: the caption's
   /// livery, [government] while none is chosen.
   static PlateTheme byCaption(

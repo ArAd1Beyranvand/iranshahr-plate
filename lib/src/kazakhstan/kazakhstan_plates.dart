@@ -72,6 +72,9 @@ PlateSlot _field(PlateAlphabet alphabet, _Run run, int count) {
   );
 }
 
+// TODO(py): [H2][D6] ImageProvider: reference the raster as package + path; importlib.resources.
+// TODO(ts): [H2][D6] ImageProvider: reference the raster as package + path; import as asset URL.
+// TODO(kt): [H2][D6] ImageProvider: reference the raster as package + path; Res/compose resources.
 const AssetImage _flagImage = AssetImage(
   // Commons: File:Flag_of_Kazakhstan.svg; assets/icons/kazakhstan_flag.svg is
   // the vector.

@@ -10,6 +10,9 @@
 /// ```
 library;
 
+// TODO(py): [D5] one module `plates.countries.iranshahr`; assets via importlib.resources.
+// TODO(ts): [D5] one subpath export `./countries/iranshahr`; tree-shakable.
+// TODO(kt): [D5] package `countries.iranshahr` in the countries module.
 export 'src/afghanistan/afghanistan_alphabets.dart';
 export 'src/afghanistan/afghanistan_colors.dart';
 export 'src/afghanistan/afghanistan_plates.dart';

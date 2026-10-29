@@ -165,6 +165,9 @@ PlateLabel _label(String text, _Ink ink) {
   );
 }
 
+// TODO(py): [H2][D6] ImageProvider: reference the raster as package + path; importlib.resources.
+// TODO(ts): [H2][D6] ImageProvider: reference the raster as package + path; import as asset URL.
+// TODO(kt): [H2][D6] ImageProvider: reference the raster as package + path; Res/compose resources.
 // Commons: File:Flag_of_Turkmenistan.svg, green recoloured to the plates'
 // 28AE66; assets/icons/turkmenistan_flag.svg is the vector. The strip and the
 // crescent are crops of it (carpet göls; crescent with five stars).

@@ -3,6 +3,9 @@ import 'package:plate_core/plate_core.dart';
 import 'tajikistan_alphabets.dart';
 import 'tajikistan_regions.dart';
 
+// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// Validates a standard Tajik registration: a serial, a letter group, and a
 /// two-digit region code, in whatever order the spec lays them out.
 ///

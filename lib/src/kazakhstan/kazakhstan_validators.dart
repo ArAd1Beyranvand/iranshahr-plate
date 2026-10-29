@@ -3,6 +3,12 @@ import 'package:plate_core/plate_core.dart';
 
 import 'kazakhstan_missions.dart';
 
+// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(py): [H9] Python re: \d/\w match Unicode; keep explicit [0-9]/[A-Z] classes (or re.ASCII).
+// TODO(ts): [H9] same flavour as Dart; port as is, cover accept/reject in the vectors (D9).
+// TODO(kt): [H9] Regex engine differs per target (JVM/JS/Native): keep to portable syntax.
 /// Judges `573 ABX | 15` by its groups `number`, `letters` and `region`.
 ///
 /// Three digits, then [letters] letters (three on private plates, two on
@@ -37,6 +43,9 @@ class KazakhstanValidator extends GatedPlateValidator {
   }
 }
 
+// TODO(py): [H9] Python re: \d/\w match Unicode; keep explicit [0-9]/[A-Z] classes (or re.ASCII).
+// TODO(ts): [H9] same flavour as Dart; port as is, cover accept/reject in the vectors (D9).
+// TODO(kt): [H9] Regex engine differs per target (JVM/JS/Native): keep to portable syntax.
 /// Judges the diplomatic plate `D 001 618`: a class letter, a three-digit
 /// mission code ([KazakhstanMissions]) and three digits. Refuses `007` on its
 /// own account as well as through the spec's restriction, always with

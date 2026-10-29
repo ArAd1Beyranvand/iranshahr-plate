@@ -2,6 +2,9 @@ import 'package:plate_core/plate_core.dart';
 
 import 'uzbekistan_missions.dart';
 
+// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
+// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// Regional plates: once the region is started, every keyed group must be
 /// full. Advisory, except for the spec's restrictions, which
 /// [GatedPlateValidator] reports first.
