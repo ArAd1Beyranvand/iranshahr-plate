@@ -1,7 +1,7 @@
 name: iranshahr_plate
 description: "Licence plates of Bahrain, Azerbaijan, Afghanistan, Armenia, Tajikistan, Kuwait, Qatar, Iraq, UAE, Turkey, Oman, Turkmenistan, Uzbekistan and Kazakhstan for plate_core."
 version: 0.1.0
-repository: https://github.com/ArAd1Beyranvand/iranshahr-plate
+repository: https://github.com/ArAd1Beyranvand/iranshahr-plate/tree/main/flutter
 resolution: workspace
 
 environment:
