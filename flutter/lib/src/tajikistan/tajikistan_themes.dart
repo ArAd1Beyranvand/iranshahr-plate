@@ -82,9 +82,6 @@ abstract final class TajikistanThemes {
     plateRadiusRatio: _plateRadiusRatio,
   );
 
-  // TODO(py): [D4-table] lookup table: becomes a dict in the export, no code.
-  // TODO(ts): [D4-table] lookup table: becomes data in the export, no code.
-  // TODO(kt): [D4-table] lookup table: becomes a map in the export, no code.
   /// [PlateSpec.resolveTheme] for `TajikistanPlates.car`: `TT` prints on
   /// [transport], anything else on [civilian].
   static PlateTheme byLetters(

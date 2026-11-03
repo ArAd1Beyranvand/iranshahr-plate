@@ -11,8 +11,7 @@ import 'oman_country.dart';
 /// 217 / 111 / 176 with thin dividers. Each is the source's field normalised
 /// to 520×110 (the article's 520×110 mm), x and y scaled separately.
 abstract final class _Layout {
-  static const double width = 520;
-  static const double height = 110;
+  static const double width = 520, height = 110;
 
   /// A digit row. Reference digit ink is 73.3 tall (artwork, y 19.9..93.2) and
   /// 81 (photo, 11.5..92.7). A slot scales its glyph down to the cell's width,
@@ -22,22 +21,18 @@ abstract final class _Layout {
   static const double digitHeight = 92;
 
   /// The name label's row: the full plate height, ink centred by its box.
-  static const double rowTop = 3;
-  static const double rowHeight = 106;
+  static const double rowTop = 3, rowHeight = 106;
 
   /// Latin letter row: caps 38 tall, y 61.9..100.1, centre 81. A 58 box
   /// centred there is the largest that fits under the canvas (bottom 110),
   /// ~32 of ink — 84% of the reference.
-  static const double latinTop = 52;
-  static const double latinHeight = 58;
+  static const double latinTop = 52, latinHeight = 58;
 
   /// Arabic letter row: ink y 8.4..54.2 (artwork, the tall `ك`), centre 31;
   /// both columns span x 202..325 in the golden against 200.5..327.2. The
   /// ink is ~25 tall in Vazirmatn (ref 46), centred on 29.5 (ref 31): the
   /// reference letters are drawn taller than the face's.
-  static const double arabicTop = 0;
-  static const double arabicHeight = 44;
-  static const double arabicGlyph = 52;
+  static const double arabicTop = 0, arabicHeight = 44, arabicGlyph = 52;
 
   /// `عمان` is a calligraphic word in the reference (71 tall, 123 wide in the
   /// artwork); Vazirmatn is far squatter, so the glyph is sized to the
@@ -137,10 +132,12 @@ abstract final class OmanPlates {
           ),
           length: 5,
           minLength: 4,
+          group: 'number',
         ),
         PlateSlot(
           alphabet: OmanAlphabets.letters,
           box: PlateBox(left, _Layout.latinTop, width, _Layout.latinHeight),
+          group: 'letters',
         ),
       ],
       mirrors: <PlateMirror>[
@@ -163,10 +160,6 @@ abstract final class OmanPlates {
           ),
           glyphHeight: p.nameGlyph,
         ),
-      ],
-      textGroups: const <PlateTextGroup>[
-        PlateTextGroup(<int>[0], key: 'number'),
-        PlateTextGroup(<int>[1], key: 'letters'),
       ],
     );
   }();

@@ -15,9 +15,6 @@ abstract final class TajikistanCountry {
     panelColor: Color(0x00000000),
     panelTextColor: null,
     flagAspectRatio: 2, // the flag's official 1:2
-    // TODO(py): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
-    // TODO(ts): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
-    // TODO(kt): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
     flag: SvgPlateAsset(
       'assets/flags/Flag_of_Tajikistan.svg',
       package: 'iranshahr_plate',

@@ -60,9 +60,6 @@ abstract final class AfghanistanThemes {
     plateRadiusRatio: _plateRadiusRatio,
   );
 
-  // TODO(py): [D4-code] resolver with logic: hand-port against the same vectors (D9).
-  // TODO(ts): [D4-code] resolver with logic: hand-port against the same vectors (D9).
-  // TODO(kt): [D4-code] resolver with logic: hand-port against the same vectors (D9).
   /// [PlateSpec.resolveTheme] for plates with a class register: taxi and bus
   /// (`ت`, `ب`) print on [transport], every other class on [civilian], keeping
   /// [base]'s rim and corner.

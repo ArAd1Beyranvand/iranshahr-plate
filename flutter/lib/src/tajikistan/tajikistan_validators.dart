@@ -3,9 +3,6 @@ import 'package:plate_core/plate_core.dart';
 import 'tajikistan_alphabets.dart';
 import 'tajikistan_regions.dart';
 
-// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// Validates a standard Tajik registration: a serial, a letter group, and a
 /// two-digit region code, in whatever order the spec lays them out.
 ///
@@ -124,10 +121,7 @@ class TajikistanPlateValidator extends GatedPlateValidator {
 /// registered to a Tajik region — so [TajikistanRegions] has nothing to say
 /// about it, and all three groups are judged on their own shape.
 class TajikistanForeignPlateValidator extends GatedPlateValidator {
-  const TajikistanForeignPlateValidator();
-
-  @override
-  String get gateGroup => 'serial';
+  const TajikistanForeignPlateValidator() : super('serial');
 
   @override
   PlateValidation judge(PlateEntry entry) {
@@ -155,10 +149,7 @@ class TajikistanForeignPlateValidator extends GatedPlateValidator {
 /// digit. The spec's own alphabet already holds the code to those five, so what
 /// is left is the shape of the digits and that the code is one of them.
 class TajikistanDiplomaticPlateValidator extends GatedPlateValidator {
-  const TajikistanDiplomaticPlateValidator();
-
-  @override
-  String get gateGroup => 'tail';
+  const TajikistanDiplomaticPlateValidator() : super('tail');
 
   @override
   PlateValidation judge(PlateEntry entry) {

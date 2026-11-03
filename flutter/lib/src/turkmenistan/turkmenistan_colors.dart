@@ -19,6 +19,4 @@ abstract final class TurkmenistanColors {
   /// ink a dark slate rather than black.
   static const Color classicField = Color(0xFFF2F2F5);
   static const Color classicInk = Color(0xFF343C44);
-
-  static const Color inactive = Color(0xFFB0B0B0);
 }

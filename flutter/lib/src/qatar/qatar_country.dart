@@ -33,7 +33,6 @@ abstract final class QatarCountry {
   /// The maroon hoist block: civilian plates in every size.
   static const PlateCountry civilian = PlateCountry(
     code: 'qa',
-    captionLines: <String>[],
     panelColor: QatarColors.maroon,
     panelTextColor: QatarColors.onMaroon,
     flagAspectRatio: _flagAspectRatio,
@@ -43,7 +42,6 @@ abstract final class QatarCountry {
   /// the whole plate is blue and the wording sits on it as labels.
   static const PlateCountry police = PlateCountry(
     code: 'qa',
-    captionLines: <String>[],
     panelColor: QatarColors.policeBlue,
     panelTextColor: QatarColors.onPoliceBlue,
     flagAspectRatio: _flagAspectRatio,

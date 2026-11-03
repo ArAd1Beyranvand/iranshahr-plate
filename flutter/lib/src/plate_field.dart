@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/widgets.dart' show Color;
 import 'package:plate_core/plate_core.dart';
 
@@ -29,6 +27,6 @@ PlateSlot plateField({
     color: color,
     spacing: count == 1 || minLength != null
         ? 0
-        : math.max(0, step - 0.6 * 0.72 * height),
+        : plateRunSpacing(step, height),
   );
 }

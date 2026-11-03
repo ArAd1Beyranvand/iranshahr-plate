@@ -22,8 +22,7 @@ abstract final class UzbekistanThemes {
   );
 
   /// Temporary, trailer and motorcycle plates are black on white too.
-  static final PlateTheme temporary = passenger;
-  static final PlateTheme trailer = passenger;
+  static final PlateTheme temporary = passenger, trailer = passenger;
   static final PlateTheme motorcycle = passenger;
 
   static final PlateTheme foreignCitizen = _mono(
@@ -38,9 +37,6 @@ abstract final class UzbekistanThemes {
     UzbekistanColors.inactiveOnDark,
   );
 
-  // TODO(py): [D4-table] lookup table: becomes a dict in the export, no code.
-  // TODO(ts): [D4-table] lookup table: becomes data in the export, no code.
-  // TODO(kt): [D4-table] lookup table: becomes a map in the export, no code.
   /// Green for a foreign company's `M`, yellow otherwise.
   static PlateTheme byClass(
     PlateTheme base,

@@ -18,19 +18,15 @@ import 'afghanistan_themes.dart';
 ///
 /// The province is the last slot of every spec except [kabul6].
 abstract final class AfghanistanPlates {
-  static const double _width = 420;
-  static const double _height = 175;
+  static const double _width = 420, _height = 175;
 
   /// The upper band holds the Iranian-numeral serial and Persian class letter,
   /// the lower their Latin twins. Core sets a glyph at 0.72 of the height it is
   /// handed, so these are as deep as two bands can be and clear the frame.
-  static const double _upperTop = 2;
-  static const double _lowerTop = 82;
-  static const double _bandHeight = 78;
+  static const double _upperTop = 2, _lowerTop = 82, _bandHeight = 78;
 
   /// The serial's edges; a shorter run sits centred in the box.
-  static const double _serialLeft = 106;
-  static const double _serialRight = 310;
+  static const double _serialLeft = 106, _serialRight = 310;
 
   /// The block is 84×156: name slot, emblem, code mirror. The panel draws only
   /// the emblem, so its box is the block's middle band.
@@ -183,8 +179,7 @@ abstract final class AfghanistanPlates {
     resolveTheme: AfghanistanThemes.byClass,
   );
 
-  static const double _cycleSerialRight = 196;
-  static const double _cycleBandHeight = 48;
+  static const double _cycleSerialRight = 196, _cycleBandHeight = 48;
   static const PlateBox _cyclePanelBox = PlateBox(10, 5, 54, 95);
 
   /// Three figures for a motorcycle (`م`/`M`), four for a rickshaw (`ر`/`TRC`):
@@ -277,10 +272,7 @@ abstract final class AfghanistanPlates {
       ),
       PlateLabel(text: 'CD', box: PlateBox(322, 56, 90, 60), glyphHeight: 54),
     ],
-    groups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0], key: 'mission'),
-      PlateTextGroup(<int>[1], key: 'serial'),
-    ],
+    groups: PlateTextGroup.perSlot(<String>['mission', 'serial']),
   );
 
   /// A fixed dash in each band where a class code would be.
@@ -336,10 +328,7 @@ abstract final class AfghanistanPlates {
         color: AfghanistanColors.temporaryRed,
       ),
     ],
-    textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0], key: 'serial'),
-      PlateTextGroup(<int>[1], key: 'province'),
-    ],
+    textGroups: PlateTextGroup.perSlot(<String>['serial', 'province']),
   );
 
   /// Cross-border plate for vehicles running to Iran. Reconstructed from the
@@ -364,10 +353,7 @@ abstract final class AfghanistanPlates {
         box: PlateBox(316, 68, 98, 40),
       ),
     ],
-    groups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0], key: 'serial'),
-      PlateTextGroup(<int>[1], key: 'category'),
-    ],
+    groups: PlateTextGroup.perSlot(<String>['serial', 'category']),
   );
 
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[

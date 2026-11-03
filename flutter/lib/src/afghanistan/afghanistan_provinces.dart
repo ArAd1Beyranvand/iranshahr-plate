@@ -62,7 +62,6 @@ enum AfghanistanProvince {
     id: 'af.province',
     characters: <String>[for (final p in values) p.code],
     input: AlphabetInput.chosen,
-    isNumeric: false,
     direction: TextDirection.rtl,
     glyphs: <String, String>{for (final p in values) p.code: p.localName},
   );
@@ -72,7 +71,6 @@ enum AfghanistanProvince {
     id: 'af.provinceCode',
     characters: <String>[for (final p in values) p.code],
     input: AlphabetInput.chosen,
-    isNumeric: false,
   );
 }
 
@@ -83,9 +81,6 @@ enum AfghanistanPanelInk {
   /// Black line art, for white, yellow and blue fields.
   dark(
     'af',
-    // TODO(py): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
-    // TODO(ts): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
-    // TODO(kt): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
     SvgPlateAsset('assets/emblems/Darul_Aman_dark.svg', package: _package),
   ),
 
@@ -106,7 +101,6 @@ enum AfghanistanPanelInk {
   /// is part of the plate's value rather than of the rendered country.
   PlateCountry get country => PlateCountry(
     code: _code,
-    captionLines: const <String>[],
     // Transparent: the block is printed straight onto five different fields.
     panelColor: const Color(0x00000000),
     panelTextColor: const Color(0x00000000),

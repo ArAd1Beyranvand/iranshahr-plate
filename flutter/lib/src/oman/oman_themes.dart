@@ -8,8 +8,7 @@ abstract final class OmanThemes {
   /// Frame 3.9 of 110 (`Оман1.gif` outer edge to field; 4.4 on the photograph);
   /// corner ~14.6 — the artwork's panel corner measured at ~10.7 plus the
   /// frame.
-  static const double _border = 0.037;
-  static const double _radius = 0.13;
+  static const double _border = 0.037, _radius = 0.13;
 
   static PlateTheme _mono(
     Color field,

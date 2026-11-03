@@ -36,7 +36,6 @@ abstract final class BahrainCountry {
 
   static const PlateCountry civilian = PlateCountry(
     code: 'bh',
-    captionLines: <String>[],
     // The field colour, so the panel is invisible.
     panelColor: BahrainColors.field,
     panelTextColor: BahrainColors.blue,
@@ -49,7 +48,6 @@ abstract final class BahrainCountry {
   /// Green band; its labels are reversed out white.
   static const PlateCountry diplomatic = PlateCountry(
     code: 'bh',
-    captionLines: <String>[],
     panelColor: BahrainColors.diplomaticGreen,
     panelTextColor: BahrainColors.onDiplomaticGreen,
     flagAspectRatio: _flagAspectRatio,
@@ -58,7 +56,6 @@ abstract final class BahrainCountry {
   /// Pale blue band; its labels are dark.
   static const PlateCountry police = PlateCountry(
     code: 'bh',
-    captionLines: <String>[],
     panelColor: BahrainColors.policeBlue,
     panelTextColor: BahrainColors.onPoliceBlue,
     flagAspectRatio: _flagAspectRatio,

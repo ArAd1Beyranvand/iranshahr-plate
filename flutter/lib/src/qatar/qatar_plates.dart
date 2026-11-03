@@ -75,8 +75,7 @@ abstract final class QatarPlates {
   /// face, less the same margin. Every civilian size below fills exactly this
   /// span, which is what makes three, four and five digits read as one design
   /// at three lengths rather than as a plate with a gap in it.
-  static const double _serialLeft = 209;
-  static const double _serialRight = 500;
+  static const double _serialLeft = 209, _serialRight = 500;
 
   /// The civilian serial: one field of three to five digits across the room
   /// between [_serialLeft] and [_serialRight]. A shorter serial sits centred

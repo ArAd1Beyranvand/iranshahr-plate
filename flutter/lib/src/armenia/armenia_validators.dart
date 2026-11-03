@@ -4,9 +4,6 @@ import 'armenia_alphabets.dart';
 import 'armenia_regions.dart';
 import 'armenia_special_plates.dart';
 
-// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// Validates a private registration, `NN LL NNN`: a region code `ArmeniaRegions`
 /// issues, letters that are neither `G` nor `I` (reserved to the state since 2015,
 /// see [ArmeniaAlphabets.stateVehiclesOnly]), and a three-digit serial.
@@ -15,15 +12,13 @@ import 'armenia_special_plates.dart';
 /// ([ArmeniaAlphabets.introduced]); left null the check does not run, since
 /// today every letter is legal. Advisory: it never prevents input.
 class ArmeniaPlateValidator extends GatedPlateValidator {
-  const ArmeniaPlateValidator({this.issuedYear, this.issuedMonth = 12});
+  const ArmeniaPlateValidator({this.issuedYear, this.issuedMonth = 12})
+    : super('serial');
 
   final int? issuedYear;
 
   /// The month within [issuedYear]; December by default.
   final int issuedMonth;
-
-  @override
-  String get gateGroup => 'serial';
 
   @override
   PlateValidation judge(PlateEntry entry) {
@@ -103,10 +98,7 @@ class ArmeniaPlateValidator extends GatedPlateValidator {
 /// combination in `ArmeniaSpecialPlates`. So the `G` and `I` that
 /// [ArmeniaPlateValidator] rejects are required here.
 class ArmeniaPublicPlateValidator extends GatedPlateValidator {
-  const ArmeniaPublicPlateValidator();
-
-  @override
-  String get gateGroup => 'tail';
+  const ArmeniaPublicPlateValidator() : super('tail');
 
   @override
   PlateValidation judge(PlateEntry entry) {
@@ -136,10 +128,7 @@ class ArmeniaPublicPlateValidator extends GatedPlateValidator {
 
 /// Validates a trailer number, `NNN L` over `NN`.
 class ArmeniaTrailerPlateValidator extends GatedPlateValidator {
-  const ArmeniaTrailerPlateValidator();
-
-  @override
-  String get gateGroup => 'tail';
+  const ArmeniaTrailerPlateValidator() : super('tail');
 
   @override
   PlateValidation judge(PlateEntry entry) {
@@ -168,10 +157,7 @@ class ArmeniaTrailerPlateValidator extends GatedPlateValidator {
 
 /// Validates a bus number, `NNNN L`.
 class ArmeniaBusPlateValidator extends GatedPlateValidator {
-  const ArmeniaBusPlateValidator();
-
-  @override
-  String get gateGroup => 'class';
+  const ArmeniaBusPlateValidator() : super('class');
 
   @override
   PlateValidation judge(PlateEntry entry) {
@@ -193,10 +179,7 @@ class ArmeniaBusPlateValidator extends GatedPlateValidator {
 /// Validates a diplomatic number, `NN L NNN`. The leading pair is the mission's
 /// country code, which is not checked; the class letter is `D` or `T`.
 class ArmeniaDiplomaticPlateValidator extends GatedPlateValidator {
-  const ArmeniaDiplomaticPlateValidator();
-
-  @override
-  String get gateGroup => 'serial';
+  const ArmeniaDiplomaticPlateValidator() : super('serial');
 
   @override
   PlateValidation judge(PlateEntry entry) {
@@ -221,10 +204,7 @@ class ArmeniaDiplomaticPlateValidator extends GatedPlateValidator {
 /// Validates a Ministry of Defence number, `ՊՆ NNNN Մ`; the class `Մ` or `Տ` is
 /// stored as `M` and `T`.
 class ArmeniaMilitaryPlateValidator extends GatedPlateValidator {
-  const ArmeniaMilitaryPlateValidator();
-
-  @override
-  String get gateGroup => 'class';
+  const ArmeniaMilitaryPlateValidator() : super('class');
 
   @override
   PlateValidation judge(PlateEntry entry) {
@@ -244,12 +224,9 @@ class ArmeniaMilitaryPlateValidator extends GatedPlateValidator {
 
 /// Validates the UN plate, whose only typed field is the serial.
 class ArmeniaSerialPlateValidator extends GatedPlateValidator {
-  const ArmeniaSerialPlateValidator({required this.length});
+  const ArmeniaSerialPlateValidator({required this.length}) : super('serial');
 
   final int length;
-
-  @override
-  String get gateGroup => 'serial';
 
   @override
   PlateValidation judge(PlateEntry entry) =>

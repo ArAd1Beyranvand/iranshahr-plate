@@ -55,7 +55,6 @@ abstract final class IraqGovernorates {
 abstract final class IraqCountry {
   static const PlateCountry _band = PlateCountry(
     code: 'iq',
-    captionLines: <String>[],
     panelColor: IraqColors.field,
     panelTextColor: IraqColors.ink,
   );
@@ -67,7 +66,6 @@ abstract final class IraqCountry {
   /// Vehicle for hire, bus, taxi: red band.
   static const PlateCountry hire = PlateCountry(
     code: 'iq',
-    captionLines: <String>[],
     panelColor: IraqColors.hireBand,
     panelTextColor: IraqColors.ink,
   );
@@ -75,7 +73,6 @@ abstract final class IraqCountry {
   /// Governmental: blue band.
   static const PlateCountry government = PlateCountry(
     code: 'iq',
-    captionLines: <String>[],
     panelColor: IraqColors.governmentBand,
     panelTextColor: IraqColors.ink,
   );
@@ -83,7 +80,6 @@ abstract final class IraqCountry {
   /// Trade — trucks, tractors, cranes: yellow band.
   static const PlateCountry trade = PlateCountry(
     code: 'iq',
-    captionLines: <String>[],
     panelColor: IraqColors.tradeBand,
     panelTextColor: IraqColors.ink,
   );
@@ -91,7 +87,6 @@ abstract final class IraqCountry {
   /// Agricultural: green band.
   static const PlateCountry agricultural = PlateCountry(
     code: 'iq',
-    captionLines: <String>[],
     panelColor: IraqColors.agriculturalBand,
     panelTextColor: IraqColors.ink,
   );
@@ -100,7 +95,6 @@ abstract final class IraqCountry {
   /// throughout — which is the theme's business, not the band's.
   static const PlateCountry temporary = PlateCountry(
     code: 'iq',
-    captionLines: <String>[],
     panelColor: IraqColors.field,
     panelTextColor: IraqColors.temporaryInk,
   );

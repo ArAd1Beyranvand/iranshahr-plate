@@ -8,13 +8,9 @@ import 'kazakhstan_colors.dart';
 abstract final class KazakhstanCountry {
   static const PlateCountry kazakhstan = PlateCountry(
     code: 'kz',
-    captionLines: <String>[],
     panelColor: KazakhstanColors.flagBlue,
     panelTextColor: KazakhstanColors.black,
     flagAspectRatio: 2,
-    // TODO(py): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
-    // TODO(ts): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
-    // TODO(kt): [H20][D6] flag asset by package + path; convert to PlateDrawing at export time.
     flag: SvgPlateAsset(
       'assets/icons/kazakhstan_flag.svg',
       package: 'iranshahr_plate',

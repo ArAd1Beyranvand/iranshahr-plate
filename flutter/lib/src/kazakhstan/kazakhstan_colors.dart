@@ -11,6 +11,4 @@ abstract final class KazakhstanColors {
   /// so glare skews it): mean of three unlit patches (254, 95, 13), an
   /// orange-red.
   static const Color diplomaticOrange = Color(0xFFFE5F0D);
-
-  static const Color inactive = Color(0xFFB0B0B0);
 }

@@ -2,17 +2,11 @@ import 'package:plate_core/plate_core.dart';
 
 import 'uzbekistan_missions.dart';
 
-// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// Regional plates: once the region is started, every keyed group must be
 /// full. Advisory, except for the spec's restrictions, which
 /// [GatedPlateValidator] reports first.
 class UzbekistanValidator extends GatedPlateValidator {
-  const UzbekistanValidator();
-
-  @override
-  String get gateGroup => 'region';
+  const UzbekistanValidator() : super('region');
 
   @override
   PlateValidation judge(PlateEntry entry) {
@@ -35,10 +29,7 @@ class UzbekistanValidator extends GatedPlateValidator {
 /// mission register refusing `011` on its own account as well as through the
 /// spec's restriction.
 class UzbekistanDiplomaticValidator extends GatedPlateValidator {
-  const UzbekistanDiplomaticValidator();
-
-  @override
-  String get gateGroup => 'mission';
+  const UzbekistanDiplomaticValidator() : super('mission');
 
   @override
   PlateValidation validate(PlateEntry entry) {
@@ -66,10 +57,7 @@ class UzbekistanDiplomaticValidator extends GatedPlateValidator {
 
 /// UN plates, `UN 0123`: four digits, no region.
 class UzbekistanUnitedNationsValidator extends GatedPlateValidator {
-  const UzbekistanUnitedNationsValidator();
-
-  @override
-  String get gateGroup => 'serial';
+  const UzbekistanUnitedNationsValidator() : super('serial');
 
   @override
   PlateValidation judge(PlateEntry entry) =>

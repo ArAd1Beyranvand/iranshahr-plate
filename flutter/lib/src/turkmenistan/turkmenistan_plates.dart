@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/widgets.dart' show AssetImage, EdgeInsets;
 import 'package:plate_alphabet/plate_alphabet.dart';
 import 'package:plate_core/plate_core.dart';
@@ -149,25 +147,21 @@ PlateSlot _field(PlateAlphabet alphabet, _Run run, int count) {
       height,
     ),
     length: count,
-    spacing: count == 1 ? 0 : max(0, run.pitch - 0.6 * 0.72 * height),
+    spacing: count == 1 ? 0 : plateRunSpacing(run.pitch, height),
   );
 }
 
 PlateLabel _label(String text, _Ink ink) {
   final double glyph = (ink.bottom - ink.top) / 0.55;
-  final double width = ink.right - ink.left;
-  final double cx = (ink.left + ink.right) / 2;
+  final double width = ink.right - ink.left, cx = (ink.left + ink.right) / 2;
   final double cy = (ink.top + ink.bottom) / 2;
   return PlateLabel(
     text: text,
-    box: PlateBox(cx - width / 2, cy - glyph / 2, width, glyph),
+    box: PlateBox.centered(cx, cy, width, glyph),
     glyphHeight: glyph,
   );
 }
 
-// TODO(py): [H2][D6] ImageProvider: reference the raster as package + path; importlib.resources.
-// TODO(ts): [H2][D6] ImageProvider: reference the raster as package + path; import as asset URL.
-// TODO(kt): [H2][D6] ImageProvider: reference the raster as package + path; Res/compose resources.
 // Commons: File:Flag_of_Turkmenistan.svg, green recoloured to the plates'
 // 28AE66; assets/icons/turkmenistan_flag.svg is the vector. The strip and the
 // crescent are crops of it (carpet göls; crescent with five stars).

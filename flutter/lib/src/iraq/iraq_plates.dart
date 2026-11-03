@@ -20,8 +20,7 @@ abstract final class _Layout {
   // One row: governorate code, class letter, five-digit serial.
   // ---------------------------------------------------------------------
 
-  static const double largeWidth = 520;
-  static const double largeHeight = 110;
+  static const double largeWidth = 520, largeHeight = 110;
 
   /// The band's size; the red is a background region running out under the frame.
   static const PlateBox largeBand = PlateBox(4.8, 4.7, 39.3, 100.6);
@@ -35,12 +34,10 @@ abstract final class _Layout {
   /// a 127-unit box. 106 is the tallest that fits and keeps the ink centred, landing
   /// at ~78% of reference. The top is 1.4, not 0.7: a cap sits 0.7 above its line
   /// box's centre.
-  static const double largeRowTop = 1.4;
-  static const double largeRowHeight = 106;
+  static const double largeRowTop = 1.4, largeRowHeight = 106;
 
   /// Governorate pair: ink centres 81.8 and 131.1, so a 49.3 pitch.
-  static const double largeCodeLeft = 57.15;
-  static const double largeCodeCell = 49.3;
+  static const double largeCodeLeft = 57.15, largeCodeCell = 49.3;
 
   /// Class letter: ink 187.7..228.6, centre 208.15.
   static const PlateBox largeLetter = PlateBox(
@@ -51,15 +48,13 @@ abstract final class _Layout {
   );
 
   /// Serial: ink centres 284.2..477.5, so a 48.3 pitch from a 260.05 left.
-  static const double largeSerialLeft = 260.05;
-  static const double largeSerialCell = 48.3;
+  static const double largeSerialLeft = 260.05, largeSerialCell = 48.3;
 
   /// "IRQ" set as three stacked upright letters, not rotated text, centred on
   /// the band. Reference cap height 20.9 at a 34.9 line pitch; core prints
   /// 0.525 of [largeStackGlyph] as ink and steps lines by `0.72 * glyph *
   /// lineHeight`.
-  static const double largeStackGlyph = 39.8;
-  static const double largeStackLineHeight = 1.22;
+  static const double largeStackGlyph = 39.8, largeStackLineHeight = 1.22;
 
   /// Kurdistan tightens the "IRQ" stack and lifts it to make room for "KR".
   static const double largeStackLineHeightKr = 0.835;
@@ -74,8 +69,7 @@ abstract final class _Layout {
   // European plate. Two rows: code and letter over the serial.
   // ---------------------------------------------------------------------
 
-  static const double smallWidth = 335;
-  static const double smallHeight = 155;
+  static const double smallWidth = 335, smallHeight = 155;
 
   /// Measured x 4.2..38.6, y 3.9..151.1; a background region, as [largeBand].
   static const PlateBox smallBand = PlateBox(4.2, 3.9, 34.4, 147.2);
@@ -88,14 +82,12 @@ abstract final class _Layout {
   /// (84 and 82.2 at most), at ~78% of reference. The bottom row cannot take the
   /// 1.3 cap correction of [largeRowTop]: 73 is the last top that fits, so the 1.4
   /// is the canvas running out.
-  static const double smallRowHeight = 82;
-  static const double smallTopRowTop = 2.3;
+  static const double smallRowHeight = 82, smallTopRowTop = 2.3;
   static const double smallBottomRowTop = 73.0;
 
   /// Both rows sit on one five-column grid: ink centres 84.0..282.7, a 49.7
   /// pitch. The code takes columns 0 and 1 and the serial takes all five.
-  static const double smallGridLeft = 59.15;
-  static const double smallGridCell = 49.7;
+  static const double smallGridLeft = 59.15, smallGridCell = 49.7;
 
   /// The class letter is the one cell off the grid: its ink centres on 235.65,
   /// not on column 3's 233.1.
@@ -108,8 +100,7 @@ abstract final class _Layout {
 
   /// "IRQ" at a 22.0 cap; Kurdistan does not move it here, only adds "KR" below.
   static const PlateBox smallStack = PlateBox(4.2, 4.5, 32.5, 110);
-  static const double smallStackGlyph = 41.9;
-  static const double smallStackLineHeight = 1.08;
+  static const double smallStackGlyph = 41.9, smallStackLineHeight = 1.08;
 
   /// "KR": cap height 15.1, centred on y 129.8.
   static const PlateBox smallKrBox = PlateBox(4.2, 115.8, 32.5, 28);
@@ -118,8 +109,7 @@ abstract final class _Layout {
   /// Temporary plates put a governorate code, a dash and a two-digit year on
   /// the top row instead of a code and a letter: five evenly pitched cells of
   /// their own, ink centres 87.7..278.5 at a 47.7 pitch.
-  static const double temporaryGridLeft = 63.85;
-  static const double temporaryGridCell = 47.7;
+  static const double temporaryGridLeft = 63.85, temporaryGridCell = 47.7;
 }
 
 /// Only the current series: the earlier four (1988-2001, 2001-2008, 2008-2024,
@@ -196,15 +186,9 @@ abstract final class IraqPlates {
     textGroups: _groups,
   );
 
-  // TODO(py): [D4-table] lookup table: becomes a dict in the export, no code.
-  // TODO(ts): [D4-table] lookup table: becomes data in the export, no code.
-  // TODO(kt): [D4-table] lookup table: becomes a map in the export, no code.
   /// Blank a label unless the typed governorate is (or is not) in Kurdistan.
   static String? _inKurdistan(String Function(String key) group) =>
       IraqGovernorates.isKurdistan(group('governorate')) ? null : '';
-  // TODO(py): [D4-table] lookup table: becomes a dict in the export, no code.
-  // TODO(ts): [D4-table] lookup table: becomes data in the export, no code.
-  // TODO(kt): [D4-table] lookup table: becomes a map in the export, no code.
   static String? _outsideKurdistan(String Function(String key) group) =>
       IraqGovernorates.isKurdistan(group('governorate')) ? '' : null;
 
@@ -341,11 +325,11 @@ abstract final class IraqPlates {
         glyphHeight: _Layout.smallRowHeight,
       ),
     ],
-    textGroups: const <PlateTextGroup>[
-      PlateTextGroup(<int>[0], key: 'governorate'),
-      PlateTextGroup(<int>[1], key: 'year'),
-      PlateTextGroup(<int>[2], key: 'serial'),
-    ],
+    textGroups: PlateTextGroup.perSlot(<String>[
+      'governorate',
+      'year',
+      'serial',
+    ]),
   );
 
   static final List<PlateSpec> all = List<PlateSpec>.unmodifiable(<PlateSpec>[

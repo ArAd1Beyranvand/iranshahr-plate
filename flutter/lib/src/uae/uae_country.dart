@@ -9,7 +9,6 @@ import 'uae_colors.dart';
 abstract final class UaeCountry {
   static const PlateCountry uae = PlateCountry(
     code: 'ae',
-    captionLines: <String>[],
     panelColor: UaeColors.field,
     panelTextColor: UaeColors.ink,
   );

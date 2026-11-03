@@ -7,7 +7,6 @@ import 'turkmenistan_colors.dart';
 abstract final class TurkmenistanCountry {
   static const PlateCountry turkmenistan = PlateCountry(
     code: 'tm',
-    captionLines: <String>[],
     panelColor: TurkmenistanColors.green,
     panelTextColor: TurkmenistanColors.white,
   );

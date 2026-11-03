@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:plate_core/plate_core.dart';
 import 'package:flutter/widgets.dart';
 
@@ -19,28 +17,23 @@ import 'turkey_themes.dart';
 /// box on a 110 plate. [rowHeight] is the tallest box that stays on the canvas,
 /// giving ~90% of reference ink.
 abstract final class _Layout {
-  static const double width = 520;
-  static const double height = 110;
+  static const double width = 520, height = 110;
 
-  static const double rowCentre = 54.8;
-  static const double rowHeight = 2 * rowCentre;
+  static const double rowCentre = 54.8, rowHeight = 2 * rowCentre;
 
   /// Figures sit at a 44 pitch, letters at 52, groups a space of 14 apart; this
   /// reproduces the artwork's ink extents to within ~7.
   static const double digitPitch = 44;
 
   /// Pitches at which the longest form (three letters, five figures) fits right of the strip.
-  static const double varDigitPitch = 41;
-  static const double varLetterPitch = 48.4;
+  static const double varDigitPitch = 41, varLetterPitch = 48.4;
 
   /// A letter box's width over its pitch. Roboto Bold's M is ~0.87 em (69 here)
   /// against a 52 pitch; it is let scale ~10% down rather than ~25%.
-  static const double letterBoxRatio = 1.2;
-  static const double groupGap = 14;
+  static const double letterBoxRatio = 1.2, groupGap = 14;
 
   /// The TR strip, x 0..51.6, under the frame to the plate's edge.
-  static const double stripEnd = 51.6;
-  static const double stripCentre = 284.4;
+  static const double stripEnd = 51.6, stripCentre = 284.4;
   static const double plainCentre = width / 2;
 
   /// "TR" is set smaller and further right than the artwork because Roboto's is wider.
@@ -51,26 +44,21 @@ abstract final class _Layout {
   static const double taxiDivider = 3.5;
 
   /// The temporary plate's stripe falls 0.21 per mm, 18.8 tall, crossing the centreline at y 52.
-  static const double stripeAngle = -0.207;
-  static const double stripeTop = 52 - 9.4;
+  static const double stripeAngle = -0.207, stripeTop = 52 - 9.4;
   static const double stripeBottom = 52 + 9.4;
 
   /// The sample plate: a blue band x 172.2..374.4 between the province code
   /// (ink x 77.9..159.9) and the serial (ink x 383.4..489); "NUMUNE" ink
   /// x 213..333, y 22.7..47.3, "PLAKA" x 226..319, y 62.4..87.
-  static const double sampleBandStart = 172.2;
-  static const double sampleBandEnd = 374.4;
-  static const double sampleProvinceCentre = 118.9;
-  static const double sampleSerialCentre = 436.2;
+  static const double sampleBandStart = 172.2, sampleBandEnd = 374.4;
+  static const double sampleProvinceCentre = 118.9, sampleSerialCentre = 436.2;
 
   /// Roboto's figures are wider than the artwork's, so a 38 pitch keeps the first figure clear of the band.
-  static const double sampleSerialPitch = 38;
-  static const double sampleCaptionGlyph = 24.6 / ink;
+  static const double sampleSerialPitch = 38, sampleCaptionGlyph = 24.6 / ink;
 
   /// Parliament's labelled plate: "TBMM" ink x 54..194.6, y 47.7..84.6; its
   /// serial ink x 339.6..461.5.
-  static const double tbmmGlyph = 36.9 / ink;
-  static const double tbmmSerialCentre = 400.5;
+  static const double tbmmGlyph = 36.9 / ink, tbmmSerialCentre = 400.5;
 
   /// Bold Roboto's cap height at core's 0.72 glyph scale.
   static const double ink = 0.512;
@@ -81,25 +69,17 @@ abstract final class _Layout {
 /// in the bottom-left corner only. Boxes that fit the canvas give ~60% of the
 /// photographed ink height.
 abstract final class _Moto {
-  static const double width = 240;
-  static const double height = 150;
+  static const double width = 240, height = 150;
 
   /// Top row: "34" at a 40 pitch, "UF" at 54, ink x 11.9..236.5.
-  static const double topCentre = 124;
-  static const double topTop = 0;
-  static const double topHeight = 79;
-  static const double topDigitPitch = 40;
-  static const double topLetterPitch = 54;
-  static const double topGap = 40;
+  static const double topCentre = 124, topTop = 0, topHeight = 79;
+  static const double topDigitPitch = 40, topLetterPitch = 54, topGap = 40;
 
   /// Bottom row: "2409" at a 42.3 pitch, ink x 49.2..213.6.
-  static const double bottomCentre = 131.4;
-  static const double bottomTop = 79;
-  static const double bottomHeight = 71;
+  static const double bottomCentre = 131.4, bottomTop = 79, bottomHeight = 71;
   static const double bottomPitch = 42.3;
 
-  static const double stripTop = 89;
-  static const double stripEnd = 36.3;
+  static const double stripTop = 89, stripEnd = 36.3;
 
   /// "TR": ink x 8..30, y 130.9..145.5.
   static const PlateBox trBox = PlateBox(10, 130.9, 22, 14.6);
@@ -187,7 +167,7 @@ abstract final class TurkeyPlates {
           box: PlateBox(left - (width - run) / 2, top, width, height),
           length: count,
           minLength: min,
-          spacing: min == null ? math.max(0, pitch - 0.6 * 0.72 * height) : 0,
+          spacing: min == null ? plateRunSpacing(pitch, height) : 0,
         ),
       );
       left += run + gap;

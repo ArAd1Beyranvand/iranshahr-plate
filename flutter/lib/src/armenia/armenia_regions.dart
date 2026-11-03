@@ -58,8 +58,7 @@ enum ArmeniaProvince {
   const ArmeniaProvince(this.englishName, this.localName, this.codes);
 
   /// Neither name is printed: a plate names its region in digits only.
-  final String englishName;
-  final String localName;
+  final String englishName, localName;
 
   /// Two-digit codes as printed, with the leading zero.
   final List<String> codes;

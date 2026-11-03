@@ -28,13 +28,9 @@ import 'uae_country.dart';
 /// logotype is set as bold text, and its doubled codes (AA to EE) are not laid
 /// out; the code is one letter.
 abstract final class UaePlates {
-  static const double _longW = 520;
-  static const double _longH = 110;
-  static const double _shortW = 335;
-  static const double _shortH = 155;
+  static const double _longW = 520, _longH = 110, _shortW = 335, _shortH = 155;
 
-  static const double _latinInk = 0.55;
-  static const double _arabicInk = 0.65;
+  static const double _latinInk = 0.55, _arabicInk = 0.65;
 
   /// Sharjah's frame: 7 mm on the long plate, 8 on the short.
   static const double _sharjahLongBorder = 7 / _longH;
@@ -51,7 +47,7 @@ abstract final class UaePlates {
     Color? color,
   }) => PlateLabel(
     text: text,
-    box: PlateBox(x0, y0, x1 - x0, y1 - y0),
+    box: PlateBox.fromLTRB(x0, y0, x1, y1),
     glyphHeight: (y1 - y0) / (arabic ? _arabicInk : _latinInk),
     color: color,
   );
@@ -89,7 +85,7 @@ abstract final class UaePlates {
       minLength: minLength,
       spacing: count == 1 || minLength != null
           ? 0
-          : math.max(0, pitch - 0.6 * 0.72 * height),
+          : plateRunSpacing(pitch, height),
       color: color,
     );
   }
@@ -154,10 +150,7 @@ abstract final class UaePlates {
       labels: labels,
       background: background,
       borderWidthRatioOverride: borderWidthRatioOverride,
-      textGroups: <PlateTextGroup>[
-        PlateTextGroup(<int>[0], key: 'code'),
-        PlateTextGroup(<int>[1], key: 'serial'),
-      ],
+      textGroups: PlateTextGroup.perSlot(<String>['code', 'serial']),
     );
   }
 

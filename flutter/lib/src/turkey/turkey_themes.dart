@@ -15,8 +15,7 @@ import 'turkey_colors.dart';
 /// The ratios are of the plate's height, so the motorcycle plate, which reuses
 /// [civilian], gets a proportionally heavier frame.
 abstract final class TurkeyThemes {
-  static const double _stripFrame = 3.5 / 110;
-  static const double _plainFrame = 3.2 / 110;
+  static const double _stripFrame = 3.5 / 110, _plainFrame = 3.2 / 110;
   static const double _radius = 9 / 110;
 
   static PlateTheme _theme({
@@ -120,9 +119,6 @@ abstract final class TurkeyThemes {
     frame: TurkeyColors.gold,
   );
 
-  // TODO(py): [D4-table] lookup table: becomes a dict in the export, no code.
-  // TODO(ts): [D4-table] lookup table: becomes data in the export, no code.
-  // TODO(kt): [D4-table] lookup table: becomes a map in the export, no code.
   /// [PlateSpec.resolveTheme] for `TurkeyPlates.strip` and `plain`: the
   /// letters that name a class set its colours (each exists on one shape
   /// only), and `T` alone prints the taxi's black rule at the strip.

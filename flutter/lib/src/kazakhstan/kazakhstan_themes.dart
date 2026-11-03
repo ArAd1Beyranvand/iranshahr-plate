@@ -12,7 +12,6 @@ abstract final class KazakhstanThemes {
   static final PlateTheme private = PlateTheme.monochrome(
     field: KazakhstanColors.white,
     ink: KazakhstanColors.black,
-    inactive: KazakhstanColors.inactive,
     borderWidthRatio: 3.6 / 110,
     plateRadiusRatio: 6 / 110,
   );
@@ -22,7 +21,6 @@ abstract final class KazakhstanThemes {
   static final PlateTheme diplomatic = PlateTheme.monochrome(
     field: KazakhstanColors.diplomaticOrange,
     ink: KazakhstanColors.white,
-    inactive: KazakhstanColors.inactive,
     borderWidthRatio: 3.7 / 110,
     plateRadiusRatio: 6 / 110,
   );

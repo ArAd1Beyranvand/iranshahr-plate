@@ -3,12 +3,6 @@ import 'package:plate_core/plate_core.dart';
 
 import 'kazakhstan_missions.dart';
 
-// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(py): [H9] Python re: \d/\w match Unicode; keep explicit [0-9]/[A-Z] classes (or re.ASCII).
-// TODO(ts): [H9] same flavour as Dart; port as is, cover accept/reject in the vectors (D9).
-// TODO(kt): [H9] Regex engine differs per target (JVM/JS/Native): keep to portable syntax.
 /// Judges `573 ABX | 15` by its groups `number`, `letters` and `region`.
 ///
 /// Three digits, then [letters] letters (three on private plates, two on
@@ -16,12 +10,9 @@ import 'kazakhstan_missions.dart';
 /// nothing is reported until the plate is complete. Reports, never bars a
 /// keystroke.
 class KazakhstanValidator extends GatedPlateValidator {
-  const KazakhstanValidator({this.letters = 3});
+  const KazakhstanValidator({this.letters = 3}) : super('region');
 
   final int letters;
-
-  @override
-  String get gateGroup => 'region';
 
   static const String reasonNumber = 'The number is three digits.';
   static const String reasonLetters =
@@ -43,18 +34,12 @@ class KazakhstanValidator extends GatedPlateValidator {
   }
 }
 
-// TODO(py): [H9] Python re: \d/\w match Unicode; keep explicit [0-9]/[A-Z] classes (or re.ASCII).
-// TODO(ts): [H9] same flavour as Dart; port as is, cover accept/reject in the vectors (D9).
-// TODO(kt): [H9] Regex engine differs per target (JVM/JS/Native): keep to portable syntax.
 /// Judges the diplomatic plate `D 001 618`: a class letter, a three-digit
 /// mission code ([KazakhstanMissions]) and three digits. Refuses `007` on its
 /// own account as well as through the spec's restriction, always with
 /// [KazakhstanMissions.notFound].
 class KazakhstanDiplomaticValidator extends GatedPlateValidator {
-  const KazakhstanDiplomaticValidator();
-
-  @override
-  String get gateGroup => 'number';
+  const KazakhstanDiplomaticValidator() : super('number');
 
   static const String reasonClass = 'The class is one letter.';
   static const String reasonNumber = 'The number is three digits.';

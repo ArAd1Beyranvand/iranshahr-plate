@@ -2,9 +2,6 @@ import 'package:plate_core/plate_core.dart';
 
 import 'turkey_alphabets.dart';
 
-// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// What a Turkish registration may contain, as description rather than
 /// restriction: it reports on a value, it does not bar it from being typed.
 /// Transcribed from Wikipedia's "Vehicle registration plates of Turkey".

@@ -7,7 +7,6 @@ import 'oman_colors.dart';
 abstract final class OmanCountry {
   static const PlateCountry oman = PlateCountry(
     code: 'om',
-    captionLines: <String>[],
     panelColor: OmanColors.yellow,
     panelTextColor: OmanColors.black,
   );

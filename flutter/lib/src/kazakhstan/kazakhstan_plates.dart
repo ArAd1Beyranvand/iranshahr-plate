@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/widgets.dart' show AssetImage, EdgeInsets;
 import 'package:plate_alphabet/plate_alphabet.dart';
 import 'package:plate_core/plate_core.dart';
@@ -59,22 +57,16 @@ PlateSlot _field(PlateAlphabet alphabet, _Run run, int count) {
       2 * (centre < _Layout.height - centre ? centre : _Layout.height - centre);
   final double wanted = (run.inkBottom - run.inkTop) / 0.55;
   final double height = wanted < fit ? wanted : fit;
-  return PlateSlot(
-    alphabet: alphabet,
-    box: PlateBox(
-      run.firstCx - run.pitch / 2,
-      centre - height / 2,
-      count * run.pitch,
-      height,
-    ),
-    length: count,
-    spacing: max(0, run.pitch - 0.6 * 0.72 * height),
+  return plateRun(
+    alphabet,
+    count,
+    left: run.firstCx - run.pitch / 2,
+    top: centre - height / 2,
+    pitch: run.pitch,
+    height: height,
   );
 }
 
-// TODO(py): [H2][D6] ImageProvider: reference the raster as package + path; importlib.resources.
-// TODO(ts): [H2][D6] ImageProvider: reference the raster as package + path; import as asset URL.
-// TODO(kt): [H2][D6] ImageProvider: reference the raster as package + path; Res/compose resources.
 const AssetImage _flagImage = AssetImage(
   // Commons: File:Flag_of_Kazakhstan.svg; assets/icons/kazakhstan_flag.svg is
   // the vector.

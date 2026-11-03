@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/widgets.dart';
 import 'package:plate_core/plate_core.dart';
 import 'package:plate_alphabet/plate_alphabet.dart';
@@ -22,26 +20,20 @@ import 'uzbekistan_themes.dart';
 /// ~58 (~89%). The trailer and motorcycle rows are likewise limited by the
 /// canvas edge, each box as tall as it can be centred on the reference ink.
 abstract final class _Layout {
-  static const double width = 520;
-  static const double height = 110;
+  static const double width = 520, height = 110;
 
   /// Digit pitch 47.3 on every one-row plate; ink y 21..86.
-  static const double rowTop = 2;
-  static const double rowHeight = 106;
-  static const double pitch = 47.3;
+  static const double rowTop = 2, rowHeight = 106, pitch = 47.3;
 
   /// Fixed prefix letters are labels; a label sits ~4 higher than a slot's
   /// ink, so its box drops by 10 and shrinks by 12 to share the baseline.
-  static const double labelTop = 12;
-  static const double labelHeight = 94;
-  static const double labelGlyph = 106;
+  static const double labelTop = 12, labelHeight = 94, labelGlyph = 106;
 
   static const double borderlessDivider = 3.6;
 
   /// Passenger: region ink 37.7..114.4, divider x 128.7, `A` centre 176.8,
   /// `123` 207.3..336, `NN` 345..428.2; digit ink y 32.8..89 (centre 61).
-  static const double passengerTop = 12;
-  static const double passengerHeight = 98;
+  static const double passengerTop = 12, passengerHeight = 98;
   static const double passengerDivider = 128.7;
 
   /// Flag x 446..494, `UZ` ink y 68..96.5.
@@ -58,10 +50,8 @@ abstract final class _Layout {
 
   /// Trailer canvas 280×152; ink rows: digits y 6.3..68, letters 80.5..141,
   /// region 83..129.6. Block corner at x 147, y 71.7; flag x 229.6..271.6.
-  static const double trailerWidth = 280;
-  static const double trailerHeight = 152;
-  static const double trailerRowEnd = 71.7;
-  static const double trailerBlockEnd = 147;
+  static const double trailerWidth = 280, trailerHeight = 152;
+  static const double trailerRowEnd = 71.7, trailerBlockEnd = 147;
   static const double trailerRule = 2.5;
   static const PlatePanel trailerPanel = PlatePanel(
     box: PlateBox(224, 76, 52, 72),
@@ -71,11 +61,8 @@ abstract final class _Layout {
 
   /// Motorcycle canvas 200×160: digit ink y 15..63.5, letters 88..136.5,
   /// region 22.4..50.5; dividers x 131 and (right column) y 68.
-  static const double motoWidth = 200;
-  static const double motoHeight = 160;
-  static const double motoColumnEnd = 131;
-  static const double motoRowEnd = 68;
-  static const double motoRule = 3;
+  static const double motoWidth = 200, motoHeight = 160, motoColumnEnd = 131;
+  static const double motoRowEnd = 68, motoRule = 3;
   static const PlatePanel motoPanel = PlatePanel(
     box: PlateBox(140, 74, 52, 78),
     padding: EdgeInsets.zero,
@@ -93,11 +80,13 @@ abstract final class UzbekistanPlates {
     double right,
     double top,
     double height,
-  ) => PlateSlot(
-    alphabet: a,
-    box: PlateBox(left, top, right - left, height),
-    length: count,
-    spacing: max(0, (right - left) / count - 0.6 * 0.72 * height),
+  ) => plateRun(
+    a,
+    count,
+    left: left,
+    top: top,
+    pitch: (right - left) / count,
+    height: height,
   );
 
   static PlateSlot _cell(

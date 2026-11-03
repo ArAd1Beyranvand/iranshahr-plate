@@ -41,7 +41,6 @@ abstract final class TurkmenistanThemes {
 PlateTheme _theme(Color field, Color ink) => PlateTheme.monochrome(
   field: field,
   ink: ink,
-  inactive: TurkmenistanColors.inactive,
   borderWidthRatio: 4.5 / 110,
   plateRadiusRatio: 9 / 110,
 );

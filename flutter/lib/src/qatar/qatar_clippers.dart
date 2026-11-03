@@ -1,8 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-// TODO(py): [H1][D3] CustomClipper: export as a path in plate coordinates; QPainterPath.
-// TODO(ts): [H1][D3] CustomClipper: export as an SVG path string in plate coordinates.
-// TODO(kt): [H1][D3] CustomClipper: export as path data; Compose Path via PathParser.
 /// The serrated inboard edge of Qatar's hoist block.
 ///
 /// Qatar is the one country in this package whose country block is not a

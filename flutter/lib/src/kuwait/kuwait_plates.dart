@@ -11,45 +11,36 @@ import 'kuwait_themes.dart';
 /// plate rectangle to the article's 335x155 mm and projecting the ink onto each
 /// axis; the files agree to within half a unit.
 abstract final class _Layout {
-  static const double width = 335;
-  static const double height = 155;
+  static const double width = 335, height = 155;
 
   /// Vertical rule between the "KUWAIT" band and the face.
-  static const double ruleLeft = 39;
-  static const double ruleWidth = 3;
+  static const double ruleLeft = 39, ruleWidth = 3;
 
   /// "KUWAIT" set as six stacked upright letters, not rotated text. Sized so
   /// the widest letter clears [ruleLeft]: the band is only 13 units of ink
   /// wide on the reference, narrower than a bold "W" at the height the six
   /// letters need to fill the plate.
   static const PlateBox kuwaitBand = PlateBox(10, 10, 27, 135);
-  static const double kuwaitGlyph = 19;
-  static const double kuwaitLineHeight = 1.6;
+  static const double kuwaitGlyph = 19, kuwaitLineHeight = 1.6;
 
   /// The face: everything right of the rule, inside the frame.
-  static const double faceLeft = 48;
-  static const double faceRight = 319;
+  static const double faceLeft = 48, faceRight = 319;
 
   /// Arabic caption row. Each category passes its own glyph height: 42 gives
   /// the reference's 31 units of ink, and the longer captions step down from
   /// there to stay inside the face.
-  static const double captionTop = 11;
-  static const double captionHeight = 37;
+  static const double captionTop = 11, captionHeight = 37;
 
   /// Serial row. The reference ink is 71 units tall, which would need a
   /// 130-unit box — taller than the plate. 112 is the tallest box that keeps
   /// the ink centred where the reference puts it (y 98) and still fits, so
   /// the digits come out at about 86% of reference size.
-  static const double serialTop = 42;
-  static const double serialHeight = 112;
+  static const double serialTop = 42, serialHeight = 112;
 
   /// The two-digit class code public-transport plates set left of the caption,
   /// and the shortened caption that leaves room for it.
-  static const double classLeft = 52;
-  static const double classWidth = 31;
-  static const double classPitch = 33;
-  static const double classTop = 0;
-  static const double classHeight = 57;
+  static const double classLeft = 52, classWidth = 31, classPitch = 33;
+  static const double classTop = 0, classHeight = 57;
   static const PlateBox captionBesideClass = PlateBox(
     122,
     captionTop,
@@ -58,13 +49,10 @@ abstract final class _Layout {
   );
 
   /// Square motorcycle plates, 155x155. Same band, tighter face.
-  static const double squareSide = 155;
-  static const double squareRuleLeft = 37;
+  static const double squareSide = 155, squareRuleLeft = 37;
   static const PlateBox squareKuwaitBand = PlateBox(6, 8, 28, 139);
-  static const double squareKuwaitGlyph = 25;
-  static const double squareKuwaitLineHeight = 1.4;
-  static const double squareFaceLeft = 44;
-  static const double squareFaceRight = 148;
+  static const double squareKuwaitGlyph = 25, squareKuwaitLineHeight = 1.4;
+  static const double squareFaceLeft = 44, squareFaceRight = 148;
 }
 
 /// Sizes: 520x110 (EU) for private long-format, 335x155 for everything but
@@ -364,12 +352,10 @@ abstract final class KuwaitPlates {
 
   /// Six digits and a dash on a seven-position pitch, sized so the ink lands
   /// on the reference's 52..318 span at its measured 48-unit cap height.
-  static const double _diplomaticPitch = 38;
-  static const double _diplomaticSerialTop = 32;
+  static const double _diplomaticPitch = 38, _diplomaticSerialTop = 32;
   static const double _diplomaticSerialHeight = 90;
 
-  static const double _diplomaticBandTop = 113;
-  static const double _diplomaticBandHeight = 30;
+  static const double _diplomaticBandTop = 113, _diplomaticBandHeight = 30;
 
   /// The rule, 4 units wide at x 42, and right of it the red band: a row of
   /// the face from the rule out under the frame, so it meets both with no
