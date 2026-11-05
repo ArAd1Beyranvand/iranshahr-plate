@@ -1,4 +1,4 @@
-import { GatedPlateValidator, type PlateEntry, type PlateValidation, type PlateValidator, invalid, isDigits, isDigitsOfLength, valid } from '../../core/validators/plate_validator';
+import { GatedPlateValidator, type PlateEntry, type PlateValidation, type PlateValidator, invalid, isDigits, isDigitsOfLength, valid } from 'plate_core/core/validators/plate_validator';
 
 /** Region codes Tajikistan issues: Dushanbe, Sughd, Khatlon, Gorno-Badakhshan and the districts of republican subordination. */
 const issuedRegions: ReadonlySet<string> = new Set(['01', '05', '02', '06', '03', '04', '07', '08']);

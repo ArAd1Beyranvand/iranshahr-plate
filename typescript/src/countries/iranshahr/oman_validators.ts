@@ -1,4 +1,4 @@
-import { PlateValidator, type PlateEntry, type PlateValidation, invalid, valid } from '../../core/validators/plate_validator';
+import { PlateValidator, type PlateEntry, type PlateValidation, invalid, valid } from 'plate_core/core/validators/plate_validator';
 
 /** Every field at least at its minimum length. The article gives no rule beyond the format, and the
  * letter list is incomplete, so nothing else is judged. */

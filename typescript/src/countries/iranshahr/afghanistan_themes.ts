@@ -1,4 +1,4 @@
-import type { PlateTheme } from '../../core/theme/plate_theme';
+import type { PlateTheme } from 'plate_core/core/theme/plate_theme';
 import { AfghanistanThemes as Liveries } from './themes';
 
 export const AfghanistanThemes = {
